@@ -24,15 +24,17 @@ private:
 };
 
 class Document : public Note {
-private:
     
+private:
+    //Attributs
     QList<Note*> notes; //This QList implement the design pattern Composite.
-
     //We could also have used std::List<Note*> but QList is simpler to use.
+    
+    //Constructeur de recopie
     Document(const Document& m);
     Document& operator=(const Document& m);
-public:
     
+public:
     //Constructeurs
     Document(unsigned int i, const QString& t):Note(i,t),notes(QList<Note*>()){}
     Document(unsigned int i, const QString& t, const QList<Note*>& listNote):Note(i,t){
@@ -45,13 +47,20 @@ public:
     
     //Destructeur
     ~Document() {}
+    
+    //Methodes inlines
+    
+    //Autres methodes non-inline
     void load(const QString& path);
     Note* getSubNote(unsigned int i) const;
-    //QString ExportNote(ExportStrategy* es) const;     Class ExportStrategy not yet implemented
-    //QString ExportAsPart(ExportStrategy* es, unsigned int tl) const;      Class ExportStrategy not yet implemented
     void addSubNote(Note* n);
     void addSubNote(Note* n, unsigned int id);
     void removeSubNote(unsigned int id);
+    
+    
+    //TODO
+    //QString ExportNote(ExportStrategy* es) const;     Class ExportStrategy not yet implemented
+    //QString ExportAsPart(ExportStrategy* es, unsigned int tl) const;      Class ExportStrategy not yet implemented
 };
 
 #endif // DOCUMENT_H

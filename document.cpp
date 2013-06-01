@@ -35,6 +35,7 @@ void load(const QString& path){}
 //QString ExportNote(ExportStrategy* es) const {}
 //QString ExportAsPart(ExportStrategy* es, unsigned int tl) const{}
 
+
 //Cette fonction va ajouter une Note au document. Attention, je n'ai pas le cas où la note est déjà dans la list.
 void Document::addSubNote(Note* n)
 {

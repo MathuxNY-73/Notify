@@ -23,15 +23,28 @@
 #include "note.h"
 
 class Article : public Note {
+    
 private:
+    //Attributs
     QString text;
+    
+    //Constructeurs de recopie
     Article(const Article&);
     Article& operator=(const Article&);
     //void load();
+    
 public:
+    //Constructeurs
     Article(const QString& path):Note(path),text(""){}
     Article(unsigned int i, const QString& ti, const QString& te): Note(i,ti),text(te){}
+    
+    //Destructeur
+    ~Article(){}
+    
+    //Methodes inlines
     const QString& getText() const { return text; }
+    
+    //Methodes non-inlines
     void setText(const QString& t);
 };
 

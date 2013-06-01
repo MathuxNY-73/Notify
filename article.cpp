@@ -15,6 +15,7 @@ void Article::setText(const QString& t) {
     modified=true; text=t;
 }
 
+
 //The two following functions are copy constructor. However these two function are not well ...
 //... defined and does not fit the declaration given in the header file
 /*
