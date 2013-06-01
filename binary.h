@@ -15,38 +15,42 @@
 class Binary : public Note{
 private:
     void load();
+    Binary(const Binary& b);
+    Binary& operator=(const Binary& b);
+    
 protected:
     QString desc;
     QString path;
+    
 public:
-    Binary(const QString& t, const QString& d, const QString& p):Note(t),desc(d),path(p){}
-    QString getDesc() const {return this->desc;}
-    void setDesc(const QString& d) {desc=d;}
-    QString getPath() const { return this->path;}
-    void setPath(const QString& p) {path=p;}
+    Binary(unsigned int i,const QString& t, const QString& d, const QString& p);
+    QString getDesc() const;
+    void setDesc(const QString& d);
+    QString getPath() const;
+    void setPath(const QString& p);
 };
 
 class Video : public Binary {
 private:
-    Video(const Video& v){}
-    Video& operator=(const Video& v){}
+    Video(const Video& v);
+    Video& operator=(const Video& v);
 public:
-    Video();
+    Video(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p){}
 };
 
 class Image : public Binary {
 private:
-    Image(const Image& v){}
-    Image& operator=(const Image& v){}
+    Image(const Image& i);
+    Image& operator=(const Image& i);
 public:
-    Image();
+    Image(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p){}
 };
 
 class Audio : public Binary {
 private:
-    Audio(const Audio& v){}
-    Audio& operator=(const Audio& v){}
+    Audio(const Audio& a);
+    Audio& operator=(const Audio& a);
 public:
-    Audio();
+    Audio(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p){}
 };
 #endif // BINARY_H

@@ -12,7 +12,6 @@
 #include <QFile>
 #include <QList>
 
-Document::Document(unsigned int i, const QString& t):Note(i,t),notes(QList<Note*>()){}
 
 //Les deux fonctions qui suivent sont des constructeurs de recopie cependant on ne les utilisent pas pour le moment.
 
@@ -47,7 +46,7 @@ void Document::addSubNote(Note* n)
         if(n->getId()==this->getId())
             throw DocumentException("You are trying to put a document in itself dude. Why are you so stupid ?");
         else
-            notes.append(n);
+            notes<<n;
     }
     catch(DocumentException& e){
         std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";  //To be modified to display a warning on the screen.
@@ -64,7 +63,7 @@ void Document::addSubNote(Note* n, unsigned int id){
         if(id==this->getId())
             throw DocumentException("You are trying to put a document in itself dude. Why are you so stupid ?");
         else
-            notes.append(n);
+            notes<<n;
     }
     catch(DocumentException& e){
         std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";  //To be modified to display a warning on the screen.
@@ -73,9 +72,12 @@ void Document::addSubNote(Note* n, unsigned int id){
 
 //Cette fonction supprime les notes en prenant leur id
 void Document::removeSubNote(unsigned int id){
-    if(notes.size()<=0)
-    {
-        throw DocumentException("The list is empty. Why are you so stupid ?");
+    try{
+        if(notes.size()<=0)
+            throw DocumentException("The list is empty. Why are you so stupid ?");
+    }
+    catch (DocumentException &e){
+        std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";  //To be modified to display a warning on the screen.
         return;
     }
     QList<Note*>::iterator it;
@@ -101,7 +103,13 @@ Note* Document::getSubNote(unsigned int id) const{
     for(it = notes.begin() ; it!=notes.end() ; ++it)
         if((*it)->getId()==id)
             break;
-    if(it==notes.end() && (*it)->getId()!=id)
-        throw DocumentException("The note you are trying to select is not in the document. Why are you so stupid ?");
+    try{
+        if(it==notes.end())
+            throw DocumentException("The note you are trying to select is not in the document. Why are you so stupid ?");
+    }
+    catch(DocumentException& e){
+        std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";  //To be modified to display a warning on the screen.
+        return NULL;
+    }
     return *it;
 }

@@ -25,14 +25,25 @@ private:
 
 class Document : public Note {
 private:
+    
     QList<Note*> notes; //This QList implement the design pattern Composite.
 
     //We could also have used std::List<Note*> but QList is simpler to use.
     Document(const Document& m);
     Document& operator=(const Document& m);
 public:
-    Document(unsigned int id, const QString& t);
-    Document(unsigned int id, const QString& t, const QList<Note*>& listNote);
+    
+    //Constructeurs
+    Document(unsigned int i, const QString& t):Note(i,t),notes(QList<Note*>()){}
+    Document(unsigned int i, const QString& t, const QList<Note*>& listNote):Note(i,t){
+        notes=QList<Note*>();
+        QList<Note*>::const_iterator it;                 //Il faudra vérifier si le const est justifié et correct ici.
+        for(it=listNote.begin() ; it!=listNote.end() ; ++it)
+            notes<<(*it);
+    }
+    Document(const QString& p):Note(p), notes(QList<Note*>()){}
+    
+    //Destructeur
     ~Document() {}
     void load(const QString& path);
     Note* getSubNote(unsigned int i) const;

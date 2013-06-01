@@ -24,3 +24,11 @@ Notify_Github.pro.user
 *.mak
 
 *.xcbkptlist
+
+Notify.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+
+*.xcuserstate
+
+*.xcscheme
+
+*.plist

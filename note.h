@@ -17,7 +17,10 @@ class Article;
 class Document;
 class NotesManager;
 class NotesException;
-class binary;
+class Binary;
+class Video;
+class Image;
+class Audio;
 
 QTextStream& operator<<(QTextStream& f, const Article& a);
 QTextStream& operator<<(QTextStream& f, const Document& d);
