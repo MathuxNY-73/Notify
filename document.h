@@ -33,7 +33,7 @@ private:
 public:
     Document(unsigned int id, const QString& t);
     Document(unsigned int id, const QString& t, const QList<Note*>& listNote);
-    ~Document() { notes.~QList(); }
+    ~Document() {}
     void load(const QString& path);
     Note* getSubNote(unsigned int i) const;
     //QString ExportNote(ExportStrategy* es) const;     Class ExportStrategy not yet implemented

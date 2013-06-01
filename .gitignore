@@ -18,3 +18,9 @@ Notify_Github.xcodeproj/xcuserdata/Antoine.xcuserdatad/xcschemes/Notify_Github.x
 Notify_Github.xcodeproj/xcuserdata/Antoine.xcuserdatad/xcschemes/xcschememanagement.plist
 
 Notify_Github.pro.user
+
+*.pbxproj
+
+*.mak
+
+*.xcbkptlist

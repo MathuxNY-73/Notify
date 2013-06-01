@@ -7,10 +7,12 @@ QT += widgets
 HEADERS += \
     article.h \
     note.h \
-    document.h
+    document.h \
+    binary.h
 
 SOURCES += \
     article.cpp \
     note.cpp \
     document.cpp \
-    main.cpp
+    main.cpp \
+    binary.cpp

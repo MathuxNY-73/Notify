@@ -8,13 +8,11 @@
 
 #include "document.h"
 #include <fstream>
+#include <iostream>
 #include <QFile>
 #include <QList>
 
-Document::Document(unsigned int i, const QString& t):Note(i,t)
-{
-    notes=QList<Note*>();
-}
+Document::Document(unsigned int i, const QString& t):Note(i,t),notes(QList<Note*>()){}
 
 //Les deux fonctions qui suivent sont des constructeurs de recopie cependant on ne les utilisent pas pour le moment.
 
@@ -49,7 +47,7 @@ void Document::addSubNote(Note* n)
         if(n->getId()==this->getId())
             throw DocumentException("You are trying to put a document in itself dude. Why are you so stupid ?");
         else
-            notes<<n;
+            notes.append(n);
     }
     catch(DocumentException& e){
         std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";  //To be modified to display a warning on the screen.
@@ -66,7 +64,7 @@ void Document::addSubNote(Note* n, unsigned int id){
         if(id==this->getId())
             throw DocumentException("You are trying to put a document in itself dude. Why are you so stupid ?");
         else
-            notes<<n;
+            notes.append(n);
     }
     catch(DocumentException& e){
         std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";  //To be modified to display a warning on the screen.
@@ -75,16 +73,22 @@ void Document::addSubNote(Note* n, unsigned int id){
 
 //Cette fonction supprime les notes en prenant leur id
 void Document::removeSubNote(unsigned int id){
-    QList<Note*>::iterator it=notes.begin();
-    int i;
-    for(i=0 ; i!=notes.size() ; i++)
-        if (it[i]->getId()==id)
+    if(notes.size()<=0)
+    {
+        throw DocumentException("The list is empty. Why are you so stupid ?");
+        return;
+    }
+    QList<Note*>::iterator it;
+    it=notes.end();
+    for(it = notes.begin() ; it!=notes.end() ; ++it)
+        if((*it)->getId()==id)
             break;
+    
     try{
-        if(i==notes.size() && it[i]->getId()!=id)
+        if(it==notes.end())
             throw DocumentException("The note you are trying to remove is not in the document. Why are you so stupid ?");
         else
-            notes.removeAt(i);
+            notes.erase(it);
     }
     catch(DocumentException& e){
         std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";  //To be modified to display a warning on the screen.

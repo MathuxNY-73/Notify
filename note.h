@@ -54,7 +54,7 @@ public:
     void addSubNote(Note* n);
     void addSubNote(Note* n, unsigned int id);
     void removeSubNote(unsigned int id);
-    void getSubNote(unsigned int id) const;
+    Note* getSubNote(unsigned int id) const;
     //virtual void load(const QString& path) =0;
 
 };
