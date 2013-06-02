@@ -20,3 +20,5 @@ SOURCES += \
     binary.cpp \
     notemanager.cpp \
     exports.cpp
+
+FORMS +=

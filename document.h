@@ -56,6 +56,8 @@ public:
     void addSubNote(Note* n);
     void addSubNote(Note* n, unsigned int id);
     void removeSubNote(unsigned int id);
+    //QTextStream& operator<<(QTextStream& f, const Document& d);
+
     
     
     //TODO

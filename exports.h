@@ -10,6 +10,7 @@
 #define EXPORTS_H
 
 #include <QString>
+#include <QTextStream>
 #include "note.h"
 
 namespace Exports{
@@ -56,13 +57,13 @@ namespace Exports{
 
     };
 
-    class TexExport{
+    class TeXExport{
     
     private:
         
     public:
         //Constructeurs
-        TexExport(){}
+        TeXExport(){}
         
         //Methodes inlines
         

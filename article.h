@@ -46,6 +46,7 @@ public:
     
     //Methodes non-inlines
     void setText(const QString& t);
+    //QTextStream& operator<<(QTextStream& f, const Article& a);
 };
 
 
