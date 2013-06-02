@@ -9,7 +9,8 @@ HEADERS += \
     note.h \
     document.h \
     binary.h \
-    notemanager.h
+    notemanager.h \
+    exports.h
 
 SOURCES += \
     article.cpp \
@@ -17,4 +18,5 @@ SOURCES += \
     document.cpp \
     main.cpp \
     binary.cpp \
-    notemanager.cpp
+    notemanager.cpp \
+    exports.cpp

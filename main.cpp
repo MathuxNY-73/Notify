@@ -49,6 +49,18 @@ int main(int argc, char *argv[])
     nm1->deleteNote(&d1);
     std::cout<<(nm1->getFilename(2)).toStdString()<<"\n";
     std::cout<<(nm1->getFilename(1)).toStdString()<<"\n";
+    try{
+        NoteManager* nm2;
+        nm2=NoteManager::getInstance();
+        if(nm2==nm1)
+        {
+            nm2->releaseInstance();
+            throw NoteManagerException("An instance of NoteManager already exists");
+        }
+    }
+    catch ( NoteManagerException &e){
+        std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";
+    }
     nm1->releaseInstance();
     return 0;
 
