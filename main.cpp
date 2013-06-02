@@ -11,6 +11,7 @@
 #include "article.h"
 #include "document.h"
 #include "binary.h"
+#include "notemanager.h"
 #include <QString>
 
 int main(int argc, char *argv[])
@@ -36,9 +37,19 @@ int main(int argc, char *argv[])
     d1.removeSubNote(3);
     d1.removeSubNote(2);
     d1.removeSubNote(1);
-    Video v1(3,"Ceci est une video","Video de chat","/home/video/chaton.avi");
+    Video v1(3,"Ceci est une video","Video de chats","/home/video/video de chatons.avi");
     d1.addSubNote(&v1);
     std::cout<<((d1.Document::getSubNote(3))->getTitle()).toStdString()<<"\n";  //Remarque : à partir d'un document il nous est impossible de récupérer "desc" et "path" car getSubNote renvoie Note*.
+    Image i1(4,"Ceci est une image","Image d'avion","/home/images/airbusa380.avi");
+    d1.addSubNote(&i1,4);
+    NoteManager* nm1;
+    nm1 = NoteManager::getInstance();
+    nm1->addNote(&d1);
+    nm1->addNote(&a1);
+    nm1->deleteNote(&d1);
+    std::cout<<(nm1->getFilename(2)).toStdString()<<"\n";
+    std::cout<<(nm1->getFilename(1)).toStdString()<<"\n";
+    nm1->releaseInstance();
     return 0;
 
 }

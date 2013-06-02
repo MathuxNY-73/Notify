@@ -54,7 +54,8 @@ void Document::addSubNote(Note* n)
     }
 }
 
-//Cette fonction va ajouter une Note au document. Attention, je n'ai pas le cas où la note est déjà dans la list.
+//Cette fonction va ajouter une Note au document. Attention, je n'ai pas le cas où la note est déjà dans la list. 
+//Nota : Comment faire en sorte que l'on ne puisse pas inlcure un document dans un autre ?
 void Document::addSubNote(Note* n, unsigned int id){
     try{
         QList<Note*>::const_iterator it;
@@ -82,11 +83,9 @@ void Document::removeSubNote(unsigned int id){
         return;
     }
     QList<Note*>::iterator it;
-    it=notes.end();
     for(it = notes.begin() ; it!=notes.end() ; ++it)
         if((*it)->getId()==id)
             break;
-    
     try{
         if(it==notes.end())
             throw DocumentException("The note you are trying to remove is not in the document. Why are you so stupid ?");

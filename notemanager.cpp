@@ -46,7 +46,9 @@ Note* NoteManager::getNote(unsigned int i) const{
 void NoteManager::addNote(Note* n){
     try{
         if(notes.contains(n))
-            throw NoteManagerException("The note you are trying to add in NoteManager already exists. Why are you so stupid ?");
+            throw NoteManagerException("The note you are trying to add in NoteManager is already in the set. Why are you so stupid ?");
+        else
+            notes<<n;
     }
     catch(NoteManagerException& e){
         std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";  //To be modified to display a warning on the screen.
@@ -54,8 +56,50 @@ void NoteManager::addNote(Note* n){
     
 }
 
-void NoteManager::deleteNote(Note* n){}
-QString NoteManager::getFilename(unsigned int i) const{}
+void NoteManager::deleteNote(Note* n){
+    try{
+        if(notes.size()<=0)
+            throw DocumentException("The list is empty. Why are you so stupid ?");
+    }
+    catch (NoteManagerException &e){
+        std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";  //To be modified to display a warning on the screen.
+        return;
+    }
+    try{
+        if(!notes.contains(n))
+            throw NoteManagerException("The note you are trying to delete is not in the list. Why are you so stupid ?");
+        else
+        {
+            QSet<Note*>::iterator it;
+            for(it = notes.begin() ; it!=notes.end() ; ++it)
+                if((*it)->getId()==n->getId())
+                    break;
+            notes.erase(it);
+        }
+    }
+    catch(NoteManagerException& e){
+        std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";  //To be modified to display a warning on the screen.
+    }
+}
+
+//Ici je ne sais pas trop ce qu'il faut renvoyer
+QString NoteManager::getFilename(unsigned int i) const{
+    QSet<Note*>::const_iterator it;
+    for(it = notes.begin() ; it!=notes.end() ; ++it)
+        if((*it)->getId()==i)
+            break;
+    try{
+        if(it==notes.end())
+            throw NoteManagerException("The note you are trying to select is not in the document. Why are you so stupid ?");
+        else
+             return (*it)->getTitle();
+    }
+    catch(NoteManagerException& e){
+        std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";  //To be modified to display a warning on the screen.
+        return "";      
+    }
+}
+
 void NoteManager::load(const QString& newPath){}
 void NoteManager::load(){}
 void NoteManager::reset(){}
