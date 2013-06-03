@@ -107,6 +107,8 @@ Note* NoteManager::loadNote(unsigned int i){}
 void NoteManager::saveState() const{}
 
 
+
+
 //Les deux fonctions suivantes servent à sauver les articles et les documents. Cependant, je pense que la fonctionnalité va être réalisée par la méthodes saveState.
 /*
 void NoteManager::saveArticle(Article& a){

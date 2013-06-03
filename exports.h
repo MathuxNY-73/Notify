@@ -13,7 +13,7 @@
 #include <QTextStream>
 #include "note.h"
 
-namespace Exports{
+namespace Exports {
     
     //Mise en place du design pattern strategy et template methods
     class ExportStrategy{
@@ -32,11 +32,11 @@ namespace Exports{
         //Méthode virtuelles
         virtual QString header(Note* n) =0;
         virtual QString footer(Note* n) =0;
-        virtual QString exportNote(Note* n, unsigned int tl) =0;
+        virtual QString exportNote(Note* n, unsigned int tl=0) =0;
     };
     
     //Exporter en txt
-    class TextExport{
+    class TextExport : public ExportStrategy {
         
     private:
       
@@ -49,15 +49,15 @@ namespace Exports{
         //Methodes non-inlines
         QString header(Note* n);
         QString footer(Note* n);
-        QString exportNote(Article* a, unsigned int tl);
-        QString exportNote(Document* d, unsigned int tl);
-        QString exportNote(Image* i, unsigned int tl);
-        QString exportNote(Audio* a, unsigned int tl);
-        QString exportNote(Video* v, unsigned int tl);
+        QString exportNote(Article* a, unsigned int tl=0);
+        QString exportNote(Document* d, unsigned int tl=0);
+        QString exportNote(Image* i, unsigned int tl=0);
+        QString exportNote(Audio* a, unsigned int tl=0);
+        QString exportNote(Video* v, unsigned int tl=0);
 
     };
 
-    class TeXExport{
+    class TeXExport : public ExportStrategy{
     
     private:
         
@@ -70,15 +70,15 @@ namespace Exports{
         //Methodes non-inlines
         QString header(Note* n);
         QString footer(Note* n);
-        QString exportNote(Article* a, unsigned int tl);
-        QString exportNote(Document* d, unsigned int tl);
-        QString exportNote(Image* i, unsigned int tl);
-        QString exportNote(Audio* a, unsigned int tl);
-        QString exportNote(Video* v, unsigned int tl);
+        QString exportNote(Article* a, unsigned int tl=0);
+        QString exportNote(Document* d, unsigned int tl=0);
+        QString exportNote(Image* i, unsigned int tl=0);
+        QString exportNote(Audio* a, unsigned int tl=0);
+        QString exportNote(Video* v, unsigned int tl=0);
         
     };
 
-    class HTMLExport{
+    class HTMLExport : public ExportStrategy {
     
     private:
     
@@ -91,15 +91,15 @@ namespace Exports{
         //Methodes non-inlines
         QString header(Note* n);
         QString footer(Note* n);
-        QString exportNote(Article* a, unsigned int tl);
-        QString exportNote(Document* d, unsigned int tl);
-        QString exportNote(Image* i, unsigned int tl);
-        QString exportNote(Audio* a, unsigned int tl);
-        QString exportNote(Video* v, unsigned int tl);
+        QString exportNote(Article* a, unsigned int tl=0);
+        QString exportNote(Document* d, unsigned int tl=0);
+        QString exportNote(Image* i, unsigned int tl=0);
+        QString exportNote(Audio* a, unsigned int tl=0);
+        QString exportNote(Video* v, unsigned int tl=0);
     
     };
 
-    class SaveTextExport{
+    class SaveTextExport : public ExportStrategy{
     
     private:
     
@@ -112,11 +112,11 @@ namespace Exports{
         //Methodes non-inlines
         QString header(Note* n);
         QString footer(Note* n);
-        QString exportNote(Article* a, unsigned int tl);
-        QString exportNote(Document* d, unsigned int tl);
-        QString exportNote(Image* i, unsigned int tl);
-        QString exportNote(Audio* a, unsigned int tl);
-        QString exportNote(Video* v, unsigned int tl);
+        QString exportNote(Article* a, unsigned int tl=0);
+        QString exportNote(Document* d, unsigned int tl=0);
+        QString exportNote(Image* i, unsigned int tl=0);
+        QString exportNote(Audio* a, unsigned int tl=0);
+        QString exportNote(Video* v, unsigned int tl=0);
     
     };
 }

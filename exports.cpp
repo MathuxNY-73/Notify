@@ -17,13 +17,13 @@ ExportStrategy::ExportStrategy(){}
 
 QString TextExport::header(Note* n){
     QString s;
-    s="Voici le header";
+    s="";
     return s;
 }
 
 QString TextExport::footer(Note* n){
     QString s;
-    s="Voici le footer";
+    s="";
     return s;
 }
 
@@ -38,8 +38,11 @@ QString TextExport::exportNote(Article* a, unsigned int tl){
     return s;
 }
 
-/*QString TextExport::exportNote(Document* d, unsigned int tl){     Je ne voie pas comment l'implémenter.
+QString TextExport::exportNote(Document* d, unsigned int tl){
+    QString s;
+    for(unsigned int i=0 ; i<tl ; i++)
+        s+="    ";
+    s=s+d->getTitle()+"\n";
     QList<Note*>::const_iterator it;
-    for(it=d->notes.begin() ; it!=d->notes.end() ; ++it)
-        
-}*/
+    
+}
