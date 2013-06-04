@@ -184,3 +184,8 @@ QString TeXExport::exportNote(const Audio& a, unsigned int tl){
     s=s+"description : "+a.getDesc()+"\n";
     return s;
 }
+
+
+//TODO
+//Export en HTML
+//Export SaveText
