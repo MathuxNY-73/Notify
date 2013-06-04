@@ -76,6 +76,7 @@ namespace Exports{
         QString exportNote(const Image& i, unsigned int tl=0);
         QString exportNote(const Audio& a, unsigned int tl=0);
         QString exportNote(const Video& v, unsigned int tl=0);
+        QString docStruct(unsigned int i) const;
         
     };
 
