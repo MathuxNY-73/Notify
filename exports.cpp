@@ -16,6 +16,13 @@ using namespace Exports;
 
 ExportStrategy::ExportStrategy(){}
 
+QMap<QString, ExportStrategy*> ExportStrategy::getExport(){
+    QMap<QString, ExportStrategy*> map;
+    map["text"]=new TextExport();       //J'ai une erreur ici qui me dit que je ne peut pas allouer de l'espace sur des classe abstraites et je pense que cela est dû à l'erreur ennoncé précédement dans l'exports.h
+    map["TeX"]=new TeXExport();
+    //map["html"]=new HTMLExport();
+    return map;
+}
 
 //Export en text
 QString TextExport::header(const Note& n){
@@ -50,7 +57,7 @@ QString TextExport::exportNote(const Document& d, unsigned int tl){
     for(unsigned int i=0 ; i<tl+1 ; i++)
         s+="    ";
     for(it=d.begin() ; it!=d.end() ; ++it)
-        s=s+(*it)->ExportAsPart(this, tl+1);        //A voir avec damien le Dieu de LO21 qui a eu 2 fucking points en plus.
+        s=s+(*it)->ExportAsPart(this, tl+1);        
     return s;
 }
 
@@ -116,7 +123,7 @@ QString TeXExport::docStruct(unsigned int i) const{
 QString TeXExport::header(const Note& n){
     QString s;
     //Definition du document en latex
-    s="\\documentclass[a4paper, 12pt, leqno]{arcticle}";
+    s="\\documentclass[a4paper, 12pt]{arcticle}";
     
     //Inclure les packages
     s=s+"\\usepackage[T1]{fontenc} \n"
@@ -152,7 +159,7 @@ QString TeXExport::exportNote(const Document& d, unsigned int tl){
     s=docStruct(tl)+d.getTitle()+"} \n";
     Document::constIterator it;
     for(it=d.begin() ; it!=d.end() ; ++it)
-        s=s+(*it)->ExportAsPart(this, tl+1);        //A voir avec damien le Dieu de LO21 qui a eu 2 fucking points en plus.
+        s=s+(*it)->ExportAsPart(this, tl+1);        
     return s;
 }
 
@@ -188,4 +195,86 @@ QString TeXExport::exportNote(const Audio& a, unsigned int tl){
 
 //TODO
 //Export en HTML
+QString HTMLExport::header(const Note& n){
+    QString s;
+    //Definition du document en HTML
+    s="<!DOCTYPE html> \n"
+        "<html lang='fr'>";
+    s=s+"<head> \n"
+        "<meta charset='utf-8'> \n"
+        "<title>"+n.getTitle()+"</title>";
+    
+    //Debut du corps
+    s=s+"</head> \n"
+        "<body> \n";
+    
+    //Crée le titre du document
+    s=s+"\\title{\\textsc{\\textbf{"+n.getTitle()+"}}} \n"
+    "\\date{"+n.getId()+"} \n";
+    
+    //On commence le document
+    s=s+"\\begin{document} \n"
+    "\\maketitle \n";
+    return s;
+}
+
+QString HTMLExport::footer(const Note& n){
+    QString s;
+    s="</body> \n"
+        "</html> \n";
+    return s;
+}
+
+QString HTMLExport::exportNote(const Article& a, unsigned int tl){
+    QString s,indent="";
+    for(unsigned int i=0 ; i<tl ; i++)
+        indent+="    ";
+    if(tl>=6)
+        tl=6;
+    s=indent+"<h"+(QString)tl+">"+a.getTitle()+"</h"+(QString)tl+">";
+    s=s+indent+"    <p>"+a.getText()+"</p> \n";
+    return s;
+}
+
+QString HTMLExport::exportNote(const Document& d, unsigned int tl){
+    QString s,indent="";
+    for(unsigned int i=0 ; i<tl ; i++)
+        indent+="    ";
+    if(tl>=6)
+        tl=6;
+    s=indent+"<h"+(QString)tl+">"+d.getTitle()+"</h"+(QString)tl+">";
+    Document::constIterator it;
+    for(it=d.begin() ; it!=d.end() ; ++it)
+        s=s+(*it)->ExportAsPart(this, tl+1);        
+    return s;
+}
+
+/*QString HTMLExport::exportNote(const Video& v, unsigned int tl){
+    QString s;
+    s=docStruct(tl)+v.getTitle()+"} \n";
+    s=s+"path : "+v.getPath()+"\n";
+    s=s+"description : "+v.getDesc()+"\n";
+    return s;
+}*/
+
+QString HTMLExport::exportNote(const Image& i, unsigned int tl){
+    QString s;
+    s="\\begin{figure} \n"
+    "\\begin{center} \n";
+    s=s+"\\includegraphics{"+i.getPath()+"} \n";
+    s=s+"\\end{center} \n"
+    "\\label{"+i.getTitle()+"} \n";
+    s=s+"\\end{figure} \n";
+    s=s+"\\textsc{\\textbf{Description}} :";
+    s=s+i.getDesc()+"\n";
+    return s;
+}
+
+/*QString HTMLExport::exportNote(const Audio& a, unsigned int tl){
+    QString s;
+    s=docStruct(tl)+a.getTitle()+"} \n";
+    s=s+"path : "+a.getPath()+"\n";
+    s=s+"description : "+a.getDesc()+"\n";
+    return s;
+}*/
 //Export SaveText

@@ -12,6 +12,7 @@
 #include <QString>
 #include <QTextStream>
 #include "note.h"
+#include "article.h"
 
 
 namespace Exports{
@@ -33,7 +34,11 @@ namespace Exports{
         //Méthode virtuelles
         virtual QString header(const Note& n) =0;
         virtual QString footer(const Note& n) =0;
-        virtual QString exportNote(const Note& n, unsigned int tl=0) =0;
+        virtual QString exportNote(const Article& n, unsigned int tl=0) =0;
+        virtual QString exportNote(const Document& n, unsigned int tl=0) =0;
+        virtual QString exportNote(const Audio& n, unsigned int tl=0) =0;
+        virtual QString exportNote(const Video& n, unsigned int tl=0) =0;
+        virtual QString exportNote(const Image& n, unsigned int tl=0) =0;
     };
     
     //Exporter en txt
@@ -48,13 +53,15 @@ namespace Exports{
         //Methodes inlines
         
         //Methodes non-inlines
+        
         QString header(const Note& n);
         QString footer(const Note& n);
-        QString exportNote(const Article& a, unsigned int tl=0);
+        QString exportNote(const Article& a, unsigned int tl=0);        //Ces fonctions n'implémentent, apparement, pas la fonction virtuelle de l'ExportStrategy je ne sais pas pourquoi.
         QString exportNote(const Document& d, unsigned int tl=0);
         QString exportNote(const Image& i, unsigned int tl=0);
         QString exportNote(const Audio& a, unsigned int tl=0);
         QString exportNote(const Video& v, unsigned int tl=0);
+        //using ExportStrategy::exportNote;
 
     };
 
@@ -76,6 +83,7 @@ namespace Exports{
         QString exportNote(const Image& i, unsigned int tl=0);
         QString exportNote(const Audio& a, unsigned int tl=0);
         QString exportNote(const Video& v, unsigned int tl=0);
+        //using ExportStrategy::exportNote;
         QString docStruct(unsigned int i) const;
         
     };
@@ -98,6 +106,7 @@ namespace Exports{
         QString exportNote(const Image& i, unsigned int tl=0);
         QString exportNote(const Audio& a, unsigned int tl=0);
         QString exportNote(const Video& v, unsigned int tl=0);
+        //using ExportStrategy::exportNote;
     
     };
 
@@ -119,6 +128,7 @@ namespace Exports{
         QString exportNote(const Image& i, unsigned int tl=0);
         QString exportNote(const Audio& a, unsigned int tl=0);
         QString exportNote(const Video& v, unsigned int tl=0);
+        //using ExportStrategy::exportNote;
     
     };
 

@@ -37,10 +37,11 @@ private:
     static NoteManager* instance;
     QString path;
     //QMap<QString, NoteFactory*> factories;
-    //QMap<QString, Exports::ExportStrategy*> strategies; ,strategies(Exports::ExportStrategy::getExport())
+    QMap<QString, Exports::ExportStrategy*> strategies;
     
     //Constructeurs
-    NoteManager():notes(QSet<Note*>()),path(""){}  //Je subodore que c'est quelque chose comme cela.
+    NoteManager():notes(QSet<Note*>()),path(""),strategies(Exports::ExportStrategy::getExport()){
+    }  //Je subodore que c'est quelque chose comme cela.
     NoteManager(const QString& p):notes(QSet<Note*>()),path(p){}
     
     //Destructeur

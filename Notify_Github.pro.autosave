@@ -4,7 +4,6 @@ TARGET = Notify
 CONFIG += x86 x86_64
 
 QT += core gui
-LIBS += /Users/Antoine/Qt5.0.2/5.0.2/Src/qtbase/lib
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 HEADERS += \
