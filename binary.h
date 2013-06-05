@@ -10,6 +10,7 @@
 #define BINARY_H
 
 #include "note.h"
+#include "exports.h"
 #include <QString>
 
 
@@ -53,6 +54,9 @@ public:
     //Constructeurs
     Video(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p){}
     
+    //Méthodes non inline
+    QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const;
+    
 };
 
 
@@ -68,6 +72,9 @@ public:
     //Constructeurs
     Image(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p){}
     
+    //Méthodes non inline
+    QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const;
+
 };
 
 
@@ -83,5 +90,7 @@ public:
     //Constructeurs
     Audio(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p){}
     
+    //Méthodes non inline
+    QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const;
 };
 #endif // BINARY_H

@@ -13,6 +13,7 @@
 #include <QString>
 #include <QTextStream>
 
+
 class Article;
 class Document;
 class NotesManager;
@@ -21,6 +22,11 @@ class Binary;
 class Video;
 class Image;
 class Audio;
+
+namespace Exports {
+    class ExportStrategy;
+}
+
 
 
 //Classe pour la gestion des exceptions
@@ -73,7 +79,7 @@ public:
     //TODO
     
     //QString ExportNote(ExportStrategy* es) const ;		Class ExportStrategy not yet implemented
-    //virtual QString ExportAsPart(ExportStrategy* es, unsigned int tl) const =0;		Class ExportStrategy not yet implemented
+    virtual QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const =0;		//Class ExportStrategy not yet implemented
     //virtual void load(const QString& path) =0;
 
 };

@@ -17,6 +17,8 @@
 #include "note.h"
 #include "article.h"
 #include "document.h"
+#include "exports.h"
+
 
 
 class NoteManagerException{
@@ -36,10 +38,12 @@ private:
     static NoteManager* instance;
     QString path;
     //QMap<QString, NoteFactory*> factories;
-    //QMap<QString, ExportStrategy*> strategies;  ExportStrategy not yet implemented.
+    QMap<QString, Exports::ExportStrategy*> strategies;
     
     //Constructeurs
-    NoteManager():notes(QSet<Note*>()),path(""){}
+    NoteManager():notes(QSet<Note*>()),path(""),strategies(Exports::ExportStrategy::getExport()){
+    }  //Je subodore que c'est quelque chose comme cela.
+
     NoteManager(const QString& p):notes(QSet<Note*>()),path(p){}
     
     //Destructeur

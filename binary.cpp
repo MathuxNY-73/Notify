@@ -30,6 +30,16 @@ void Binary::setPath(const QString& p) {
 }
 
 
+QString Audio::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const{
+    return es->exportNote(*this,tl);
+}
+QString Image::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const{
+    return es->exportNote(*this,tl);
+}
+QString Video::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const{
+    return es->exportNote(*this,tl);
+}
+
 //Constructeurs de recopie
 /*
 //Video

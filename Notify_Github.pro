@@ -1,8 +1,8 @@
 TEMPLATE = app
 TARGET = Notify
-INCLUDEPATH += .
 
-QT += widgets
+QT += core gui
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 HEADERS += \
     article.h \
@@ -10,7 +10,9 @@ HEADERS += \
     document.h \
     binary.h \
     notemanager.h \
-    exports.h
+    exports.h \
+    notewidget.h \
+    articlewidget.h
 
 SOURCES += \
     article.cpp \
@@ -20,5 +22,7 @@ SOURCES += \
     binary.cpp \
     notemanager.cpp \
     exports.cpp
+    exports.cpp \
+    notewidget.cpp \
+    articlewidget.cpp
 
-FORMS +=

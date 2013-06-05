@@ -7,6 +7,7 @@
 //
 
 #include "document.h"
+#include "exports.h"
 #include <fstream>
 #include <iostream>
 #include <QFile>
@@ -112,4 +113,9 @@ Note* Document::getSubNote(unsigned int id) const{
         return NULL;
     }
     return *it;
+}
+
+
+QString Document::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const{
+    return es->exportNote(*this,tl);
 }
