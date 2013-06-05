@@ -2,9 +2,7 @@
 //  NoteWidget.h
 //  LO21_Projet
 //
-//  Created by Anthony WEIBEL and Antoine POUILLAUDE on 07/05/13.
-//  Copyright (c) 2013 Antoine POUILLAUDE. All rights reserved.
-//
+
 
 #ifndef NOTEWIDGET_H
 #define NOTEWIDGET_H
@@ -23,24 +21,28 @@
 #include <QMessageBox>
 #include "note.h"
 
-
 class NoteWidget : public QWidget
 {
     //Macro
-    //Q_OBJECT
+    Q_OBJECT
+
 private:
+
+protected:
     QLineEdit* title;
     QVBoxLayout* layout;
 
 public:
     explicit NoteWidget(QWidget *parent=0);
-    //virtual Note* getNote()=0;
+    QVBoxLayout* getLayout() {return layout;}
+    virtual Note* getNote()=0;
 
     //Slots
-/*public slots:
+public slots:
     virtual void updateNote();
+
 private slots:
-    void titleChanged(QString q);*/
+    void titleChanged(QString q);
 
 };
 

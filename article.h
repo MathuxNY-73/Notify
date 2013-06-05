@@ -24,6 +24,14 @@
 #include "exports.h"
 #include "notewidget.h"
 
+class ArticleException{
+public:
+    ArticleException(const QString& message):info(message){}
+    QString getInfo() const { return info; }
+private:
+    QString info;
+};
+
 class Article : public Note {
     
 private:
@@ -52,28 +60,4 @@ public:
     //QTextStream& operator<<(QTextStream& f, const Article& a);
 };
 
-
-
-//Attention cette classe n'est pas dans la précédente
-class ArticleEditeur : public NoteWidget {
-    //Q_OBJECT
-    QLineEdit* titre;
-    QTextEdit* text;
-    QPushButton* save;
-    QVBoxLayout* couche;
-    Article* article;
-
-public:
-    explicit ArticleEditeur(Article* art, QWidget* parent = 0);
-    Article& getArticle(){return *article;}
-
-    /*signals:
-    private slots:
-    void activerSlot(QString str);
-
-    public slots:
-    void saveArticle();
-    void updateArticle();*/
-
-};
 #endif // ARTICLE_H

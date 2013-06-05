@@ -249,13 +249,13 @@ QString HTMLExport::exportNote(const Document& d, unsigned int tl){
     return s;
 }
 
-/*QString HTMLExport::exportNote(const Video& v, unsigned int tl){
+QString HTMLExport::exportNote(const Video& v, unsigned int tl){
     QString s;
-    s=docStruct(tl)+v.getTitle()+"} \n";
+    s=v.getTitle()+"} \n";
     s=s+"path : "+v.getPath()+"\n";
     s=s+"description : "+v.getDesc()+"\n";
     return s;
-}*/
+}
 
 QString HTMLExport::exportNote(const Image& i, unsigned int tl){
     QString s;
@@ -270,11 +270,11 @@ QString HTMLExport::exportNote(const Image& i, unsigned int tl){
     return s;
 }
 
-/*QString HTMLExport::exportNote(const Audio& a, unsigned int tl){
+QString HTMLExport::exportNote(const Audio& a, unsigned int tl){
     QString s;
-    s=docStruct(tl)+a.getTitle()+"} \n";
+    s=a.getTitle()+"} \n";
     s=s+"path : "+a.getPath()+"\n";
     s=s+"description : "+a.getDesc()+"\n";
     return s;
-}*/
+}
 //Export SaveText

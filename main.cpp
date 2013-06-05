@@ -12,7 +12,8 @@
 #include "document.h"
 #include "binary.h"
 #include "notemanager.h"
-//#include "notewidget.h"
+#include "notewidget.h"
+#include "articlewidget.h"
 #include <QString>
 
 int main(int argc, char *argv[])
@@ -63,10 +64,11 @@ int main(int argc, char *argv[])
         std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";
     }
     nm1->releaseInstance();
-    //QApplication app(argc, argv);
-    //NoteWidget nw;
-    //nw.show();
+    std::cout<<(a1.getTitle()).toStdString()<<"\n";
 
-    return 0 ;//app.exec();
+    QApplication app(argc, argv);
+    ArticleWidget aw(&a1);
+    aw.show();
 
+    return app.exec();
 }

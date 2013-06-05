@@ -1,10 +1,7 @@
 TEMPLATE = app
 TARGET = Notify
 
-CONFIG += x86 x86_64
-
 QT += core gui
-LIBS += /Users/Antoine/Qt5.0.2/5.0.2/Src/qtbase/lib
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 HEADERS += \
@@ -14,7 +11,8 @@ HEADERS += \
     binary.h \
     notemanager.h \
     exports.h \
-    notewidget.h
+    notewidget.h \
+    articlewidget.h
 
 SOURCES += \
     article.cpp \
@@ -24,5 +22,6 @@ SOURCES += \
     binary.cpp \
     notemanager.cpp \
     exports.cpp \
-    notewidget.cpp
+    notewidget.cpp \
+    articlewidget.cpp
 
