@@ -21,8 +21,6 @@ SOURCES += \
     main.cpp \
     binary.cpp \
     notemanager.cpp \
-    exports.cpp
     exports.cpp \
     notewidget.cpp \
     articlewidget.cpp
-
