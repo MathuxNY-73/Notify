@@ -24,6 +24,10 @@
 #include "exports.h"
 #include "notewidget.h"
 
+
+class ArticleWidget;
+
+
 class ArticleException{
 public:
     ArticleException(const QString& message):info(message){}
@@ -59,6 +63,10 @@ public:
 
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const;
     //QTextStream& operator<<(QTextStream& f, const Article& a);
+
+    /*
+    //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
+    ArticleWidget* getWidget();*/
 };
 
 

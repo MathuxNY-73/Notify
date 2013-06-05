@@ -12,7 +12,9 @@ HEADERS += \
     notemanager.h \
     exports.h \
     notewidget.h \
-    articlewidget.h
+    articlewidget.h \
+    documentwidget.h \
+    binarywidget.h
 
 SOURCES += \
     article.cpp \
@@ -23,4 +25,6 @@ SOURCES += \
     notemanager.cpp \
     exports.cpp \
     notewidget.cpp \
-    articlewidget.cpp
+    articlewidget.cpp \
+    documentwidget.cpp \
+    binarywidget.cpp

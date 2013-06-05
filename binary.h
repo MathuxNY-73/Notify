@@ -13,6 +13,10 @@
 #include "exports.h"
 #include <QString>
 
+class BinaryWidget;
+class AudioWidget;
+class ImageWidget;
+class VideoWidget;
 
 //Super-classe des fichiers binaires
 class Binary : public Note{
@@ -39,6 +43,10 @@ public:
     void setDesc(const QString& d);
     QString getPath() const;
     void setPath(const QString& p);
+
+    /*
+    //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
+    BinaryWidget* getWidget();*/
 };
 
 
@@ -57,6 +65,9 @@ public:
     //Méthodes non inline
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const;
     
+    /*
+    //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
+    VideoWidget* getWidget();*/
 };
 
 
@@ -75,6 +86,9 @@ public:
     //Méthodes non inline
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const;
 
+    /*
+    //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
+    ImageWidget* getWidget();*/
 };
 
 
@@ -92,5 +106,9 @@ public:
     
     //Méthodes non inline
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const;
+
+    /*
+    //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
+    AudioWidget* getWidget();*/
 };
 #endif // BINARY_H

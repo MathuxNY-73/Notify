@@ -20,4 +20,9 @@ QString Article::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) cons
     return es->exportNote(*this,tl);
 }
 
-
+/*
+ArticleWidget* Article::getWidget(){
+    ArticleWidget* aw= new ArticleWidget(this);
+    return aw;
+}
+*/

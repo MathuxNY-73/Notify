@@ -16,6 +16,8 @@
 #include "note.h"
 #include "exports.h"
 
+class DocumentWidget;
+
 class DocumentException{
 public:
     DocumentException(const QString& message):info(message){}
@@ -137,6 +139,10 @@ public:
     constIterator end() const{
         return constIterator(notes.constEnd());
     }
+
+
+    //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
+    DocumentWidget* getWidget();
     
 };
 

@@ -27,7 +27,7 @@ namespace Exports {
     class ExportStrategy;
 }
 
-
+class NoteWidget;
 
 //Classe pour la gestion des exceptions
 class NotesException{
@@ -75,12 +75,16 @@ public:
     void removeSubNote(unsigned int id);
     Note* getSubNote(unsigned int id) const;
     
-    
+
     //TODO
     
     //QString ExportNote(ExportStrategy* es) const ;		Class ExportStrategy not yet implemented
     virtual QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const =0;		//Class ExportStrategy not yet implemented
     //virtual void load(const QString& path) =0;
+
+    /*Cela ne marche pas mais je le garde tout de même
+    //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
+    virtual NoteWidget* getWidget()=0;*/
 
 };
 

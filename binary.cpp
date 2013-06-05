@@ -40,6 +40,31 @@ QString Video::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const{
     return es->exportNote(*this,tl);
 }
 
+/*
+BinaryWidget* Binary::getWidget()
+{
+    BinaryWidget* dw = new BinaryWidget(this);
+    return dw;
+}
+
+VideoWidget* Video::getWidget()
+{
+    VideoWidget* dw = new VideoWidget(this);
+    return dw;
+}
+
+ImageWidget* Image::getWidget()
+{
+    ImageWidget* dw = new ImageWidget(this);
+    return dw;
+}
+
+AudioWidget* Audio::getWidget()
+{
+    AudioWidget* dw = new AudioWidget(this);
+    return dw;
+}
+*/
 //Constructeurs de recopie
 /*
 //Video

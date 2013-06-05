@@ -119,3 +119,11 @@ Note* Document::getSubNote(unsigned int id) const{
 QString Document::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const{
     return es->exportNote(*this,tl);
 }
+
+/*
+DocumentWidget* Document::getWidget()
+{
+    DocumentWidget* dw = new DocumentWidget(this);
+    return dw;
+}
+*/
