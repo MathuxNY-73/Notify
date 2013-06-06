@@ -12,29 +12,56 @@
 #include "notewidget.h"
 #include "note.h"
 #include "binary.h"
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QGridLayout>
+#include <QPixmap>
+
 
 class BinaryWidget : public NoteWidget
 {
+
+private:
+
+protected:
+    QHBoxLayout* hlayout;
+    QPushButton* bwse;
+    QLabel* path;
+    QTextEdit* descpt;
+    Binary* binary;
+
 public:
-    BinaryWidget(QWidget* parent);
+    BinaryWidget(Binary* b,QWidget* parent);
 };
 
 class AudioWidget : public BinaryWidget
 {
+    Audio* audio;
+
 public:
-    AudioWidget(QWidget* parent);
+    AudioWidget(Audio* a,QWidget* parent);
 };
 
 class VideoWidget : public BinaryWidget
 {
+
+private:
+    Video* video;
+
 public:
-    VideoWidget(QWidget* parent);
+    VideoWidget(Video* v,QWidget* parent);
 };
 
 class ImageWidget : public BinaryWidget
 {
+
+private:
+    QGridLayout* glayout;
+    QPixmap* img;
+    Image* image;
+
 public:
-    ImageWidget(QWidget* parent);
+    ImageWidget(Image* i,QWidget* parent);
 };
 
 #endif // BINARYWIDGET_H
