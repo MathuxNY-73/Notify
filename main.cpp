@@ -41,15 +41,16 @@ int main(int argc, char *argv[])
     d1.removeSubNote(2);
     d1.removeSubNote(1);
     Video v1(3,"Ceci est une video","Video de chats","/home/video/video de chatons.avi");
-    d1.addSubNote(&v1);
+    //d1.addSubNote(&v1);
     std::cout<<((d1.Document::getSubNote(3))->getTitle()).toStdString()<<"\n";  //Remarque : à partir d'un document il nous est impossible de récupérer "desc" et "path" car getSubNote renvoie Note*.
     Image i1(4,"Ceci est une image","Image d'avion","/home/images/airbusa380.avi");
+    Audio ad1(6,"Ceci est un fichier audio","Bruit de chat","/home/audio/chaton.wav");
     d1.addSubNote(&i1,4);
     NoteManager* nm1;
     nm1 = NoteManager::getInstance();
     nm1->addNote(&d1);
     nm1->addNote(&a1);
-    nm1->deleteNote(&d1);
+    //nm1->deleteNote(&d1);
     std::cout<<(nm1->getFilename(2)).toStdString()<<"\n";
     std::cout<<(nm1->getFilename(1)).toStdString()<<"\n";
     try{
@@ -66,6 +67,7 @@ int main(int argc, char *argv[])
     }
     nm1->releaseInstance();
 
+
     Image i2(5,"Une image", "Le logo de Qt", "./Icons/Qt_logo.png");
     std::cout<<(a1.getTitle()).toStdString()<<"\n";
 
@@ -73,11 +75,13 @@ int main(int argc, char *argv[])
    // QWidget fenetre;
     //QVBoxLayout la(&fenetre);
 
-    //ArticleWidget aw(&a1,&fenetre);
-    ImageWidget iw(&i2);
+    ArticleWidget aw(&a1);
+    //ImageWidget iw(&i2);
+    //DocumentWidget dw(&d1);
+    //AudioWidget aw(&ad1);
 
 
-    iw.show();
+    aw.show();
 
     return app.exec();
 }

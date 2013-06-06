@@ -1,4 +1,5 @@
 #include "articlewidget.h"
+#include "article.h"
 
 ArticleWidget::ArticleWidget(Article* a,QWidget* parent):NoteWidget(parent),article(a)
 {

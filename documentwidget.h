@@ -10,9 +10,11 @@
 #define DOCUMENTWIDGET_H
 
 #include "notewidget.h"
-#include "document.h"
 #include "article.h"
 #include "binary.h"
+
+class Document;
+class DocumentException;
 
 class DocumentWidget : public NoteWidget
 {

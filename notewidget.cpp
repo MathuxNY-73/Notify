@@ -12,8 +12,7 @@ NoteWidget::NoteWidget(QWidget *parent):QWidget(parent)
     layout->addWidget(title);
     this->setLayout(layout);
     QObject::connect(title,SIGNAL(textChanged(QString)),this,SLOT(titleChanged(QString)));
-
-
+    layout->addWidget(title);
 }
 
 void NoteWidget::titleChanged(QString q)

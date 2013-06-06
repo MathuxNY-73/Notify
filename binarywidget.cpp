@@ -7,6 +7,7 @@
 //
 
 #include "binarywidget.h"
+#include "binary.h"
 #include "notewidget.h"
 
 BinaryWidget::BinaryWidget(Binary* b,QWidget* parent):NoteWidget(parent),binary(b)
@@ -31,16 +32,23 @@ BinaryWidget::BinaryWidget(Binary* b,QWidget* parent):NoteWidget(parent),binary(
 
 AudioWidget::AudioWidget(Audio* a, QWidget* parent):BinaryWidget(a,parent),audio(a)
 {
-
-
+    pl = new QPushButton("Play",this);
+    stop = new QPushButton("Stop", this);
+    glayout = new QGridLayout();
+    cursor = new QSlider(Qt::Horizontal,this);
+    glayout->addWidget(cursor,0,0,1,5);
+    glayout->addWidget(pl,0,5,1,1);
+    glayout->addWidget(stop,0,6,1,1);
+    layout->addLayout(glayout);
 }
 
 ImageWidget::ImageWidget(Image* i,QWidget* parent):BinaryWidget(i,parent),image(i)
 {
-    img = new QPixmap(i->getPath());
+    //Chez moi ces lignes font planter l'application. Essaye de compiler chez toi.
+    /*img = new QPixmap(i->getPath());
     label->setPixmap((const QPixmap&) img);
     //label->adjustSize();
-    layout->addWidget(label);
+    layout->addWidget(label);*/
 }
 
 VideoWidget::VideoWidget(Video* v,QWidget* parent):BinaryWidget(v,parent),video(v)

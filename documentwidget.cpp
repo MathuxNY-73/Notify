@@ -7,6 +7,7 @@
 //
 
 #include "documentwidget.h"
+#include "document.h"
 #include "notewidget.h"
 
 DocumentWidget::DocumentWidget(Document* d, QWidget* parent):NoteWidget(parent),document(d)
@@ -21,7 +22,7 @@ DocumentWidget::DocumentWidget(Document* d, QWidget* parent):NoteWidget(parent),
     } catch(DocumentException& e){
         std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";
     }
-    //Document::constIterator it;
-    //for(it=constBegin() ; it!=constBegin() ; ++it)
-
+    Document::Iterator it;
+    for(it=d->begin() ; it!=d->end() ; ++it)
+        layout->addWidget((*it)->getWidget());
 }

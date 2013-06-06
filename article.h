@@ -10,20 +10,9 @@
 #define ARTICLE_H
 
 #include <iostream>
-#include <QFile>
-#include <QString>
-#include <QTextStream>
-#include <QApplication> //Toutes les lignes suivantes sont à décommenter sous Qt. Elles sont commentées parce que sinon sous XCode cela ne fonctionne pas.
-#include <QWidget>
-#include <QLineEdit>
-#include <QTextEdit>
-#include <QPushButton>
-#include <QVBoxLayout>
-#include <QMessageBox>
 #include "note.h"
 #include "exports.h"
-
-class ArticleWidget;
+#include "articlewidget.h"
 
 class ArticleException{
 public:
@@ -46,17 +35,18 @@ private:
     
 public:
     //Constructeurs
-    Article(const QString& path):Note(path),text(""){}
-    Article(unsigned int i, const QString& ti, const QString& te): Note(i,ti),text(te){}
+    Article(const QString& path);
+    Article(unsigned int i, const QString& ti, const QString& te);
     
     //Destructeur
     ~Article(){}
     
     //Methodes inlines
-    const QString& getText() const { return text; }
+
     
     //Methodes non-inlines
     void setText(const QString& t);
+    const QString& getText() const;
 
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const;
     //QTextStream& operator<<(QTextStream& f, const Article& a);

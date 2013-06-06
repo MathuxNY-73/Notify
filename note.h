@@ -13,7 +13,7 @@
 #include <QString>
 #include <QTextStream>
 
-
+/*
 class Article;
 class Document;
 class NotesManager;
@@ -21,7 +21,7 @@ class NotesException;
 class Binary;
 class Video;
 class Image;
-class Audio;
+class Audio;*/
 
 namespace Exports {
     class ExportStrategy;
@@ -84,7 +84,7 @@ public:
 
     //Cela ne marche pas mais je le garde tout de même
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
-    //virtual NoteWidget* getWidget()=0;
+    virtual NoteWidget* getWidget()=0;
 
 };
 

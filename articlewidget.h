@@ -9,7 +9,10 @@
 #ifndef ARTICLEWIDGET_H
 #define ARTICLEWIDGET_H
 
-#include "article.h"
+#include "notewidget.h"
+
+class Article;
+class ArticleException;
 
 class ArticleWidget : public NoteWidget
 {

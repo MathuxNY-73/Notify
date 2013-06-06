@@ -10,9 +10,6 @@
 #define DOCUMENT_H
 
 #include <iostream>
-#include <QString>
-#include <QList>
-#include <QTextStream>
 #include "note.h"
 #include "exports.h"
 #include "documentwidget.h"
@@ -142,7 +139,7 @@ public:
 
 
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
-    //DocumentWidget* getWidget();
+    DocumentWidget* getWidget();
     
 };
 

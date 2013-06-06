@@ -51,7 +51,7 @@ private:
     
     //Constructeurs de recopie
     NoteManager(const NoteManager& nm);
-    NoteManager& operator=(const NotesManager& nm);
+    NoteManager& operator=(const NoteManager& nm);
     
 public:
     //Methodes inlines

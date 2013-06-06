@@ -9,9 +9,10 @@
 #ifndef BINARY_H
 #define BINARY_H
 
+#include <QString>
+#include <iostream>
 #include "note.h"
 #include "exports.h"
-#include <QString>
 #include "binarywidget.h"
 
 class BinaryException{
@@ -50,7 +51,7 @@ public:
 
 
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
-    //BinaryWidget* getWidget();
+    BinaryWidget* getWidget();
 };
 
 
@@ -71,7 +72,7 @@ public:
     
 
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
-    //VideoWidget* getWidget();
+    VideoWidget* getWidget();
 };
 
 
@@ -92,7 +93,7 @@ public:
 
 
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
-    //ImageWidget* getWidget();
+    ImageWidget* getWidget();
 };
 
 
@@ -113,6 +114,6 @@ public:
 
 
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
-    //AudioWidget* getWidget();
+    AudioWidget* getWidget();
 };
 #endif // BINARY_H

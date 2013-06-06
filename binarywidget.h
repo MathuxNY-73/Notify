@@ -11,13 +11,19 @@
 
 #include "notewidget.h"
 #include "note.h"
-#include "binary.h"
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QGridLayout>
 #include <QPixmap>
 #include <QImage>
+#include <QObject>
+#include <QSlider>
 
+class Binary;
+class Audio;
+class Video;
+class Image;
+class BinaryException;
 
 class BinaryWidget : public NoteWidget
 {
@@ -39,7 +45,12 @@ public:
 class AudioWidget : public BinaryWidget
 {
 
+private:
     Audio* audio;
+    QPushButton* pl;
+    QPushButton* stop;
+    QGridLayout* glayout;
+    QSlider* cursor;
 
 public:
     AudioWidget(Audio* a,QWidget* parent=0);

@@ -12,8 +12,15 @@
 #include <QString>
 #include <QTextStream>
 #include "note.h"
-#include "article.h"
-#include "notewidget.h"
+
+//#include "notewidget.h"
+
+class Article;
+class Document;
+class Binary;
+class Video;
+class Image;
+class Audio;
 
 
 namespace Exports{

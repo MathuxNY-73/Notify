@@ -120,11 +120,11 @@ QString Document::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) con
     return es->exportNote(*this,tl);
 }
 
-/*
+
 DocumentWidget* Document::getWidget()
 {
     DocumentWidget* dw = new DocumentWidget(this);
     return dw;
 }
 
-*/
+

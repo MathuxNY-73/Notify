@@ -8,6 +8,7 @@
 
 #include "binary.h"
 
+
 //Methodes de Binary
 
 Binary::Binary(unsigned int i,const QString& t, const QString& d, const QString& p):Note(i,t),desc(d),path(p){}
@@ -40,7 +41,7 @@ QString Video::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const{
     return es->exportNote(*this,tl);
 }
 
-/*
+
 BinaryWidget* Binary::getWidget()
 {
     BinaryWidget* dw = new BinaryWidget(this);
@@ -64,7 +65,8 @@ AudioWidget* Audio::getWidget()
     AudioWidget* dw = new AudioWidget(this);
     return dw;
 }
-*/
+
+
 //Constructeurs de recopie
 /*
 //Video
