@@ -24,6 +24,7 @@ private:
 
 public:
     DocumentWidget(Document* d, QWidget* parent=0);
+    Note* getNote(){}
 };
 
 #endif // DOCUMENTWIDGET_H

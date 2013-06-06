@@ -12,11 +12,15 @@
 #include "note.h"
 #include "exports.h"
 #include <QString>
+#include "binarywidget.h"
 
-class BinaryWidget;
-class AudioWidget;
-class ImageWidget;
-class VideoWidget;
+class BinaryException{
+public:
+    BinaryException(const QString& message):info(message){}
+    QString getInfo() const { return info; }
+private:
+    QString info;
+};
 
 //Super-classe des fichiers binaires
 class Binary : public Note{
@@ -44,9 +48,9 @@ public:
     QString getPath() const;
     void setPath(const QString& p);
 
-    /*
+
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
-    BinaryWidget* getWidget();*/
+    //BinaryWidget* getWidget();
 };
 
 
@@ -65,9 +69,9 @@ public:
     //Méthodes non inline
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const;
     
-    /*
+
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
-    VideoWidget* getWidget();*/
+    //VideoWidget* getWidget();
 };
 
 
@@ -86,9 +90,9 @@ public:
     //Méthodes non inline
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const;
 
-    /*
+
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
-    ImageWidget* getWidget();*/
+    //ImageWidget* getWidget();
 };
 
 
@@ -107,8 +111,8 @@ public:
     //Méthodes non inline
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const;
 
-    /*
+
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
-    AudioWidget* getWidget();*/
+    //AudioWidget* getWidget();
 };
 #endif // BINARY_H

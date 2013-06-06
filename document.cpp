@@ -126,4 +126,5 @@ DocumentWidget* Document::getWidget()
     DocumentWidget* dw = new DocumentWidget(this);
     return dw;
 }
+
 */

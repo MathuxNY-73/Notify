@@ -7,14 +7,13 @@
 //
 
 #include "binary.h"
-#include "note.h"
 
 //Methodes de Binary
 
 Binary::Binary(unsigned int i,const QString& t, const QString& d, const QString& p):Note(i,t),desc(d),path(p){}
 
 QString Binary::getDesc() const {
-    return this->desc;
+    return desc;
 }
 
 void Binary::setDesc(const QString& d) {
@@ -22,13 +21,14 @@ void Binary::setDesc(const QString& d) {
 }
 
 QString Binary::getPath() const {
-    return this->path;
+    return path;
 }
 
 void Binary::setPath(const QString& p) {
     path=p;
 }
 
+//Methodes de Image
 
 QString Audio::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const{
     return es->exportNote(*this,tl);

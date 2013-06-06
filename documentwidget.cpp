@@ -7,6 +7,7 @@
 //
 
 #include "documentwidget.h"
+#include "notewidget.h"
 
 DocumentWidget::DocumentWidget(Document* d, QWidget* parent):NoteWidget(parent),document(d)
 {

@@ -15,8 +15,8 @@
 #include <QTextStream>
 #include "note.h"
 #include "exports.h"
+#include "documentwidget.h"
 
-class DocumentWidget;
 
 class DocumentException{
 public:
@@ -142,7 +142,7 @@ public:
 
 
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
-    DocumentWidget* getWidget();
+    //DocumentWidget* getWidget();
     
 };
 

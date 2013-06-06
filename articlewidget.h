@@ -9,7 +9,6 @@
 #ifndef ARTICLEWIDGET_H
 #define ARTICLEWIDGET_H
 
-#include "notewidget.h"
 #include "article.h"
 
 class ArticleWidget : public NoteWidget

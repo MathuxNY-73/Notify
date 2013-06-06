@@ -7,11 +7,12 @@
 //
 
 #include "binarywidget.h"
+#include "notewidget.h"
 
 BinaryWidget::BinaryWidget(Binary* b,QWidget* parent):NoteWidget(parent),binary(b)
 {
     //Allocation des Widgets
-    hlayout = new QHBoxLayout(this);
+    hlayout = new QHBoxLayout();
     bwse = new QPushButton("Browse",this);
     path = new QLabel("Path : ",this);
     descpt = new QTextEdit("Description",this);
@@ -19,11 +20,13 @@ BinaryWidget::BinaryWidget(Binary* b,QWidget* parent):NoteWidget(parent),binary(
     //Layout
     hlayout->addWidget(path);
     hlayout->addWidget(bwse);
+    layout->addLayout(hlayout);
+    layout->addWidget(descpt);
 
-    //layout->addLayout(hlayout);  Je pense que cette est à écrire plutôt dans les classes filles.
+     //Je pense que cette est à écrire plutôt dans les classes filles.
     path->setText("Path : "+binary->getPath());
+    title->setText(binary->getTitle());
     descpt->setText(binary->getDesc());
-
 }
 
 AudioWidget::AudioWidget(Audio* a, QWidget* parent):BinaryWidget(a,parent),audio(a)
@@ -34,8 +37,10 @@ AudioWidget::AudioWidget(Audio* a, QWidget* parent):BinaryWidget(a,parent),audio
 
 ImageWidget::ImageWidget(Image* i,QWidget* parent):BinaryWidget(i,parent),image(i)
 {
-    glayout = new QGridLayout(this);
-    img = new QPixmap();
+    img = new QPixmap(i->getPath());
+    label->setPixmap((const QPixmap&) img);
+    //label->adjustSize();
+    layout->addWidget(label);
 }
 
 VideoWidget::VideoWidget(Video* v,QWidget* parent):BinaryWidget(v,parent),video(v)

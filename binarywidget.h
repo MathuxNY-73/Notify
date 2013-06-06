@@ -16,6 +16,7 @@
 #include <QLabel>
 #include <QGridLayout>
 #include <QPixmap>
+#include <QImage>
 
 
 class BinaryWidget : public NoteWidget
@@ -31,15 +32,17 @@ protected:
     Binary* binary;
 
 public:
-    BinaryWidget(Binary* b,QWidget* parent);
+    BinaryWidget(Binary* b,QWidget* parent=0);
+    Note* getNote(){}
 };
 
 class AudioWidget : public BinaryWidget
 {
+
     Audio* audio;
 
 public:
-    AudioWidget(Audio* a,QWidget* parent);
+    AudioWidget(Audio* a,QWidget* parent=0);
 };
 
 class VideoWidget : public BinaryWidget
@@ -49,19 +52,20 @@ private:
     Video* video;
 
 public:
-    VideoWidget(Video* v,QWidget* parent);
+    VideoWidget(Video* v,QWidget* parent=0);
 };
 
 class ImageWidget : public BinaryWidget
 {
 
 private:
-    QGridLayout* glayout;
+    //QGridLayout* glayout;
     QPixmap* img;
     Image* image;
+    QLabel* label;
 
 public:
-    ImageWidget(Image* i,QWidget* parent);
+    ImageWidget(Image* i,QWidget* parent=0);
 };
 
 #endif // BINARYWIDGET_H

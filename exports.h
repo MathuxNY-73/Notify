@@ -13,6 +13,7 @@
 #include <QTextStream>
 #include "note.h"
 #include "article.h"
+#include "notewidget.h"
 
 
 namespace Exports{

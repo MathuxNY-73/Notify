@@ -13,7 +13,7 @@
 #include <QFile>
 #include <QString>
 #include <QTextStream>
-//#include <QApplication> //Toutes les lignes suivantes sont à décommenter sous Qt. Elles sont commentées parce que sinon sous XCode cela ne fonctionne pas.
+#include <QApplication> //Toutes les lignes suivantes sont à décommenter sous Qt. Elles sont commentées parce que sinon sous XCode cela ne fonctionne pas.
 #include <QWidget>
 #include <QLineEdit>
 #include <QTextEdit>
@@ -22,11 +22,8 @@
 #include <QMessageBox>
 #include "note.h"
 #include "exports.h"
-#include "notewidget.h"
-
 
 class ArticleWidget;
-
 
 class ArticleException{
 public:
@@ -41,7 +38,7 @@ class Article : public Note {
 private:
     //Attributs
     QString text;
-    
+
     //Constructeurs de recopie
     Article(const Article&);
     Article& operator=(const Article&);
@@ -64,9 +61,9 @@ public:
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const;
     //QTextStream& operator<<(QTextStream& f, const Article& a);
 
-    /*
+
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
-    ArticleWidget* getWidget();*/
+    ArticleWidget* getWidget();
 };
 
 

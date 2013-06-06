@@ -14,6 +14,7 @@
 #include "notemanager.h"
 #include "notewidget.h"
 #include "articlewidget.h"
+#include "binarywidget.h"
 #include <QString>
 
 int main(int argc, char *argv[])
@@ -64,11 +65,19 @@ int main(int argc, char *argv[])
         std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";
     }
     nm1->releaseInstance();
+
+    Image i2(5,"Une image", "Le logo de Qt", "./Icons/Qt_logo.png");
     std::cout<<(a1.getTitle()).toStdString()<<"\n";
 
     QApplication app(argc, argv);
-    ArticleWidget aw(&a1);
-    aw.show();
+   // QWidget fenetre;
+    //QVBoxLayout la(&fenetre);
+
+    //ArticleWidget aw(&a1,&fenetre);
+    ImageWidget iw(&i2);
+
+
+    iw.show();
 
     return app.exec();
 }

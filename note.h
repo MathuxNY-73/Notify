@@ -82,9 +82,9 @@ public:
     virtual QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const =0;		//Class ExportStrategy not yet implemented
     //virtual void load(const QString& path) =0;
 
-    /*Cela ne marche pas mais je le garde tout de même
+    //Cela ne marche pas mais je le garde tout de même
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
-    virtual NoteWidget* getWidget()=0;*/
+    //virtual NoteWidget* getWidget()=0;
 
 };
 
