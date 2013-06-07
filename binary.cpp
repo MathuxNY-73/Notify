@@ -29,14 +29,20 @@ void Binary::setPath(const QString& p) {
     path=p;
 }
 
-//Methodes de Image
+//Methodes de Audio
 
 QString Audio::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const{
     return es->exportNote(*this,tl);
 }
+
+//Methodes de Image
+
 QString Image::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const{
     return es->exportNote(*this,tl);
 }
+
+//Methodes de Video
+
 QString Video::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const{
     return es->exportNote(*this,tl);
 }
