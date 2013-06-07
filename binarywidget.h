@@ -27,6 +27,8 @@ class BinaryException;
 
 class BinaryWidget : public NoteWidget
 {
+    //Macro
+    //Q_OBJECT
 
 private:
 
@@ -44,6 +46,8 @@ public:
 
 class AudioWidget : public BinaryWidget
 {
+    //Macro
+    //Q_OBJECT
 
 private:
     Audio* audio;
@@ -54,6 +58,11 @@ private:
 
 public:
     AudioWidget(Audio* a,QWidget* parent=0);
+
+//Slots
+private slots:
+    void setPlay();
+    void setStop();
 };
 
 class VideoWidget : public BinaryWidget
