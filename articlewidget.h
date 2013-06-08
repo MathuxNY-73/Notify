@@ -21,7 +21,7 @@ class ArticleWidget : public NoteWidget
 
 private:
     QTextEdit* text;
-    QPushButton* save;
+    //QPushButton* save;
     Article* article;
 
 public:
@@ -31,7 +31,8 @@ public:
    //Slots
 public slots:
     void updateNote();
+    void modification();
 private slots:
-    void enableSave();
+    //void enableSave();
 };
 #endif // ARTICLEWIDGET_H

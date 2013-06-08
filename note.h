@@ -68,6 +68,7 @@ public:
         title=t;
     }
     bool isModify() const {return modified;}
+    void setModify(bool m){ modified=true;}
     
     //Methodes non-inlines
     void addSubNote(Note* n);

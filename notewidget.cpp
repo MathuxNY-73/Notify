@@ -22,3 +22,4 @@ void NoteWidget::updateNote()
 {
     getNote()->setTitle(title->text());
 }
+

@@ -16,8 +16,10 @@
 #include <QGridLayout>
 #include <QPixmap>
 #include <QImage>
-#include <QObject>
+//#include <QObject>
 #include <QSlider>
+//#include <Phonon>
+
 
 class Binary;
 class Audio;
@@ -29,7 +31,6 @@ class BinaryWidget : public NoteWidget
 {
     //Macro
     //Q_OBJECT
-
 private:
 
 protected:
@@ -38,10 +39,19 @@ protected:
     QLabel* path;
     QTextEdit* descpt;
     Binary* binary;
+    QPushButton* save;
+
 
 public:
     BinaryWidget(Binary* b,QWidget* parent=0);
     Note* getNote(){}
+
+    //slots
+public slots:
+    void updateNote();
+    void modification();
+private slots:
+    void enableSave();
 };
 
 class AudioWidget : public BinaryWidget
@@ -51,28 +61,38 @@ class AudioWidget : public BinaryWidget
 
 private:
     Audio* audio;
-    QPushButton* pl;
-    QPushButton* stop;
+    QPushButton* play, *stop;
     QGridLayout* glayout;
-    QSlider* cursor;
 
 public:
     AudioWidget(Audio* a,QWidget* parent=0);
 
 //Slots
 private slots:
-    void setPlay();
-    void setStop();
+    void lire();
+    void arreter();
+
 };
 
 class VideoWidget : public BinaryWidget
 {
-
+    //Q_OBJECT
 private:
     Video* video;
+    //Phonon::VideoPlayer* player;
+    QPushButton* play, *pause, *stop;
+    QSlider* cursor;
+    QGridLayout* glayout;
 
 public:
     VideoWidget(Video* v,QWidget* parent=0);
+
+//slots
+public slots:
+    void lire();
+    void setPause();
+    void arreter();
+
 };
 
 class ImageWidget : public BinaryWidget

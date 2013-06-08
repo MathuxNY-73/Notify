@@ -5,10 +5,10 @@ ArticleWidget::ArticleWidget(Article* a,QWidget* parent):NoteWidget(parent),arti
 {
     //Allocation des différents widgets
     text= new QTextEdit("Contenu",this);
-    save = new QPushButton("Sauvegarder",this);
+    //save = new QPushButton("Sauvegarder",this); //Je l'enlève
 
     //Definition
-    save->setEnabled(false);
+    //save->setEnabled(false);
     try{
         if(a!=NULL)
         {
@@ -24,23 +24,28 @@ ArticleWidget::ArticleWidget(Article* a,QWidget* parent):NoteWidget(parent),arti
 
     //Layout
     layout->addWidget(text);
-    layout->addWidget(save);
+    //layout->addWidget(save);
 
     //Connection
-    QObject::connect(text,SIGNAL(textChanged()),this,SLOT(enableSave()));
-    QObject::connect(title,SIGNAL(textEdited(QString)),this,SLOT(enableSave()));
-    QObject::connect(save,SIGNAL(clicked()),this,SLOT(updateNote()));
+    QObject::connect(text,SIGNAL(textChanged()),this,SLOT(modification()));
+    QObject::connect(title,SIGNAL(textEdited(QString)),this,SLOT(modification()));
+
 }
 
-void ArticleWidget::enableSave()
+void ArticleWidget::modification()
+{
+    article->setModify(true);
+    emit isModified();
+}
+
+/*void ArticleWidget::enableSave()
 {
     save->setEnabled(true);
 }
-
+*/
 void ArticleWidget::updateNote()
 {
      article->setTitle(title->text());
      article->setText(text->toPlainText());
-     save->setEnabled(false);
-     QMessageBox::information(this, "Sauvegarde", "Votre article a bien été sauvegardé...");
+     article->setModify(false);
 }
