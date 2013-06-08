@@ -10,6 +10,8 @@
 #include "binary.h"
 #include "notewidget.h"
 
+//Methodes de Binary Widgets
+
 BinaryWidget::BinaryWidget(Binary* b,QWidget* parent):NoteWidget(parent),binary(b)
 {
     //Allocation des Widgets
@@ -20,7 +22,7 @@ BinaryWidget::BinaryWidget(Binary* b,QWidget* parent):NoteWidget(parent),binary(
     save = new QPushButton("Save",this);
     save->setEnabled(false);
     QObject::connect(descpt,SIGNAL(textChanged()),this,SLOT(enableSave()));
-    QObject::connect(title,SIGNAL(clicked()),this,SLOT(enableSave()));
+    QObject::connect(title,SIGNAL(textChanged(QString)),this,SLOT(enableSave()));
 
     //Layout
     hlayout->addWidget(path);
@@ -34,6 +36,7 @@ BinaryWidget::BinaryWidget(Binary* b,QWidget* parent):NoteWidget(parent),binary(
     title->setText(binary->getTitle());
     descpt->setText(binary->getDesc());
 }
+
 void BinaryWidget::enableSave()
 {
     save->setEnabled(true);
@@ -146,5 +149,6 @@ void VideoWidget::setPause()
 void VideoWidget::arreter()
 {
     stop->setEnabled(false);
+    pause->setEnabled(false);
     //Je ne sais pas ce qu'il faut mettre ici
 }

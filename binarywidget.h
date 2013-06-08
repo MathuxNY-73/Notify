@@ -30,7 +30,7 @@ class BinaryException;
 class BinaryWidget : public NoteWidget
 {
     //Macro
-    //Q_OBJECT
+    Q_OBJECT
 private:
 
 protected:
@@ -43,7 +43,7 @@ protected:
 
 
 public:
-    BinaryWidget(Binary* b,QWidget* parent=0);
+    explicit BinaryWidget(Binary* b,QWidget* parent=0);
     Note* getNote(){}
 
     //slots
@@ -57,7 +57,7 @@ private slots:
 class AudioWidget : public BinaryWidget
 {
     //Macro
-    //Q_OBJECT
+    Q_OBJECT
 
 private:
     Audio* audio;
@@ -65,10 +65,10 @@ private:
     QGridLayout* glayout;
 
 public:
-    AudioWidget(Audio* a,QWidget* parent=0);
+    explicit AudioWidget(Audio* a,QWidget* parent=0);
 
 //Slots
-private slots:
+public slots:
     void lire();
     void arreter();
 
@@ -76,7 +76,7 @@ private slots:
 
 class VideoWidget : public BinaryWidget
 {
-    //Q_OBJECT
+    Q_OBJECT
 private:
     Video* video;
     //Phonon::VideoPlayer* player;
@@ -85,7 +85,7 @@ private:
     QGridLayout* glayout;
 
 public:
-    VideoWidget(Video* v,QWidget* parent=0);
+    explicit VideoWidget(Video* v,QWidget* parent=0);
 
 //slots
 public slots:
@@ -97,7 +97,7 @@ public slots:
 
 class ImageWidget : public BinaryWidget
 {
-
+    Q_OBJECT
 private:
     //QGridLayout* glayout;
     QPixmap* img;
@@ -105,7 +105,7 @@ private:
     QLabel* label;
 
 public:
-    ImageWidget(Image* i,QWidget* parent=0);
+    explicit ImageWidget(Image* i,QWidget* parent=0);
 };
 
 #endif // BINARYWIDGET_H
