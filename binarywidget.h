@@ -39,7 +39,7 @@ protected:
     QLabel* path;
     QTextEdit* descpt;
     Binary* binary;
-    QPushButton* save;
+    //QPushButton* save;
 
 
 public:

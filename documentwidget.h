@@ -23,16 +23,19 @@ class DocumentWidget : public NoteWidget
 
 private:
     Document* document;
-    QPushButton* save;
+    QPushButton* save, *exp;
+    QTextEdit* fen;
+
 
 public:
-    DocumentWidget(Document* d, QWidget* parent=0);
+    explicit DocumentWidget(Document* d, QWidget* parent=0);
     Note* getNote(){}
 
 public slots:
     void updateNote();
     void modification();
 private slots:
+    void giveExport();
 };
 
 #endif // DOCUMENTWIDGET_H

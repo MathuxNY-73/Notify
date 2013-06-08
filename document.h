@@ -64,8 +64,8 @@ public:
     
     
     //TODO
-    //QString ExportNote(ExportStrategy* es) const;     Class ExportStrategy not yet implemented
-    QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const;      //Class ExportStrategy not yet implemented
+    //QString ExportNote(ExportStrategy* es) const;     //Class ExportStrategy not yet implemented
+    QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);      //Class ExportStrategy not yet implemented
     
     
     //Iterateur non constant
@@ -76,10 +76,10 @@ public:
         friend class Document;
         
         //Attributs
-        typename QList<Note*>::iterator it;
+        QList<Note*>::iterator it;
         
         //Constructeur
-        Iterator(typename QList<Note*>::iterator c):it(c){}
+        Iterator(QList<Note*>::iterator c):it(c){}
         
     public:
         //Constructeur
@@ -110,10 +110,10 @@ public:
         friend class Document;
         
         //Attributs
-        typename QList<Note*>::const_iterator it;
+        QList<Note*>::const_iterator it;
         
         //Constructeur
-        constIterator(typename QList<Note*>::const_iterator c):it(c){}
+        constIterator(QList<Note*>::const_iterator c):it(c){}
         
     public:
         //Constructeur

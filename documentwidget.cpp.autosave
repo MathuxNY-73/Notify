@@ -11,6 +11,7 @@
 #include "notewidget.h"
 #include "exports.h"
 #include <iostream>
+#include <QFile>
 
 DocumentWidget::DocumentWidget(Document* d, QWidget* parent):NoteWidget(parent),document(d)
 {

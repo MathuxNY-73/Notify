@@ -19,8 +19,8 @@ BinaryWidget::BinaryWidget(Binary* b,QWidget* parent):NoteWidget(parent),binary(
     bwse = new QPushButton("Browse",this);
     path = new QLabel("Path : ",this);
     descpt = new QTextEdit("Description",this);
-    save = new QPushButton("Save",this);
-    save->setEnabled(false);
+    //save = new QPushButton("Save",this);
+    //save->setEnabled(false);
     QObject::connect(descpt,SIGNAL(textChanged()),this,SLOT(enableSave()));
     QObject::connect(title,SIGNAL(textChanged(QString)),this,SLOT(enableSave()));
 
@@ -29,7 +29,7 @@ BinaryWidget::BinaryWidget(Binary* b,QWidget* parent):NoteWidget(parent),binary(
     hlayout->addWidget(bwse);
     layout->addLayout(hlayout);
     layout->addWidget(descpt);
-    layout->addWidget(save);
+    //layout->addWidget(save);
 
      //Je pense que cette est à écrire plutôt dans les classes filles.
     path->setText("Path : "+binary->getPath());
@@ -39,7 +39,7 @@ BinaryWidget::BinaryWidget(Binary* b,QWidget* parent):NoteWidget(parent),binary(
 
 void BinaryWidget::enableSave()
 {
-    save->setEnabled(true);
+    //save->setEnabled(true);
 }
 
 void BinaryWidget::updateNote()
@@ -52,7 +52,7 @@ void BinaryWidget::updateNote()
 void BinaryWidget::modification()
 {
     binary->setModify(true);
-    emit isModified();
+    emit mod();
 }
 
 //Méthodes de AudioWidget
@@ -61,10 +61,10 @@ AudioWidget::AudioWidget(Audio* a, QWidget* parent):BinaryWidget(a,parent),audio
 {
     //Allocations des widgets et connection
     play = new QPushButton("Play",this);
-    QObject::connect(play,SIGNAL(clicked()),this,SLOT(QSound::play()));
+    QObject::connect(play,SIGNAL(clicked()),this,SLOT(lire()));
 
     stop = new QPushButton("Stop", this);
-    QObject::connect(stop,SIGNAL(clicked()),this,SLOT(QSound::stop()));
+    QObject::connect(stop,SIGNAL(clicked()),this,SLOT(arreter()));
 
     glayout = new QGridLayout();
 
@@ -97,10 +97,10 @@ void AudioWidget::arreter()
 ImageWidget::ImageWidget(Image* i,QWidget* parent):BinaryWidget(i,parent),image(i)
 {
     //Chez moi ces lignes font planter l'application. Essaye de compiler chez toi.
-    img = new QPixmap(image->getPath());
+    /*img = new QPixmap(image->getPath());
     label->setPixmap((const QPixmap&) img);
     //label->adjustSize();
-    layout->addWidget(label);
+    layout->addWidget(label);*/
 }
 
 //Méthodes de Video Widget
@@ -136,6 +136,7 @@ VideoWidget::VideoWidget(Video* v,QWidget* parent):BinaryWidget(v,parent),video(
 
 void VideoWidget::lire()
 {
+    play->setText("Play");
     stop->setEnabled(true);
     pause->setEnabled(true);
     //Je ne sais pas ce qu'il faut mettre ici
@@ -143,6 +144,8 @@ void VideoWidget::lire()
 
 void VideoWidget::setPause()
 {
+    play->setText("Resume");
+    pause->setEnabled(false);
     //Je ne sais pas ce qu'il faut mettre ici
 }
 

@@ -116,8 +116,8 @@ Note* Document::getSubNote(unsigned int id) const{
 }
 
 
-QString Document::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const{
-    return es->exportNote(*this,tl);
+QString Document::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) {
+    return es->exportNote(this,tl);
 }
 
 

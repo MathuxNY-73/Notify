@@ -34,5 +34,6 @@ public slots:
     void modification();
 private slots:
     //void enableSave();
+
 };
 #endif // ARTICLEWIDGET_H

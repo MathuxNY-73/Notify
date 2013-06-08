@@ -21,9 +21,9 @@ void Article::setText(const QString& t) {
     modified=true; text=t;
 }
 
-QString Article::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const
+QString Article::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl)
 {
-    return es->exportNote(*this,tl);
+    return es->exportNote(this,tl);
 }
 
 ArticleWidget* Article::getWidget(){

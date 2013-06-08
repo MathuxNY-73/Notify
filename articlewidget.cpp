@@ -35,7 +35,7 @@ ArticleWidget::ArticleWidget(Article* a,QWidget* parent):NoteWidget(parent),arti
 void ArticleWidget::modification()
 {
     article->setModify(true);
-    emit isModified();
+    emit mod();
 }
 
 /*void ArticleWidget::enableSave()

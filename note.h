@@ -80,7 +80,7 @@ public:
     //TODO
     
     //QString ExportNote(ExportStrategy* es) const ;		Class ExportStrategy not yet implemented
-    virtual QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const =0;		//Class ExportStrategy not yet implemented
+    virtual QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) =0;		//Class ExportStrategy not yet implemented
     //virtual void load(const QString& path) =0;
 
     //Cela ne marche pas mais je le garde tout de même

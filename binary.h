@@ -68,7 +68,7 @@ public:
     Video(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p){}
     
     //Méthodes non inline
-    QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const;
+    QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);
     
 
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
@@ -89,7 +89,7 @@ public:
     Image(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p){}
     
     //Méthodes non inline
-    QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const;
+    QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);
 
 
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
@@ -110,7 +110,7 @@ public:
     Audio(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p){}
     
     //Méthodes non inline
-    QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const;
+    QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);
 
 
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document

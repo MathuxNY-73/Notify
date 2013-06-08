@@ -50,7 +50,7 @@ private slots:
 
     //signal
 signals:
-    void isModified();
+    void mod();
 
 };
 
