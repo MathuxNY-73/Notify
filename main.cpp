@@ -36,13 +36,19 @@ int main(int argc, char *argv[])
     Video v1(8,"Titre de la video","Ce fichier est une video","~/Movies/The Dark Knight.avi");
     Document d1(2,"Titre du document");
     d1.addSubNote(&a1);
-    //d1.addSubNote(&a2);
+    d1.addSubNote(&a2);
     d1.addSubNote(&a3);
     d1.addSubNote(&v1);
-    //d1.addSubNote(&a4);
-    //d1.addSubNote(&ad1);
+    d1.addSubNote(&a4);
+    d1.addSubNote(&ad1);
     //d1.addSubNote(&i1);
+    nm->addNote(&a1);
     nm->addNote(&a2);
+    nm->addNote(&a3);
+    nm->addNote(&v1);
+    nm->addNote(&a4);
+    nm->addNote(&ad1);
+    nm->addNote(&i1);
     nm->addNote(&d1);
 
     Editorspace ws(nm);

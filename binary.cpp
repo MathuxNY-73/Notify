@@ -18,6 +18,7 @@ QString Binary::getDesc() const {
 }
 
 void Binary::setDesc(const QString& d) {
+    modified=true;
     desc=d;
 }
 
@@ -26,6 +27,7 @@ QString Binary::getPath() const {
 }
 
 void Binary::setPath(const QString& p) {
+    modified=true;
     path=p;
 }
 

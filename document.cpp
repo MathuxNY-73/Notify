@@ -48,7 +48,10 @@ void Document::addSubNote(Note* n)
         if(n->getId()==this->getId())
             throw DocumentException("You are trying to put a document in itself dude. Why are you so stupid ?");
         else
+        {
+            modified=true;
             notes<<n;
+        }
     }
     catch(DocumentException& e){
         std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";  //To be modified to display a warning on the screen.
@@ -66,7 +69,10 @@ void Document::addSubNote(Note* n, unsigned int id){
         if(id==this->getId())
             throw DocumentException("You are trying to put a document in itself dude. Why are you so stupid ?");
         else
+        {
+            modified=true;
             notes<<n;
+        }
     }
     catch(DocumentException& e){
         std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";  //To be modified to display a warning on the screen.
@@ -91,7 +97,10 @@ void Document::removeSubNote(unsigned int id){
         if(it==notes.end())
             throw DocumentException("The note you are trying to remove is not in the document. Why are you so stupid ?");
         else
+        {
+            modified=true;
             notes.erase(it);
+        }
     }
     catch(DocumentException& e){
         std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";  //To be modified to display a warning on the screen.

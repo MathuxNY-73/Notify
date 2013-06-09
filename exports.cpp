@@ -209,7 +209,7 @@ QString HTMLExport::header(Note* n){
         "<html lang='fr'>";
     s=s+"<head> \n"
         "<meta charset='utf-8'> \n"
-        "<title>"+n->getTitle()+"</title>";
+        "<title>"+n->getTitle()+"</title> \n";
     
     //Debut du corps
     s=s+"</head> \n"
@@ -231,8 +231,8 @@ QString HTMLExport::exportNote(Article* a, unsigned int tl){
         indent+="    ";
     if(tl>=6)
         tl=6;
-    s=indent+"<h"+(QString)tl+">"+a->getTitle()+"</h"+(QString)tl+">";
-    s=s+indent+"    <p>"+a->getText()+"</p> \n";
+    s=indent+"<h"+(QString)tl+">"+a->getTitle()+"</h"+(QString)tl+"> \n";
+    s=s+indent+"<p>\n    "+a->getText()+"\n</p>";
     return s;
 }
 
@@ -242,7 +242,7 @@ QString HTMLExport::exportNote(Document* d, unsigned int tl){
         indent+="    ";
     if(tl>=6)
         tl=6;
-    s=indent+"<h"+(QString)tl+">"+d->getTitle()+"</h"+(QString)tl+">";
+    s=indent+"<h"+(QString)tl+">"+d->getTitle()+"</h"+(QString)tl+"> \n";
     Document::Iterator it;
     for(it=d->begin() ; it!=d->end() ; ++it)
         s=s+(*it)->ExportAsPart(this, tl+1);        
@@ -253,9 +253,9 @@ QString HTMLExport::exportNote(Video* v, unsigned int tl){
     QString s,indent="";
     for(unsigned int i=0 ; i<tl ; i++)
         indent+="    ";
-    s=indent+"<p> /n";
+    s=indent+"<p> \n";
     s=s+indent+"<a href=file://"+v->getPath()+">"+v->getTitle()+"</a> \n";
-    s=s+indent+"Description : \n"+v->getDesc()+"\n </p>";
+    s=s+indent+" \n Description : \n"+v->getDesc()+"\n </p> \n";
     return s;
 }
 
@@ -268,7 +268,7 @@ QString HTMLExport::exportNote(Image* i, unsigned int tl){
     s=indent+"<h"+(QString)tl+">"+i->getTitle()+"</h"+(QString)tl+"> \n";
     s=s+indent+"<p> \n";
     s=s+indent+"    "+"<img src=file://"+i->getPath()+"> \n";
-    s=s+indent+"Description : \n"+i->getDesc()+"\n </p>";
+    s=s+indent+"Description : \n"+i->getDesc()+"\n </p> \n";
     return s;
 }
 
@@ -278,7 +278,7 @@ QString HTMLExport::exportNote(Audio* a, unsigned int tl){
         indent+="    ";
     s=indent+"<p> /n";
     s=s+indent+"<a href=file://"+a->getPath()+">"+a->getTitle()+"</a> \n";
-    s=s+indent+"Description : \n"+a->getDesc()+"\n </p>";
+    s=s+indent+"Description : \n"+a->getDesc()+"\n </p> \n";
     return s;
 }
 
@@ -312,15 +312,12 @@ QString SaveTextExport::exportNote(Article* a, unsigned int tl){
 }
 
 QString SaveTextExport::exportNote(Document* d, unsigned int tl){
-    QString s;
-    for(unsigned int i=0 ; i<tl ; i++)
-        s+="    ";
-    s=s+d->getTitle()+"\n";
-    Document::Iterator it;
+    QString s,indent="";
     for(unsigned int i=0 ; i<tl+1 ; i++)
-        s+="    ";
+        indent+="    ";
+    Document::Iterator it;
     for(it=d->begin() ; it!=d->end() ; ++it)
-        s=s+(*it)->ExportAsPart(this, tl+1);
+        s=s+indent+"{\\"+QString::number((*it)->getId())+".}\n";
     return s;
 }
 

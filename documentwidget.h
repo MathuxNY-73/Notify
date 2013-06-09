@@ -27,10 +27,10 @@ class DocumentWidget : public NoteWidget
 
 private:
     Document* document;
-    QPushButton* save, *exp;
+    //QPushButton* save, *exp;
     //QTextEdit* fen;
-    QFile* file;
-    QTextStream* out;
+    //QFile* file;
+    //QTextStream* out;
 
 
 public:
@@ -40,8 +40,9 @@ public:
 public slots:
     void updateNote();
     void modification();
+    /*
 private slots:
-    void giveExport();
+    void giveExport();*/
 };
 
 #endif // DOCUMENTWIDGET_H

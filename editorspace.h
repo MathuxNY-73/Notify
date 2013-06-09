@@ -45,6 +45,11 @@ private:
     QFileDialog* explorer;
     QFrame* container;
     NoteManager* noteM;
+    QPushButton* save;
+    //QTextEdit* fen;
+    //QFile* file;
+    //QTextStream* out;
+
 
 public:
     explicit Editorspace(NoteManager* nm,QWidget *parent=0);
@@ -54,6 +59,7 @@ public:
 
 public slots:
     void changementOnglet(int i);
+    void sauvegarder();
 /*
 private slots:
     void changementOnglet(int);

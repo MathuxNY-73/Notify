@@ -123,6 +123,13 @@ Editorspace::Editorspace(NoteManager* nm,QWidget* parent):QWidget(parent),noteM(
 
     //Création des connexions
     QObject::connect(onglets,SIGNAL(currentChanged(int)),this,SLOT(changementOnglet(int)));
+
+    //Test sauvegarde
+    save = new QPushButton("Sauvegarder",this);
+    //fen = new QTextEdit(this);
+
+    layout_Editor->addWidget(save);
+    QObject::connect(save,SIGNAL(clicked()),this,SLOT(sauvegarder()));
 }
 
 void Editorspace::changementOnglet(int i)
@@ -167,5 +174,29 @@ void Editorspace::changementOnglet(int i)
             s+=(*it)->ExportNote(es);
             TxtEdit->setText(s);
         break;
+    }
+}
+
+void Editorspace::sauvegarder()
+{
+    NoteManager::Iterator it;
+    for(it=noteM->begin();it!=noteM->end() ; ++it)
+    {
+        (*it)->getWidget()->updateNote();
+        QString s=(*it)->ExportNote(noteM->getStrategy("save"));
+        QFile file(this);
+        file.setFileName("/Users/Antoine/Documents/ProjetInfo/Github/Notify_Github/"+QString::number((*it)->getId())+".txt");
+        try
+        {
+            if(!file.open(QIODevice::WriteOnly))
+                throw NoteManagerException("Ne parvient pas ouvrir le fichier");
+        }
+        catch(NoteManagerException& e)
+        {
+            QMessageBox::information(this,"Fatal Error",e.getInfo());
+        }
+        QTextStream out(&file);
+        out<<(const QString&)s;
+        file.close();
     }
 }

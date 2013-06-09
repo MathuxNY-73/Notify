@@ -14,11 +14,11 @@
 
 DocumentWidget::DocumentWidget(Document* d, QWidget* parent):NoteWidget(parent),document(d)
 {
-    save = new QPushButton("Sauvegarder",this);
-    exp = new QPushButton("Exporter",this);
+    //save = new QPushButton("Sauvegarder",this);
+    //exp = new QPushButton("Exporter",this);
     //fen = new QTextEdit(this);
-    file = new QFile(this);
-    file->setFileName("/Users/Antoine/Documents/ProjetInfo/Github/Notify_Github/test.txt");
+    //file = new QFile(this);
+    /*file->setFileName("/Users/Antoine/Documents/ProjetInfo/Github/Notify_Github/test.txt");
     try
     {
         if(!file->open(QIODevice::WriteOnly))
@@ -28,7 +28,7 @@ DocumentWidget::DocumentWidget(Document* d, QWidget* parent):NoteWidget(parent),
     {
         QMessageBox::information(this,"Fatal Error",e.getInfo());
     }
-    out = new QTextStream(file);
+    out = new QTextStream(file);*/
     try{
         if(d!=NULL)
         {
@@ -40,7 +40,7 @@ DocumentWidget::DocumentWidget(Document* d, QWidget* parent):NoteWidget(parent),
         QMessageBox::information(this,"Fatal Error",e.getInfo());
     }
 
-    save->setEnabled(false);
+    //save->setEnabled(false);
 
     Document::Iterator it;
     for(it=d->begin() ; it!=d->end() ; ++it)
@@ -50,10 +50,10 @@ DocumentWidget::DocumentWidget(Document* d, QWidget* parent):NoteWidget(parent),
     }
     QObject::connect(title,SIGNAL(textChanged(QString)),this,SLOT(modification()));
     //layout->addWidget(fen);
-    layout->addWidget(save);
-    layout->addWidget(exp);
-    QObject::connect(save,SIGNAL(clicked()),this,SLOT(updateNote()));
-    QObject::connect(exp,SIGNAL(clicked()),this,SLOT(giveExport()));
+    //layout->addWidget(save);
+    //layout->addWidget(exp);
+    //QObject::connect(save,SIGNAL(clicked()),this,SLOT(updateNote()));
+    //QObject::connect(exp,SIGNAL(clicked()),this,SLOT(giveExport()));
 }
 
 void DocumentWidget::updateNote()
@@ -70,7 +70,7 @@ void DocumentWidget::modification()
     document->setModify(true);
     emit mod();
 }
-
+/*
 void DocumentWidget::giveExport()
 {
     QString h,f,c;
@@ -79,5 +79,7 @@ void DocumentWidget::giveExport()
     h=ste.header(document);
     f=ste.footer(document);
     c=ste.exportNote(document,0);
-    (*out)<<(const QString&)(h+c+f);
+    //fen->setText(h+c+f);
+    //(*out)<<(const QString&)(h+c+f);
 }
+*/
