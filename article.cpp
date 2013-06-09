@@ -9,6 +9,7 @@
 #include "article.h"
 #include <fstream>
 #include <QFile>
+//#include "notefactory.h"
 
 
 void Article::setText(const QString& t) {

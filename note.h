@@ -57,7 +57,7 @@ protected:
 public:
     //Constructeurs
     Note(const QString& p):title(""), path(p), modified(false){};
-    Note(unsigned int i, const QString& t):id(i),title(t){}
+    Note(unsigned int i, const QString& t):id(i),title(t), modified(true){}
     
     //Methodes inlines
     unsigned int getId() const {return this->id;}

@@ -70,7 +70,6 @@ public:
     static NoteManager* getInstance();
     static void releaseInstance();
     void saveState() const;
-    
 };
 
 #endif // NOTEMANAGER_H

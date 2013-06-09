@@ -23,6 +23,7 @@
 #include "note.h"
 #include "exports.h"
 #include "notewidget.h"
+//#include "notefactory.h"
 
 class ArticleException{
 public:
@@ -33,7 +34,8 @@ private:
 };
 
 class Article : public Note {
-    
+    //friend class ArticleFactory;
+    //friend Article* ArticleFactory::buildNoteCopy(const Article&); //copain pour pouvoir créer des notes par recopie dans les Factories
 private:
     //Attributs
     QString text;
