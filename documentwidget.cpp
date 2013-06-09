@@ -17,6 +17,20 @@ DocumentWidget::DocumentWidget(Document* d, QWidget* parent):NoteWidget(parent),
     save = new QPushButton("Sauvegarder",this);
     exp = new QPushButton("Exporter",this);
     fen = new QTextEdit(this);
+    file = new QFile(this);
+    file->setFileName("/Users/Antoine/Documents/ProjetInfo/Github/Notify_Github/test.txt");
+    try
+    {
+        if(!file->open(QIODevice::WriteOnly))
+            throw DocumentException("Ne parvient pas ouvrir le fichier");
+    }
+    catch(DocumentException& e)
+    {
+        QMessageBox::information(this,"Fatal Error",e.getInfo());
+    }
+
+
+    out = new QTextStream(file);
     try{
         if(d!=NULL)
         {
@@ -65,5 +79,5 @@ void DocumentWidget::giveExport()
     h=ste.header(document);
     f=ste.footer(document);
     c=ste.exportNote(document,0);
-    fen->setText(h+c+f);
+    (*out)<<(const QString&)(h+c+f);
 }

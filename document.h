@@ -28,7 +28,7 @@ class Document : public Note {
 private:
     //Attributs
     QList<Note*> notes; //This QList implement the design pattern Composite.
-    //We could also have used std::List<Note*> but QList is simpler to use.
+    //We could also have used std::List<Note*> but QList is simpler to use
     
     //Constructeur de recopie
     Document(const Document& m);

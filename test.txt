@@ -1,0 +1,16 @@
+[Header] 
+ID : {2} 
+Title : {Titre du document} 
+======================================== 
+Titre du document
+        Titre article
+        Contenu article
+    Titre de la video
+        path : ~/Movies/The Dark Knight.avi
+        description : Ce fichier est une video
+    Titre de l'image
+        path : ./Icons/Qt_logo.png
+        description : Ce fichier est une image
+======================================== 
+[Footer] 
+Titre du document2

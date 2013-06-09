@@ -12,6 +12,10 @@
 #include "notewidget.h"
 #include "article.h"
 #include "binary.h"
+#include <QFile>
+#include <QDir>
+#include <QTextStream>
+
 
 class Document;
 class DocumentException;
@@ -25,6 +29,8 @@ private:
     Document* document;
     QPushButton* save, *exp;
     QTextEdit* fen;
+    QFile* file;
+    QTextStream* out;
 
 
 public:
