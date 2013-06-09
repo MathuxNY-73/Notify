@@ -27,6 +27,8 @@ class Article : public Note {
 private:
     //Attributs
     QString text;
+    ArticleWidget* widget;
+    unsigned int maxW;
 
     //Constructeurs de recopie
     Article(const Article&);

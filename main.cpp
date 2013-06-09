@@ -37,11 +37,11 @@ int main(int argc, char *argv[])
     Document d1(2,"Titre du document");
     d1.addSubNote(&a1);
     //d1.addSubNote(&a2);
-    //d1.addSubNote(&a3);
+    d1.addSubNote(&a3);
     d1.addSubNote(&v1);
     //d1.addSubNote(&a4);
     //d1.addSubNote(&ad1);
-    d1.addSubNote(&i1);
+    //d1.addSubNote(&i1);
     nm->addNote(&a2);
     nm->addNote(&d1);
 

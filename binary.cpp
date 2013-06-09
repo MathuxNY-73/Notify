@@ -11,7 +11,7 @@
 
 //Methodes de Binary
 
-Binary::Binary(unsigned int i,const QString& t, const QString& d, const QString& p):Note(i,t),desc(d),path(p){}
+Binary::Binary(unsigned int i,const QString& t, const QString& d, const QString& p):Note(i,t),desc(d),path(p),maxW(0){}
 
 QString Binary::getDesc() const {
     return desc;
@@ -31,8 +31,12 @@ void Binary::setPath(const QString& p) {
 
 BinaryWidget* Binary::getWidget()
 {
-    BinaryWidget* dw = new BinaryWidget(this);
-    return dw;
+    if(maxW==0)
+    {
+        widget = new BinaryWidget(this);
+        maxW++;
+    }
+    return widget;
 }
 
 //Methodes de Audio
@@ -48,8 +52,12 @@ QString Audio::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) {
 
 AudioWidget* Audio::getWidget()
 {
-    AudioWidget* dw = new AudioWidget(this);
-    return dw;
+    if(maxW==0)
+    {
+        widget = new AudioWidget(this);
+        maxW++;
+    }
+    return widget;
 }
 
 //Methodes de Image
@@ -64,8 +72,12 @@ QString Image::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) {
 
 ImageWidget* Image::getWidget()
 {
-    ImageWidget* dw = new ImageWidget(this);
-    return dw;
+    if(maxW==0)
+    {
+        widget = new ImageWidget(this);
+        maxW++;
+    }
+    return widget;
 }
 
 //Methodes de Video
@@ -80,8 +92,12 @@ QString Video::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) {
 
 VideoWidget* Video::getWidget()
 {
-    VideoWidget* dw = new VideoWidget(this);
-    return dw;
+    if(maxW==0)
+    {
+        widget = new VideoWidget(this);
+        maxW++;
+    }
+    return widget;
 }
 
 

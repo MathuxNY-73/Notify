@@ -16,7 +16,7 @@ DocumentWidget::DocumentWidget(Document* d, QWidget* parent):NoteWidget(parent),
 {
     save = new QPushButton("Sauvegarder",this);
     exp = new QPushButton("Exporter",this);
-    fen = new QTextEdit(this);
+    //fen = new QTextEdit(this);
     file = new QFile(this);
     file->setFileName("/Users/Antoine/Documents/ProjetInfo/Github/Notify_Github/test.txt");
     try
@@ -28,8 +28,6 @@ DocumentWidget::DocumentWidget(Document* d, QWidget* parent):NoteWidget(parent),
     {
         QMessageBox::information(this,"Fatal Error",e.getInfo());
     }
-
-
     out = new QTextStream(file);
     try{
         if(d!=NULL)
@@ -39,7 +37,7 @@ DocumentWidget::DocumentWidget(Document* d, QWidget* parent):NoteWidget(parent),
         else
             throw DocumentException("L'article n'existe pas");
     } catch(DocumentException& e){
-        std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";
+        QMessageBox::information(this,"Fatal Error",e.getInfo());
     }
 
     save->setEnabled(false);
@@ -51,7 +49,7 @@ DocumentWidget::DocumentWidget(Document* d, QWidget* parent):NoteWidget(parent),
         QObject::connect((*it)->getWidget(),SIGNAL(mod()),this,SLOT(modification()));
     }
     QObject::connect(title,SIGNAL(textChanged(QString)),this,SLOT(modification()));
-    layout->addWidget(fen);
+    //layout->addWidget(fen);
     layout->addWidget(save);
     layout->addWidget(exp);
     QObject::connect(save,SIGNAL(clicked()),this,SLOT(updateNote()));
@@ -60,13 +58,15 @@ DocumentWidget::DocumentWidget(Document* d, QWidget* parent):NoteWidget(parent),
 
 void DocumentWidget::updateNote()
 {
-    QMessageBox::information(this, "Sauvegarde", "Votre document a bien été sauvegardé...");
-    save->setEnabled(false);
+    document->setTitle(title->text());
+    Document::Iterator it;
+    for(it=document->begin() ; it!=document->end() ; ++it)
+        (*it)->getWidget()->updateNote();
+    document->setModify(false);
 }
 
 void DocumentWidget::modification()
 {
-    save->setEnabled(true);
     document->setModify(true);
     emit mod();
 }

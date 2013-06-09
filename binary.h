@@ -29,6 +29,8 @@ class Binary : public Note{
 private:
     //Methodes privées
     void load();
+    BinaryWidget* widget;
+    unsigned int maxW;
     
     //Constructeurs de recopie
     Binary(const Binary& b);
@@ -59,13 +61,16 @@ public:
 class Video : public Binary {
     
 private:
+    VideoWidget* widget;
+    unsigned int maxW;
+
     //Constructeurs de recopie
     Video(const Video& v);
     Video& operator=(const Video& v);
     
 public:
     //Constructeurs
-    Video(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p){}
+    Video(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p),maxW(0){}
     
     //Méthodes non inline
     QString ExportNote(Exports::ExportStrategy* es);
@@ -81,13 +86,16 @@ public:
 class Image : public Binary {
     
 private:
+    ImageWidget* widget;
+    unsigned int maxW;
+
     //Constructeurs de recopie
     Image(const Image& i);
     Image& operator=(const Image& i);
 
 public:
     //Constructeurs
-    Image(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p){}
+    Image(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p),maxW(0){}
     
     //Méthodes non inline
     QString ExportNote(Exports::ExportStrategy* es);
@@ -103,13 +111,16 @@ public:
 class Audio : public Binary {
     
 private:
+    AudioWidget* widget;
+    unsigned int maxW;
+
     //Constructeurs de recopie
     Audio(const Audio& a);
     Audio& operator=(const Audio& a);
     
 public:
     //Constructeurs
-    Audio(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p){}
+    Audio(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p),maxW(0){}
     
     //Méthodes non inline
     QString ExportNote(Exports::ExportStrategy* es);

@@ -127,8 +127,10 @@ Editorspace::Editorspace(NoteManager* nm,QWidget* parent):QWidget(parent),noteM(
 
 void Editorspace::changementOnglet(int i)
 {
-    QString s="";
     NoteManager::Iterator it;
+    for(it=noteM->begin();it!=noteM->end() ; ++it)
+        (*it)->getWidget()->updateNote();
+    QString s="";
     Exports::ExportStrategy* es;
     switch(i)
     {

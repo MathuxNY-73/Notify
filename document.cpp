@@ -127,8 +127,12 @@ QString Document::ExportNote(Exports::ExportStrategy* es)
 
 DocumentWidget* Document::getWidget()
 {
-    DocumentWidget* dw = new DocumentWidget(this);
-    return dw;
+    if(maxW==0)
+    {
+        widget = new DocumentWidget(this);
+        maxW++;
+    }
+    return widget;
 }
 
 

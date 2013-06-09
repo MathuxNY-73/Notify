@@ -140,7 +140,7 @@ QString TeXExport::header(Note* n){
     
     //Crée le titre du document
     s=s+"\\title{\\textsc{\\textbf{"+n->getTitle()+"}}} \n"
-        "\\date{"+n->getId()+"} \n \n";
+        "\\date{"+QString::number(n->getId())+"} \n \n";
     
     //On commence le document
     s=s+"\\begin{document} \n"
@@ -214,14 +214,7 @@ QString HTMLExport::header(Note* n){
     //Debut du corps
     s=s+"</head> \n"
         "<body> \n";
-    
-    //Crée le titre du document
-    s=s+"\\title{\\textsc{\\textbf{"+n->getTitle()+"}}} \n"
-    "\\date{"+n->getId()+"} \n";
-    
-    //On commence le document
-    s=s+"\\begin{document} \n"
-    "\\maketitle \n";
+
     return s;
 }
 

@@ -29,6 +29,8 @@ private:
     //Attributs
     QList<Note*> notes; //This QList implement the design pattern Composite.
     //We could also have used std::List<Note*> but QList is simpler to use
+    DocumentWidget* widget;
+    unsigned int maxW;
 
     //Constructeur de recopie
     Document(const Document& m);
@@ -36,8 +38,8 @@ private:
     
 public:
     //Constructeurs
-    Document(unsigned int i, const QString& t):Note(i,t),notes(QList<Note*>()){}
-    Document(unsigned int i, const QString& t, const QList<Note*>& listNote):Note(i,t){
+    Document(unsigned int i, const QString& t):Note(i,t),notes(QList<Note*>()),maxW(0){}
+    Document(unsigned int i, const QString& t, const QList<Note*>& listNote):Note(i,t),maxW(0){
         notes=QList<Note*>();
         QList<Note*>::const_iterator it;                 //Il faudra vérifier si le const est justifié et correct ici.
         for(it=listNote.begin() ; it!=listNote.end() ; ++it)

@@ -12,8 +12,8 @@
 #include "article.h"
 
 
-Article::Article(const QString& path):Note(path),text(""){}
-Article::Article(unsigned int i, const QString& ti, const QString& te): Note(i,ti),text(te){}
+Article::Article(const QString& path):Note(path),text(""),maxW(0){}
+Article::Article(unsigned int i, const QString& ti, const QString& te): Note(i,ti),text(te), maxW(0){}
 
 const QString& Article::getText() const { return text; }
 
@@ -32,7 +32,11 @@ QString Article::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl)
 }
 
 ArticleWidget* Article::getWidget(){
-    ArticleWidget* aw= new ArticleWidget(this);
-    return aw;
+    if(maxW==0)
+    {
+        widget = new ArticleWidget(this);
+        maxW++;
+    }
+    return widget;
 }
 

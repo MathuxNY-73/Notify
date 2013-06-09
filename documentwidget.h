@@ -28,7 +28,7 @@ class DocumentWidget : public NoteWidget
 private:
     Document* document;
     QPushButton* save, *exp;
-    QTextEdit* fen;
+    //QTextEdit* fen;
     QFile* file;
     QTextStream* out;
 
