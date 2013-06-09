@@ -10,6 +10,7 @@
 #include "exports.h"
 #include <iostream>
 
+
 /*Editorspace::Editorspace(QWidget* parent):QWidget(parent)
 {
     onglets = new QTabWidget(this);

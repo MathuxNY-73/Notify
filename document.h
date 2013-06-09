@@ -139,6 +139,7 @@ public:
 
     DocumentWidget* getWidget();
     
+    bool notin(const Note& n) const;
 };
 
 #endif // DOCUMENT_H

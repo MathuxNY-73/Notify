@@ -144,4 +144,12 @@ DocumentWidget* Document::getWidget()
     return widget;
 }
 
-
+bool Document::notin(const Note& n) const
+{
+    if(this->getId()==n.getId())
+        return false;
+    Document::constIterator it;
+    for (it=this->begin() ; it!=this->end() ; ++it)
+        if((*it)->getId()==n.getId())
+            return false;
+}

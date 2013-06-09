@@ -11,6 +11,7 @@
 #include "article.h"
 #include "document.h"
 #include "binary.h"
+#include <typeinfo>
 
 
 using namespace Exports;
@@ -287,6 +288,7 @@ QString HTMLExport::exportNote(Audio* a, unsigned int tl){
 QString SaveTextExport::header(Note* n){
     QString s;
     s="[Header] \n"
+            ""+QString::fromStdString(typeid(*n).name())+"\n"
             "ID : {"+QString::number(n->getId())+"} \n"
             "Title : {"+n->getTitle()+"} \n"
             "======================================== \n";
