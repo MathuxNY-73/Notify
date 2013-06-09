@@ -48,6 +48,7 @@ public:
     void setText(const QString& t);
     const QString& getText() const;
 
+    QString ExportNote(Exports::ExportStrategy *es);
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);
     //QTextStream& operator<<(QTextStream& f, const Article& a);
 

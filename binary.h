@@ -68,6 +68,7 @@ public:
     Video(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p){}
     
     //Méthodes non inline
+    QString ExportNote(Exports::ExportStrategy* es);
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);
     
 
@@ -83,12 +84,13 @@ private:
     //Constructeurs de recopie
     Image(const Image& i);
     Image& operator=(const Image& i);
-    
+
 public:
     //Constructeurs
     Image(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p){}
     
     //Méthodes non inline
+    QString ExportNote(Exports::ExportStrategy* es);
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);
 
 
@@ -110,6 +112,7 @@ public:
     Audio(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p){}
     
     //Méthodes non inline
+    QString ExportNote(Exports::ExportStrategy* es);
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);
 
 

@@ -14,6 +14,7 @@
 
 BinaryWidget::BinaryWidget(Binary* b,QWidget* parent):NoteWidget(parent),binary(b)
 {
+
     //Allocation des Widgets
     hlayout = new QHBoxLayout();
     bwse = new QPushButton("Browse",this);

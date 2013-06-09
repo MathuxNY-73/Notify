@@ -59,6 +59,7 @@ public:
     void setPath(const QString& p) {path=p;}
     
     //Methodes non-inlines
+    Exports::ExportStrategy* getStrategy(const QString& n);
     Note* getNote(unsigned int i) const;
     void addNote(Note* n);
     void deleteNote(Note* n);
@@ -70,6 +71,40 @@ public:
     static NoteManager* getInstance();
     static void releaseInstance();
     void saveState() const;
+
+    //Iterateur non constant
+    class Iterator {
+
+    private:
+        //Copain
+        friend class NoteManager;
+
+        //Attributs
+        QSet<Note*>::iterator it;
+
+        //Constructeur
+        Iterator(QSet<Note*>::iterator c):it(c){}
+
+    public:
+        //Constructeur
+        Iterator():it(){}
+
+        //Methodes inlines
+        Note* operator*() const {return *it;}
+        bool operator!=(const Iterator& c) const {return it!=c.it;}
+        Iterator& operator++() {++it; return *this;}
+        Iterator operator++(int){
+            Iterator* tmp=this;
+            ++it;
+            return *tmp;
+        }
+    };
+    Iterator begin(){
+        return Iterator(notes.begin());
+    }
+    Iterator end(){
+        return Iterator(notes.end());
+    }
     
 };
 

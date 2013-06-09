@@ -4,6 +4,7 @@
 //
 
 #include "notewidget.h"
+#include <typeinfo>
 
 NoteWidget::NoteWidget(QWidget *parent):QWidget(parent)
 {

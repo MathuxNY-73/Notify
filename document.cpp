@@ -120,6 +120,10 @@ QString Document::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) {
     return es->exportNote(this,tl);
 }
 
+QString Document::ExportNote(Exports::ExportStrategy* es)
+{
+    return es->header(this)+es->exportNote(this)+es->footer(this);
+}
 
 DocumentWidget* Document::getWidget()
 {

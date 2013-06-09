@@ -2,7 +2,7 @@
 #include "article.h"
 
 ArticleWidget::ArticleWidget(Article* a,QWidget* parent):NoteWidget(parent),article(a)
-{
+{   
     //Allocation des différents widgets
     text= new QTextEdit("Contenu",this);
     //save = new QPushButton("Sauvegarder",this); //Je l'enlève

@@ -29,35 +29,37 @@ void Binary::setPath(const QString& p) {
     path=p;
 }
 
-//Methodes de Audio
-
-QString Audio::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) {
-    return es->exportNote(this,tl);
-}
-
-//Methodes de Image
-
-QString Image::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) {
-    return es->exportNote(this,tl);
-}
-
-//Methodes de Video
-
-QString Video::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) {
-    return es->exportNote(this,tl);
-}
-
-
 BinaryWidget* Binary::getWidget()
 {
     BinaryWidget* dw = new BinaryWidget(this);
     return dw;
 }
 
-VideoWidget* Video::getWidget()
+//Methodes de Audio
+QString Audio::ExportNote(Exports::ExportStrategy* es)
 {
-    VideoWidget* dw = new VideoWidget(this);
+    return es->header(this)+es->exportNote(this)+es->footer(this);
+}
+
+QString Audio::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) {
+    return es->exportNote(this,tl);
+}
+
+
+AudioWidget* Audio::getWidget()
+{
+    AudioWidget* dw = new AudioWidget(this);
     return dw;
+}
+
+//Methodes de Image
+QString Image::ExportNote(Exports::ExportStrategy* es)
+{
+    return es->header(this)+es->exportNote(this)+es->footer(this);
+}
+
+QString Image::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) {
+    return es->exportNote(this,tl);
 }
 
 ImageWidget* Image::getWidget()
@@ -66,11 +68,22 @@ ImageWidget* Image::getWidget()
     return dw;
 }
 
-AudioWidget* Audio::getWidget()
+//Methodes de Video
+QString Video::ExportNote(Exports::ExportStrategy* es)
 {
-    AudioWidget* dw = new AudioWidget(this);
+    return es->header(this)+es->exportNote(this)+es->footer(this);
+}
+
+QString Video::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) {
+    return es->exportNote(this,tl);
+}
+
+VideoWidget* Video::getWidget()
+{
+    VideoWidget* dw = new VideoWidget(this);
     return dw;
 }
+
 
 
 //Constructeurs de recopie

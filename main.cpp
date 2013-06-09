@@ -14,15 +14,19 @@
 #include "notemanager.h"
 #include "notewidget.h"
 #include "articlewidget.h"
-//#include "binarywidget.h"
+#include "binarywidget.h"
+#include "editorspace.h"
+#include <QSet>
 #include <QString>
 
 int main(int argc, char *argv[])
 {
-
+    QSet<Note*> set;
     QApplication app(argc, argv);
     // QWidget fenetre;
     //QVBoxLayout la(&fenetre);
+    NoteManager* nm;
+    nm = NoteManager::getInstance();
     Article a2(3,"Titre article 2", "Contenu article 2");
     Article a1(1,"Titre article","Contenu article");
     Article a3(4,"Titre article 3", "Contenu article 3");
@@ -38,15 +42,18 @@ int main(int argc, char *argv[])
     //d1.addSubNote(&a4);
     //d1.addSubNote(&ad1);
     d1.addSubNote(&i1);
+    nm->addNote(&a2);
+    nm->addNote(&d1);
 
+    Editorspace ws(nm);
     //ArticleWidget aw(&a1);
     //ImageWidget iw(&i1);
-    DocumentWidget dw(&d1);
+    //DocumentWidget dw(&d1);
     //AudioWidget aw(&ad1);
     //VideoWidget vw(&v1);
 
 
-    dw.show();
+    ws.show();
 
     return app.exec();
 }

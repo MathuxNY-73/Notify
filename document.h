@@ -29,7 +29,7 @@ private:
     //Attributs
     QList<Note*> notes; //This QList implement the design pattern Composite.
     //We could also have used std::List<Note*> but QList is simpler to use
-    
+
     //Constructeur de recopie
     Document(const Document& m);
     Document& operator=(const Document& m);
@@ -59,12 +59,10 @@ public:
     void addSubNote(Note* n);
     void addSubNote(Note* n, unsigned int id);
     void removeSubNote(unsigned int id);
-    //QTextStream& operator<<(QTextStream& f, const Document& d);
 
     
     
-    //TODO
-    //QString ExportNote(ExportStrategy* es) const;     //Class ExportStrategy not yet implemented
+    QString ExportNote(Exports::ExportStrategy* es);     //Class ExportStrategy not yet implemented
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);      //Class ExportStrategy not yet implemented
     
     
@@ -137,8 +135,6 @@ public:
         return constIterator(notes.constEnd());
     }
 
-
-    //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
     DocumentWidget* getWidget();
     
 };

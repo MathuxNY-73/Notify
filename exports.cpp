@@ -19,7 +19,7 @@ ExportStrategy::ExportStrategy(){}
 
 QMap<QString, ExportStrategy*> ExportStrategy::getExport(){
     QMap<QString, ExportStrategy*> map;
-    map["text"]=new TextExport();       //J'ai une erreur ici qui me dit que je ne peut pas allouer de l'espace sur des classe abstraites et je pense que cela est dû à l'erreur ennoncé précédement dans l'exports.h
+    map["text"]=new TextExport();
     map["TeX"]=new TeXExport();
     map["html"]=new HTMLExport();
     map["save"]=new SaveTextExport();
@@ -29,15 +29,18 @@ QMap<QString, ExportStrategy*> ExportStrategy::getExport(){
 //Export en text
 QString TextExport::header(Note* n){
     QString s;
-    s="Header ID : {"+(QString)n->getId()+"} Title : {"+n->getTitle()+"} ========================================";
+    s="Header ID : {"+QString::number(n->getId())+"} \n "
+            "Title : {"+n->getTitle()+"} \n"
+            "======================================== \n";
     return s;
 }
 
 QString TextExport::footer(Note* n){
 
     QString s;
-    s="Footer \n"
-            ""+n->getTitle()+n->getId()+"\n";
+    s="======================================== \n"
+            "Footer \n"
+            ""+QString::number(n->getId())+n->getTitle()+"\n";
     return s;
 }
 

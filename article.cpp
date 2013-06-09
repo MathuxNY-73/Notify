@@ -21,6 +21,11 @@ void Article::setText(const QString& t) {
     modified=true; text=t;
 }
 
+QString Article::ExportNote(Exports::ExportStrategy* es)
+{
+    return es->header(this)+es->exportNote(this)+es->footer(this);
+}
+
 QString Article::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl)
 {
     return es->exportNote(this,tl);

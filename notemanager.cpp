@@ -100,6 +100,26 @@ QString NoteManager::getFilename(unsigned int i) const{
     }
 }
 
+Exports::ExportStrategy* NoteManager::getStrategy(const QString& n)
+{
+    QMap<QString,Exports::ExportStrategy*>::Iterator it;
+    try
+    {
+        if(strategies.isEmpty())
+            throw NoteManagerException("Il n'existe aucun export");
+        it=strategies.find(n);
+        if(it==strategies.end())
+            throw NoteManagerException("Il n'existe aucun export avec cette denomination");
+        else
+            return *it;
+    }
+    catch (NoteManagerException& e)
+    {
+        std::cout<<e.getInfo().toStdString()<<"\n";
+        return 0;
+    }
+}
+
 void NoteManager::load(const QString& newPath){}
 void NoteManager::load(){}
 void NoteManager::reset(){}
