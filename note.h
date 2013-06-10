@@ -13,7 +13,6 @@
 #include <QString>
 #include <QTextStream>
 
-
 class Article;
 class Document;
 class NotesManager;

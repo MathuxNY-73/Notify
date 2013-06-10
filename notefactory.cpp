@@ -9,8 +9,8 @@ NoteFactory::NoteFactory()
 
 QMap<QString, NoteFactory*> NoteFactory::getFactories(){
     QMap<QString, NoteFactory*> map;
-    map["article"]=new ArticleFactory();       //J'ai une erreur ici qui me dit que je ne peut pas allouer de l'espace sur des classe abstraites et je pense que cela est dû à l'erreur ennoncé précédement dans l'exports.h
-    map["document"]=new DocumentFactory();
+    map["Article"]=new ArticleFactory();       //J'ai une erreur ici qui me dit que je ne peut pas allouer de l'espace sur des classe abstraites et je pense que cela est dû à l'erreur ennoncé précédement dans l'exports.h
+    map["Document"]=new DocumentFactory();
     //map["html"]=new HTMLExport();
     return map;
 }
@@ -32,10 +32,10 @@ Article* ArticleFactory::buildNote(unsigned int id){
 }
 
 Article* ArticleFactory::buildNoteCopy(const Article* n){
-    Article* a = new Article(getNewId(), n->getTitle(), n->getText());
+    Article* a = new Article(getNewId(), (*n).getTitle(), (*n).getText());
     return a;
 }
-
+/*
 Document* DocumentFactory::buildNewNote(const QString& title){
     Document* a = new Document(getNewId(), title);
     return a;
@@ -45,11 +45,21 @@ Document* DocumentFactory::buildNote(unsigned int id){
     //à définir selon l'architecture du projet choisie
 }
 
-Document* DocumentFactory::buildNoteCopy(const Document* n){//En cours de développement
+Document* DocumentFactory::buildNoteCopy(const Note* n){//En cours de développement
     QList<Note*> list;
     Document::constIterator i;
     for (i=n->begin(); i!=n->end() ; ++i){
-        list<<NoteFactory::buildNoteCopy(*i);
+        if(typeid(*(*i)).name()=="Article")
+            list<<ArticleFactory::buildNoteCopy(*i);
+        else if(typeid(*(*i)).name()=="Document")
+            list<<DocumentFactory::buildNoteCopy(*i);
+        else if(typeid(*(*i)).name()=="Image")
+            list<<ImageFactory::buildNoteCopy(*i);
+        else if(typeid(*(*i)).name()=="Video")
+            list<<VideoFactory::buildNoteCopy(*i);
+        else if(typeid(*(*i)).name()=="Audio")
+            list<<ArticleFactory::buildNoteCopy(*i);
+
     }
     Document* d= new Document(getNewId(),n->getTitle(),list);
     return d;
@@ -80,4 +90,4 @@ Image* ImageFactory::buildNewNote(const QString& title){
 
 Image* ImageFactory::buildNote(unsigned int id){
     //à définir selon l'architecture du projet choisie
-}
+}*/

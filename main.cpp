@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 
     map=NoteFactory::getFactories();
 
-    Article* a3 = map["article"]->buildNoteCopy(&a1);
+    Article* a3 = map["Article"]->buildNoteCopy(&a1);
     std::cout<<a3->getId()<<"   "<<a3->getText().toStdString()<<"    "<<a3->getText().toStdString()<<"\n";
 
 
