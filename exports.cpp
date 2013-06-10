@@ -131,7 +131,7 @@ QString TeXExport::docStruct(unsigned int i) const{
 QString TeXExport::header(Note* n){
     QString s;
     //Definition du document en latex
-    s="\\documentclass[a4paper, 12pt]{arcticle} \n \n";
+    s="\\documentclass[a4paper, 12pt]{article} \n \n";
     
     //Inclure les packages
     s=s+"\\usepackage[T1]{fontenc} \n"
@@ -195,7 +195,7 @@ QString TeXExport::exportNote(Image* i, unsigned int tl){
 QString TeXExport::exportNote(Audio* a, unsigned int tl){
     QString s;
     s=docStruct(tl)+a->getTitle()+"} \n";
-    s=s+"path : "+a->getPath()+"\n";
+    s=s+a->getPath()+"\n";
     s=s+"description : "+a->getDesc()+"\n";
     return s;
 }

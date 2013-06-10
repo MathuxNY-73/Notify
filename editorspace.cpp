@@ -62,10 +62,11 @@
     layout->addWidget(onglets);
 }*/
 
-Editorspace::Editorspace(NoteManager* nm,QWidget* parent):QWidget(parent),noteM(nm)
+Editorspace::Editorspace(QWidget* parent,NoteManager* nm):QWidget(parent),noteM(nm)
 {
     onglets = new QTabWidget(this);
     layout = new QVBoxLayout(this);
+    save = new QPushButton("Sauvegarder",this);
     container = new QFrame();
 
     //Editeurs
@@ -118,86 +119,110 @@ Editorspace::Editorspace(NoteManager* nm,QWidget* parent):QWidget(parent),noteM(
     layout->addWidget(onglets);
 
     //Ajout des widgets dans l'editeur
-    NoteManager::Iterator it;
-    for(it=noteM->begin();it!=noteM->end() ; ++it)
-        layout_Editor->addWidget((*it)->getWidget());
+    if(noteM!=0)
+    {
+        NoteManager::Iterator it;
+        for(it=noteM->begin();it!=noteM->end() ; ++it)
+            layout_Editor->addWidget((*it)->getWidget());
 
+        layout_Editor->addWidget(save);
+
+    }
     //Création des connexions
     QObject::connect(onglets,SIGNAL(currentChanged(int)),this,SLOT(changementOnglet(int)));
 
     //Test sauvegarde
-    save = new QPushButton("Sauvegarder",this);
     //fen = new QTextEdit(this);
 
-    layout_Editor->addWidget(save);
+
     QObject::connect(save,SIGNAL(clicked()),this,SLOT(sauvegarder()));
+}
+
+void Editorspace::setWorkspace(NoteManager *nm)
+{
+    noteM=nm;
+    if(noteM!=0)
+    {
+        NoteManager::Iterator it;
+        for(it=noteM->begin();it!=noteM->end() ; ++it)
+            layout_Editor->addWidget((*it)->getWidget());
+        layout_Editor->addWidget(save);
+    }
 }
 
 void Editorspace::changementOnglet(int i)
 {
-    NoteManager::Iterator it;
-    for(it=noteM->begin();it!=noteM->end() ; ++it)
-        (*it)->getWidget()->updateNote();
-    QString s="";
-    Exports::ExportStrategy* es;
-    switch(i)
+    if(noteM!=0)
     {
-    case 1:
-        es=noteM->getStrategy("html");
-        if(es==0)
+        NoteManager::Iterator it;
+        for(it=noteM->begin();it!=noteM->end() ; ++it)
+            (*it)->getWidget()->updateNote();
+        QString s="";
+        Exports::ExportStrategy* es;
+        switch(i)
         {
-            HEdit->setText("Cet export n'existe pas");
+        case 1:
+            es=noteM->getStrategy("html");
+            if(es==0)
+            {
+                HEdit->setText("Cet export n'existe pas");
+                break;
+            }
+            for(it=noteM->begin();it!=noteM->end() ; ++it)
+                s+=(*it)->ExportNote(es);
+            HEdit->setText(s);
+            break;
+        case 2:
+            es=noteM->getStrategy("TeX");
+            if(es==0)
+            {
+                TXEdit->setText("Cet export n'existe pas");
+                break;
+            }
+            for(it=noteM->begin();it!=noteM->end() ; ++it)
+                s+=(*it)->ExportNote(es);
+                TXEdit->setText(s);
+            break;
+        case 3:
+            es=noteM->getStrategy("text");
+            if(es==0)
+            {
+                TxtEdit->setText("Cet export n'existe pas");
+                break;
+            }
+            for(it=noteM->begin();it!=noteM->end() ; ++it)
+                s+=(*it)->ExportNote(es);
+                TxtEdit->setText(s);
             break;
         }
-        for(it=noteM->begin();it!=noteM->end() ; ++it)
-            s+=(*it)->ExportNote(es);
-        HEdit->setText(s);
-        break;
-    case 2:
-        es=noteM->getStrategy("TeX");
-        if(es==0)
-        {
-            TXEdit->setText("Cet export n'existe pas");
-            break;
-        }
-        for(it=noteM->begin();it!=noteM->end() ; ++it)
-            s+=(*it)->ExportNote(es);
-            TXEdit->setText(s);
-        break;
-    case 3:
-        es=noteM->getStrategy("text");
-        if(es==0)
-        {
-            TxtEdit->setText("Cet export n'existe pas");
-            break;
-        }
-        for(it=noteM->begin();it!=noteM->end() ; ++it)
-            s+=(*it)->ExportNote(es);
-            TxtEdit->setText(s);
-        break;
     }
 }
 
 void Editorspace::sauvegarder()
 {
-    NoteManager::Iterator it;
-    for(it=noteM->begin();it!=noteM->end() ; ++it)
+    if(noteM==0)
+        return;
+    else if (noteM!=0)
     {
-        (*it)->getWidget()->updateNote();
-        QString s=(*it)->ExportNote(noteM->getStrategy("save"));
-        QFile file(this);
-        file.setFileName("/Users/Antoine/Documents/ProjetInfo/Github/Notify_Github/"+QString::number((*it)->getId())+".txt");
-        try
+        NoteManager::Iterator it;
+        for(it=noteM->begin();it!=noteM->end() ; ++it)
         {
-            if(!file.open(QIODevice::WriteOnly))
-                throw NoteManagerException("Ne parvient pas ouvrir le fichier");
+            (*it)->getWidget()->updateNote();
+            QString s=(*it)->ExportNote(noteM->getStrategy("save"));
+            QFile file(this);
+            file.setFileName("/Users/Antoine/Documents/ProjetInfo/Github/Notify_Github/"+QString::number((*it)->getId())+".txt");
+            try
+            {
+                if(!file.open(QIODevice::WriteOnly))
+                    throw NoteManagerException("Ne parvient pas ouvrir le fichier");
+            }
+            catch(NoteManagerException& e)
+            {
+                QMessageBox::information(this,"Fatal Error",e.getInfo());
+            }
+            QTextStream out(&file);
+            out<<(const QString&)s;
+            file.close();
         }
-        catch(NoteManagerException& e)
-        {
-            QMessageBox::information(this,"Fatal Error",e.getInfo());
-        }
-        QTextStream out(&file);
-        out<<(const QString&)s;
-        file.close();
     }
 }

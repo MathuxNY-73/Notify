@@ -52,8 +52,9 @@ private:
 
 
 public:
-    explicit Editorspace(NoteManager* nm,QWidget *parent=0);
+    explicit Editorspace(QWidget *parent=0,NoteManager* nm=0);
     QVBoxLayout* getLayout() {return layout;}
+    void setWorkspace(NoteManager* nm);
 
   //Slots
 

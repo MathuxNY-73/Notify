@@ -16,7 +16,6 @@
 #include <QDir>
 #include <QTextStream>
 
-
 class Document;
 class DocumentException;
 
@@ -27,6 +26,8 @@ class DocumentWidget : public NoteWidget
 
 private:
     Document* document;
+    QFrame* frame;
+    QVBoxLayout* frame_layout;
     //QPushButton* save, *exp;
     //QTextEdit* fen;
     //QFile* file;

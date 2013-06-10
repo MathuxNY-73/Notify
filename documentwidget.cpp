@@ -18,6 +18,8 @@ DocumentWidget::DocumentWidget(Document* d, QWidget* parent):NoteWidget(parent),
     //exp = new QPushButton("Exporter",this);
     //fen = new QTextEdit(this);
     //file = new QFile(this);
+    //frame =new QFrame();
+    //frame_layout=new QVBoxLayout(frame);
     /*file->setFileName("/Users/Antoine/Documents/ProjetInfo/Github/Notify_Github/test.txt");
     try
     {
@@ -29,17 +31,7 @@ DocumentWidget::DocumentWidget(Document* d, QWidget* parent):NoteWidget(parent),
         QMessageBox::information(this,"Fatal Error",e.getInfo());
     }
     out = new QTextStream(file);*/
-    try{
-        if(d!=NULL)
-        {
-            title->setText(d->getTitle());
-        }
-        else
-            throw DocumentException("L'article n'existe pas");
-    } catch(DocumentException& e){
-        QMessageBox::information(this,"Fatal Error",e.getInfo());
-    }
-
+    title->setText(d->getTitle());
     //save->setEnabled(false);
 
     Document::Iterator it;
@@ -51,7 +43,7 @@ DocumentWidget::DocumentWidget(Document* d, QWidget* parent):NoteWidget(parent),
     QObject::connect(title,SIGNAL(textChanged(QString)),this,SLOT(modification()));
     //layout->addWidget(fen);
     //layout->addWidget(save);
-    //layout->addWidget(exp);
+    //layout->addWidget(frame);
     //QObject::connect(save,SIGNAL(clicked()),this,SLOT(updateNote()));
     //QObject::connect(exp,SIGNAL(clicked()),this,SLOT(giveExport()));
 }

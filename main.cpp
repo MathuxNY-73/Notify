@@ -51,7 +51,8 @@ int main(int argc, char *argv[])
     nm->addNote(&i1);
     nm->addNote(&d1);
 
-    Editorspace ws(nm);
+    Editorspace ws;
+    ws.setWorkspace(nm);
     //ArticleWidget aw(&a1);
     //ImageWidget iw(&i1);
     //DocumentWidget dw(&d1);

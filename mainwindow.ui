@@ -28,7 +28,7 @@
       <number>0</number>
      </property>
      <item row="0" column="0">
-      <widget class="editorspace" name="Editeur" native="true">
+      <widget class="Editorspace" name="Editeur" native="true">
        <property name="enabled">
         <bool>true</bool>
        </property>
@@ -51,7 +51,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>editorspace</class>
+   <class>Editorspace</class>
    <extends>QWidget</extends>
    <header location="global">editorspace.h</header>
    <container>1</container>
