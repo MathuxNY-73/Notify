@@ -16,7 +16,8 @@ HEADERS += \
     documentwidget.h \
     binarywidget.h \
     editorspace.h \
-    mainwindow.h
+    mainwindow.h \
+    notemanagerwidget.h
 
 SOURCES += \
     article.cpp \
@@ -31,7 +32,8 @@ SOURCES += \
     documentwidget.cpp \
     binarywidget.cpp \
     editorspace.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    notemanagerwidget.cpp
 
 FORMS += \
     mainwindow.ui
