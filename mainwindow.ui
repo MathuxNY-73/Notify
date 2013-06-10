@@ -14,28 +14,20 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="gridLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>-1</x>
-      <y>-1</y>
-      <width>631</width>
-      <height>581</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout">
-     <property name="leftMargin">
-      <number>0</number>
-     </property>
-     <item row="0" column="0">
-      <widget class="Editorspace" name="Editeur" native="true">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QWidget" name="widget_2" native="true"/>
+    </item>
+    <item row="0" column="1" rowspan="2">
+     <widget class="Editorspace" name="Editeur" native="true">
+      <zorder>verticalSpacer</zorder>
+      <zorder>verticalSpacer</zorder>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QWidget" name="widget" native="true"/>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -62,12 +54,30 @@
       <addaction name="actionAudio"/>
       <addaction name="actionVideo"/>
      </widget>
+     <addaction name="actionWorkspace"/>
      <addaction name="actionArticle"/>
      <addaction name="actionDocument"/>
      <addaction name="menuBinary"/>
     </widget>
+    <widget class="QMenu" name="menuOpen">
+     <property name="title">
+      <string>Open...</string>
+     </property>
+     <widget class="QMenu" name="menuBinary_2">
+      <property name="title">
+       <string>Binary</string>
+      </property>
+      <addaction name="actionImage"/>
+      <addaction name="actionAudio_2"/>
+      <addaction name="actionVideo_2"/>
+     </widget>
+     <addaction name="actionWorkspace_2"/>
+     <addaction name="actionArticle_2"/>
+     <addaction name="actionDocument_2"/>
+     <addaction name="menuBinary_2"/>
+    </widget>
     <addaction name="menuNew"/>
-    <addaction name="actionOpen"/>
+    <addaction name="menuOpen"/>
     <addaction name="actionAdd"/>
     <addaction name="separator"/>
     <addaction name="actionSave"/>
@@ -97,11 +107,17 @@
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionOpen">
-   <property name="text">
-    <string>Open...</string>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
    </property>
-  </action>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
   <action name="actionAdd">
    <property name="text">
     <string>Add...</string>
@@ -152,12 +168,47 @@
     <string>About</string>
    </property>
   </action>
+  <action name="actionWorkspace">
+   <property name="text">
+    <string>Workspace</string>
+   </property>
+  </action>
+  <action name="actionWorkspace_2">
+   <property name="text">
+    <string>Workspace</string>
+   </property>
+  </action>
+  <action name="actionArticle_2">
+   <property name="text">
+    <string>Article</string>
+   </property>
+  </action>
+  <action name="actionDocument_2">
+   <property name="text">
+    <string>Document</string>
+   </property>
+  </action>
+  <action name="actionImage">
+   <property name="text">
+    <string>Image</string>
+   </property>
+  </action>
+  <action name="actionAudio_2">
+   <property name="text">
+    <string>Audio</string>
+   </property>
+  </action>
+  <action name="actionVideo_2">
+   <property name="text">
+    <string>Video</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
    <class>Editorspace</class>
    <extends>QWidget</extends>
-   <header location="global">editorspace.h</header>
+   <header>editorspace.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

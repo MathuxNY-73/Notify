@@ -16,12 +16,16 @@
 #include "articlewidget.h"
 #include "binarywidget.h"
 #include "editorspace.h"
+#include "mainwindow.h"
 #include <QSet>
 #include <QString>
 
 int main(int argc, char *argv[])
 {
-    QSet<Note*> set;
+    QApplication app(argc, argv);
+    MainWindow m;
+    m.show();
+    /*QSet<Note*> set;
     QApplication app(argc, argv);
     // QWidget fenetre;
     //QVBoxLayout la(&fenetre);
@@ -60,7 +64,7 @@ int main(int argc, char *argv[])
     //VideoWidget vw(&v1);
 
 
-    ws.show();
+    ws.show();*/
 
     return app.exec();
 }

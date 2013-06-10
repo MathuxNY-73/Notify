@@ -32,14 +32,8 @@ Note* NoteManager::getNote(unsigned int i) const{
     for(it = notes.begin() ; it!=notes.end() ; ++it)
         if((*it)->getId()==i)
             break;
-    try{
         if(it==notes.end())
-            throw NoteManagerException("The note you are trying to select is not in the document. Why are you so stupid ?");
-    }
-    catch(NoteManagerException& e){
-        std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";  //To be modified to display a warning on the screen.
-        return NULL;        //cette ligne provoque des erreurs.
-    }
+            return 0;
     return *it;
 }
 

@@ -41,7 +41,7 @@ QString TextExport::footer(Note* n){
     QString s;
     s="======================================== \n"
             "Footer \n"
-            ""+QString::number(n->getId())+n->getTitle()+"\n";
+            ""+QString::number(n->getId())+n->getTitle()+"\n\n\n";
     return s;
 }
 

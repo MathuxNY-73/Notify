@@ -62,11 +62,11 @@
     layout->addWidget(onglets);
 }*/
 
-Editorspace::Editorspace(QWidget* parent,NoteManager* nm):QWidget(parent),noteM(nm)
+Editorspace::Editorspace(QWidget* parent):QWidget(parent),noteM(0)
 {
     onglets = new QTabWidget(this);
     layout = new QVBoxLayout(this);
-    save = new QPushButton("Sauvegarder",this);
+    //save = new QPushButton("Sauvegarder",this);
     container = new QFrame();
 
     //Editeurs
@@ -112,6 +112,7 @@ Editorspace::Editorspace(QWidget* parent,NoteManager* nm):QWidget(parent),noteM(
 
     //Mise en conteneur
     onglets->addTab(scroll_Editor,"Editor");
+    onglets->setTabIcon(0,QIcon("/Users/Antoine/Documents/ProjetInfo/Github/Notify_Github/Icons/editorIcon48.png"));
     onglets->addTab(scroll_HTML,"HTML");
     onglets->addTab(scroll_TeX,"TeX");
     onglets->addTab(scroll_Text,"Text");
@@ -125,8 +126,6 @@ Editorspace::Editorspace(QWidget* parent,NoteManager* nm):QWidget(parent),noteM(
         for(it=noteM->begin();it!=noteM->end() ; ++it)
             layout_Editor->addWidget((*it)->getWidget());
 
-        layout_Editor->addWidget(save);
-
     }
     //Création des connexions
     QObject::connect(onglets,SIGNAL(currentChanged(int)),this,SLOT(changementOnglet(int)));
@@ -135,7 +134,7 @@ Editorspace::Editorspace(QWidget* parent,NoteManager* nm):QWidget(parent),noteM(
     //fen = new QTextEdit(this);
 
 
-    QObject::connect(save,SIGNAL(clicked()),this,SLOT(sauvegarder()));
+    //QObject::connect(save,SIGNAL(clicked()),this,SLOT(sauvegarder()));
 }
 
 void Editorspace::setWorkspace(NoteManager *nm)
@@ -146,8 +145,15 @@ void Editorspace::setWorkspace(NoteManager *nm)
         NoteManager::Iterator it;
         for(it=noteM->begin();it!=noteM->end() ; ++it)
             layout_Editor->addWidget((*it)->getWidget());
-        layout_Editor->addWidget(save);
     }
+}
+
+void Editorspace::addWidget(Note* n)
+{
+    if(noteM->getNote(n->getId())==NULL)
+        noteM->addNote(n);
+    layout_Editor->addWidget(n->getWidget());
+    QMessageBox::information(this,"Success","Layout succesfully added");
 }
 
 void Editorspace::changementOnglet(int i)
