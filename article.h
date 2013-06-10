@@ -23,7 +23,6 @@
 #include "note.h"
 #include "exports.h"
 #include "notewidget.h"
-//#include "notefactory.h"
 
 class ArticleException{
 public:
@@ -61,6 +60,7 @@ public:
 
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const;
     //QTextStream& operator<<(QTextStream& f, const Article& a);
+
 };
 
 

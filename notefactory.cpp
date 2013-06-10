@@ -7,7 +7,15 @@ NoteFactory::NoteFactory()
 }
 */
 
-unsigned int getNewId(){
+QMap<QString, NoteFactory*> NoteFactory::getFactories(){
+    QMap<QString, NoteFactory*> map;
+    map["article"]=new ArticleFactory();       //J'ai une erreur ici qui me dit que je ne peut pas allouer de l'espace sur des classe abstraites et je pense que cela est dû à l'erreur ennoncé précédement dans l'exports.h
+    map["document"]=new DocumentFactory();
+    //map["html"]=new HTMLExport();
+    return map;
+}
+
+unsigned int NoteFactory::getNewId(){
     time_t t = time(0);   // get time now
     struct tm * now = localtime( & t );
     return now->tm_mon*100000000 + now->tm_mday*1000000 + now->tm_hour*10000 + now->tm_min*100 + now->tm_sec; //valable que pour une période de 1 an. Après un an on peut avoir deux ID pareils (mais probabilité faible)
@@ -23,8 +31,8 @@ Article* ArticleFactory::buildNote(unsigned int id){
     //à définir selon l'architecture du projet choisie
 }
 
-Article* ArticleFactory::buildNoteCopy(const Article& n){
-    Article* a = new Article(getNewId(), n.getTitle(), n.getText());
+Article* ArticleFactory::buildNoteCopy(const Article* n){
+    Article* a = new Article(getNewId(), n->getTitle(), n->getText());
     return a;
 }
 
@@ -37,15 +45,14 @@ Document* DocumentFactory::buildNote(unsigned int id){
     //à définir selon l'architecture du projet choisie
 }
 
-Document* DocumentFactory::buildNoteCopy(const Document& n){//En cours de développement
-    Document* a = new Document(getNewId(), n.getTitle());
+Document* DocumentFactory::buildNoteCopy(const Document* n){//En cours de développement
+    QList<Note*> list;
     Document::constIterator i;
-    for (i=n.begin(); i!=n.end() ; ++i){
-        buildNoteCopy((*i)); //il faudra faire une méthode getFactory() dans les classes et sous classes de Note (voir tes exports)
-
+    for (i=n->begin(); i!=n->end() ; ++i){
+        list<<NoteFactory::buildNoteCopy(*i);
     }
-
-    return a;
+    Document* d= new Document(getNewId(),n->getTitle(),list);
+    return d;
 }
 
 Audio* AudioFactory::buildNewNote(const QString& title){
