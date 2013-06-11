@@ -81,7 +81,7 @@ public:
     virtual QString ExportNote(Exports::ExportStrategy* es) =0;		//Class ExportStrategy not yet implemented
     virtual QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) =0;		//Class ExportStrategy not yet implemented
     //virtual void load(const QString& path) =0;
-    virtual QList<QStandardItem*> load() const =0;
+    virtual QStandardItem* load() const =0;
 
     virtual NoteWidget* getWidget()=0;
 

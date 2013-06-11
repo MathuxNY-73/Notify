@@ -15,17 +15,31 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QWidget" name="widget_2" native="true"/>
-    </item>
-    <item row="0" column="1" rowspan="2">
-     <widget class="Editorspace" name="Editeur" native="true">
-      <zorder>verticalSpacer</zorder>
-      <zorder>verticalSpacer</zorder>
+    <item row="0" column="0" rowspan="2">
+     <widget class="QFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="1" rowspan="2">
+        <widget class="QWidget" name="widget" native="true">
+         <zorder>Editeur</zorder>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="Editorspace" name="Editeur" native="true">
+         <zorder>workWidget</zorder>
+         <zorder>widget</zorder>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="Workspace" name="workWidget" native="true"/>
+       </item>
+      </layout>
      </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QWidget" name="widget" native="true"/>
     </item>
    </layout>
   </widget>
@@ -209,6 +223,12 @@
    <class>Editorspace</class>
    <extends>QWidget</extends>
    <header>editorspace.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Workspace</class>
+   <extends>QWidget</extends>
+   <header>workspace.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

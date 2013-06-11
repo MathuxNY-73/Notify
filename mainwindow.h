@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "editorspace.h"
+#include "workspace.h"
 #include <QMainWindow>
 #include <QWidget>
 #include <QSizePolicy>

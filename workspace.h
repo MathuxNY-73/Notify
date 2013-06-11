@@ -1,28 +1,20 @@
 //
-//  notemanagerwidget.h
+//  workspace.h
 //  LO21_Projet
 //
-//  Created by Anthony WEIBEL and Antoine POUILLAUDE on 11/05/13.
+//  Created by Anthony WEIBEL and Antoine POUILLAUDE on 11/06/13.
 //  Copyright (c) 2013 Antoine POUILLAUDE. All rights reserved.
 //
+
+
 
 #ifndef WORKSPACE_H
 #define WORKSPACE_H
 
-#include "note.h"
 #include "notemanager.h"
 #include "notewidget.h"
-#include <QListView>
+#include <QTreeView>
 #include <QStandardItem>
-
-class WorkspaceException
-{
-    QString info;
-
-public:
-    WorkspaceException(const QString& message):info(message){}
-    QString getInfo() const { return info; }
-};
 
 class Workspace : public QWidget
 {
@@ -31,8 +23,9 @@ class Workspace : public QWidget
 
 private:
     NoteManager* noteM;
-    QListView* viewer;
-    QAbstractItemModel* hierarchy;
+    QVBoxLayout* layout;
+    QTreeView* viewer;
+    QStandardItemModel* model;
     QList<QStandardItem*> items;
 
     void loadWorkspace();
@@ -44,4 +37,13 @@ public:
 
 };
 
-#endif // NOTEMANAGERWIDGET_H
+class WorkspaceException
+{
+    QString info;
+
+public:
+    WorkspaceException(const QString& message):info(message){}
+    QString getInfo() const { return info; }
+};
+
+#endif // WORKSPACE_H

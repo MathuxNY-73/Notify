@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Antoine POUILLAUDE. All rights reserved.
 //
 
-#ifndef WORKSPACE_H
-#define WORKSPACE_H
+#ifndef EDITORSPACE_H
+#define EDITORSPACE_H
 
 
 #include <QWidget>
@@ -72,4 +72,4 @@ signals:
 */
 };
 
-#endif // WORKSPACE_H
+#endif // EDITORSPACE_H

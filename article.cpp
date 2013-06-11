@@ -45,9 +45,8 @@ ArticleWidget* Article::getWidget(){
     return widget;
 }
 
-QList<QStandardItem*> Article::load() const
+QStandardItem* Article::load() const
 {
-    QList<QStandardItem*> l;
-    l<<(new QStandardItem(title));
-    return l;
+    QStandardItem* i = new QStandardItem(title);
+    return i;
 }

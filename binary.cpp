@@ -51,11 +51,10 @@ QString Audio::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) {
     return es->exportNote(this,tl);
 }
 
-QList<QStandardItem*> Audio::load() const
+QStandardItem* Audio::load() const
 {
-    QList<QStandardItem*> l;
-    l<<(new QStandardItem(title));
-    return l;
+    QStandardItem* i = new QStandardItem(title);
+    return i;
 }
 
 
@@ -89,11 +88,10 @@ ImageWidget* Image::getWidget()
     return widget;
 }
 
-QList<QStandardItem*> Image::load() const
+QStandardItem* Image::load() const
 {
-    QList<QStandardItem*> l;
-    l<<(new QStandardItem(title));
-    return l;
+    QStandardItem* i = new QStandardItem(title);
+    return i;
 }
 
 
@@ -117,11 +115,10 @@ VideoWidget* Video::getWidget()
     return widget;
 }
 
-QList<QStandardItem*> Video::load() const
+QStandardItem* Video::load() const
 {
-    QList<QStandardItem*> l;
-    l<<(new QStandardItem(title));
-    return l;
+    QStandardItem* i = new QStandardItem(title);
+    return i;
 }
 
 

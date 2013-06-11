@@ -154,12 +154,13 @@ bool Document::notin(const Note& n) const
             return false;
 }
 
-QList<QStandardItem*> Document::load() const
+QStandardItem* Document::load() const
 {
-    QList<QStandardItem*> l;
+    QStandardItem* item;
     constIterator it;
     for(it=begin() ; it!=end() ; ++it)
-        l<<(*it)->load();
+        item->appendRow((*it)->load());
+    return item;
 }
 
 Document::~Document()
