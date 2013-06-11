@@ -44,7 +44,7 @@ protected:
 
 public:
     explicit BinaryWidget(Binary* b,QWidget* parent=0);
-    Note* getNote(){}
+    Note* getNote();
 
     //slots
 public slots:
@@ -66,6 +66,7 @@ private:
 
 public:
     explicit AudioWidget(Audio* a,QWidget* parent=0);
+    Note* getNote();
 
 //Slots
 public slots:
@@ -86,7 +87,7 @@ private:
 
 public:
     explicit VideoWidget(Video* v,QWidget* parent=0);
-
+    Note* getNote();
 //slots
 public slots:
     void lire();
@@ -106,6 +107,8 @@ private:
 
 public:
     explicit ImageWidget(Image* i,QWidget* parent=0);
+    Note* getNote();
+
 };
 
 #endif // BINARYWIDGET_H

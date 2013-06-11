@@ -13,6 +13,7 @@
 
 #include "notemanager.h"
 #include "notewidget.h"
+#include "editorspace.h"
 #include <QTreeView>
 #include <QStandardItem>
 
@@ -27,13 +28,18 @@ private:
     QTreeView* viewer;
     QStandardItemModel* model;
     QList<QStandardItem*> items;
+    Editorspace* editor;
 
     void loadWorkspace();
 
 public:
-    explicit Workspace(QWidget* parent=0, NoteManager* nm=0);
+    explicit Workspace(QWidget* parent=0);
     ~Workspace();
     void setWorkspace(NoteManager* nm);
+    void setEditor(Editorspace* e);
+
+public slots:
+    void addNote(Note* a);
 
 };
 

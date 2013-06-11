@@ -152,14 +152,18 @@ bool Document::notin(const Note& n) const
     for (it=this->begin() ; it!=this->end() ; ++it)
         if((*it)->getId()==n.getId())
             return false;
+    return true;
 }
 
-QStandardItem* Document::load() const
+QStandardItem* Document::getItem()
 {
-    QStandardItem* item;
-    constIterator it;
+    if(!item)
+    {
+        item = new QStandardItem(title);
+    }
+    Iterator it;
     for(it=begin() ; it!=end() ; ++it)
-        item->appendRow((*it)->load());
+        item->appendRow((*it)->getItem());
     return item;
 }
 

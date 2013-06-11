@@ -54,10 +54,13 @@ protected:
     bool loaded;
     bool modified;
 
+    QStandardItem* item;
+
 public:
     //Constructeurs
-    Note(const QString& p):title(""), path(p), modified(false){};
-    Note(unsigned int i, const QString& t):id(i),title(t){}
+    Note(const QString& p);
+    Note(unsigned int i, const QString& t);
+    ~Note();
     
     //Methodes inlines
     unsigned int getId() const {return this->id;}
@@ -68,7 +71,7 @@ public:
         title=t;
     }
     bool isModify() const {return modified;}
-    void setModify(bool m){ modified=true;}
+    void setModify(bool m){ modified=m;}
     
     //Methodes non-inlines
     void addSubNote(Note* n);
@@ -81,7 +84,7 @@ public:
     virtual QString ExportNote(Exports::ExportStrategy* es) =0;		//Class ExportStrategy not yet implemented
     virtual QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) =0;		//Class ExportStrategy not yet implemented
     //virtual void load(const QString& path) =0;
-    virtual QStandardItem* load() const =0;
+    virtual QStandardItem* getItem() =0;
 
     virtual NoteWidget* getWidget()=0;
 

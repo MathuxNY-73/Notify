@@ -9,13 +9,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     id = 0;
 
+    ui->workWidget->setEditor(ui->Editeur);
+    ui->Editeur->setWorkspace(ui->workWidget);
+
     //Configuration
-    if(!NoteManager::exist())
-    {
-        NoteManager* nm=NoteManager::getInstance();
-        ui->Editeur->setWorkspace(nm);
-        ui->actionWorkspace->setEnabled(false);
-    }
+    ui->actionWorkspace->setEnabled(false);
 
     QWidget* spacer= new QWidget();
     spacer->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
@@ -54,14 +52,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::newWorkspace()
 {
-    NoteManager* nm;
+    NoteManager* nm=NoteManager::getInstance();
     try
     {
-        if(NoteManager::exist())
-            throw MyException("La création à échoué car un workspace existe déjà");
-        nm=NoteManager::getInstance();
         if(!nm)
-            throw MyException("La création à échoué");
+            throw MyException("La création à échoué car un workspace existe déjà");
     }
     catch(MyException& e)
     {
@@ -69,7 +64,6 @@ void MainWindow::newWorkspace()
         return;
     }
     ui->actionWorkspace->setEnabled(false);
-    ui->Editeur->setWorkspace(nm);
 }
 
 void MainWindow::newArticle()
@@ -77,7 +71,7 @@ void MainWindow::newArticle()
     if(NoteManager::exist())
     {
         Article* a = new Article(id,"Titre de l'article","Texte de l'article");
-        ui->Editeur->addWidget(a);
+        ui->workWidget->addNote(a);
         id++;
     }
 
@@ -88,7 +82,7 @@ void MainWindow::newDocument()
     if(NoteManager::exist())
     {
         Document* d = new Document(id,"Titre du document");
-        ui->Editeur->addWidget(d);
+        ui->workWidget->addNote(d);
         id++;
     }
 
@@ -99,7 +93,7 @@ void MainWindow::newImage()
     if(NoteManager::exist())
     {
         Image* i = new Image(id,"Titre de l'image","Description de l'image","/Users/Antoine/Pictures/avion.jpg");
-        ui->Editeur->addWidget(i);
+        ui->workWidget->addNote(i);
         id++;
     }
 
@@ -110,7 +104,7 @@ void MainWindow::newVideo()
     if(NoteManager::exist())
     {
         Video* v = new Video(id,"Titre de la video","Description de la video","/Users/Antoine/Movies/themask.avi");
-        ui->Editeur->addWidget(v);
+        ui->workWidget->addNote(v);
         id++;
     }
 
@@ -121,7 +115,7 @@ void MainWindow::newAudio()
     if(NoteManager::exist())
     {
         Audio* a = new Audio(id,"Titre du fichier audio","Description du fichier audio","/Users/Antoine/Music/chattons.wav");
-        ui->Editeur->addWidget(a);
+        ui->workWidget->addNote(a);
         id++;
     }
 

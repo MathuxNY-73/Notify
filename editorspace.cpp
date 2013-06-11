@@ -8,6 +8,7 @@
 
 #include "editorspace.h"
 #include "exports.h"
+#include "workspace.h"
 #include <iostream>
 
 
@@ -62,7 +63,7 @@
     layout->addWidget(onglets);
 }*/
 
-Editorspace::Editorspace(QWidget* parent):QWidget(parent),noteM(0)
+Editorspace::Editorspace(QWidget* parent):QWidget(parent),noteM(NoteManager::getInstance())
 {
     onglets = new QTabWidget(this);
     layout = new QVBoxLayout(this);
@@ -136,8 +137,8 @@ Editorspace::Editorspace(QWidget* parent):QWidget(parent),noteM(0)
 
     //QObject::connect(save,SIGNAL(clicked()),this,SLOT(sauvegarder()));
 }
-
-void Editorspace::setWorkspace(NoteManager *nm)
+/*
+void Editorspace::updateManager(NoteManager *nm)
 {
     noteM=nm;
     if(noteM!=0)
@@ -146,6 +147,11 @@ void Editorspace::setWorkspace(NoteManager *nm)
         for(it=noteM->begin();it!=noteM->end() ; ++it)
             layout_Editor->addWidget((*it)->getWidget());
     }
+}*/
+
+void Editorspace::setWorkspace(Workspace * w)
+{
+    work=w;
 }
 
 void Editorspace::addWidget(Note* n)

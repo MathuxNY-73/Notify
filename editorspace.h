@@ -30,6 +30,7 @@
 #include "notemanager.h"
 #include "notewidget.h"
 
+class Workspace;
 
 class Editorspace : public QWidget
 {
@@ -46,6 +47,7 @@ private:
     QFrame* container;
     NoteManager* noteM;
     QPushButton* save;
+    Workspace* work;
     //QTextEdit* fen;
     //QFile* file;
     //QTextStream* out;
@@ -54,7 +56,7 @@ private:
 public:
     explicit Editorspace(QWidget *parent=0);
     QVBoxLayout* getLayout() {return layout;}
-    void setWorkspace(NoteManager* nm);
+    void setWorkspace(Workspace* nm);
     void addWidget(Note* n);
 
   //Slots

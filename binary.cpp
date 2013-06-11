@@ -51,10 +51,11 @@ QString Audio::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) {
     return es->exportNote(this,tl);
 }
 
-QStandardItem* Audio::load() const
+QStandardItem* Audio::getItem()
 {
-    QStandardItem* i = new QStandardItem(title);
-    return i;
+    if(!item)
+        item = new QStandardItem(title);
+    return item;
 }
 
 
@@ -88,12 +89,12 @@ ImageWidget* Image::getWidget()
     return widget;
 }
 
-QStandardItem* Image::load() const
+QStandardItem* Image::getItem()
 {
-    QStandardItem* i = new QStandardItem(title);
-    return i;
+    if(!item)
+        item = new QStandardItem(title);
+    return item;
 }
-
 
 //Methodes de Video
 QString Video::ExportNote(Exports::ExportStrategy* es)
@@ -115,10 +116,11 @@ VideoWidget* Video::getWidget()
     return widget;
 }
 
-QStandardItem* Video::load() const
+QStandardItem* Video::getItem()
 {
-    QStandardItem* i = new QStandardItem(title);
-    return i;
+    if(!item)
+        item = new QStandardItem(title);
+    return item;
 }
 
 

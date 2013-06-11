@@ -63,7 +63,7 @@ public:
     void addSubNote(Note* n, unsigned int id);
     void removeSubNote(unsigned int id);
 
-    QStandardItem* load() const;
+    QStandardItem* getItem();
     
     QString ExportNote(Exports::ExportStrategy* es);     //Class ExportStrategy not yet implemented
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);      //Class ExportStrategy not yet implemented

@@ -28,7 +28,6 @@ class Binary : public Note{
     
 private:
     //Methodes privées
-    void load();
     BinaryWidget* widget;
     unsigned int maxW;
     
@@ -40,7 +39,7 @@ protected:
     //Attributs protégés
     QString desc;
     QString path;
-    
+
 public:
     //Constructeur
     Binary(unsigned int i,const QString& t, const QString& d, const QString& p);
@@ -77,7 +76,7 @@ public:
     QString ExportNote(Exports::ExportStrategy* es);
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);
     
-    QStandardItem* load() const;
+    QStandardItem* getItem();
 
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
     VideoWidget* getWidget();
@@ -108,7 +107,7 @@ public:
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
     ImageWidget* getWidget();
 
-     QStandardItem* load() const;
+     QStandardItem* getItem();
 };
 
 
@@ -136,6 +135,6 @@ public:
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
     AudioWidget* getWidget();
 
-    QStandardItem* load() const;
+    QStandardItem* getItem();
 };
 #endif // BINARY_H

@@ -38,11 +38,11 @@ void ArticleWidget::modification()
     emit mod();
 }
 
-/*void ArticleWidget::enableSave()
+Note* ArticleWidget::getNote()
 {
-    save->setEnabled(true);
+    return dynamic_cast<Note*>(article);
 }
-*/
+
 void ArticleWidget::updateNote()
 {
      article->setTitle(title->text());

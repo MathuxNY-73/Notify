@@ -36,7 +36,7 @@ private:
 
 public:
     explicit DocumentWidget(Document* d, QWidget* parent=0);
-    Note* getNote(){}
+    Note* getNote();
 
 public slots:
     void updateNote();

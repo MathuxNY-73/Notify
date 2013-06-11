@@ -56,6 +56,11 @@ void BinaryWidget::modification()
     emit mod();
 }
 
+Note* BinaryWidget::getNote()
+{
+    return dynamic_cast<Note*>(binary);
+}
+
 //Méthodes de AudioWidget
 
 AudioWidget::AudioWidget(Audio* a, QWidget* parent):BinaryWidget(a,parent),audio(a)
@@ -93,6 +98,11 @@ void AudioWidget::arreter()
     //Je ne sais pas ce qu'il faut mettre ici non plus
 }
 
+Note* AudioWidget::getNote()
+{
+    return dynamic_cast<Note*>(audio);
+}
+
 //Methodes de Image Widget
 
 ImageWidget::ImageWidget(Image* i,QWidget* parent):BinaryWidget(i,parent),image(i)
@@ -102,6 +112,11 @@ ImageWidget::ImageWidget(Image* i,QWidget* parent):BinaryWidget(i,parent),image(
     label->setPixmap((const QPixmap&) img);
     //label->adjustSize();
     layout->addWidget(label);*/
+}
+
+Note* ImageWidget::getNote()
+{
+    return dynamic_cast<Note*>(image);
 }
 
 //Méthodes de Video Widget
@@ -155,4 +170,9 @@ void VideoWidget::arreter()
     stop->setEnabled(false);
     pause->setEnabled(false);
     //Je ne sais pas ce qu'il faut mettre ici
+}
+
+Note* VideoWidget::getNote()
+{
+    return dynamic_cast<Note*>(video);
 }

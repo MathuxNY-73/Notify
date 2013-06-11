@@ -8,13 +8,16 @@
 
 #include "workspace.h"
 
-Workspace::Workspace(QWidget* parent,NoteManager* nm):QWidget(parent),noteM(nm),items(QList<QStandardItem*>())
+Workspace::Workspace(QWidget* parent):QWidget(parent),items(QList<QStandardItem*>()),noteM(NoteManager::getInstance())
 {
     //Allocation des widgets
     viewer = new QTreeView(this);
     layout = new QVBoxLayout(this);
     model= new QStandardItemModel();
-    viewer = new QTreeView();
+
+    viewer->setHeaderHidden(false);
+    viewer->setModel(model);
+    layout->addWidget(viewer);
 }
 
 Workspace::~Workspace()
@@ -46,8 +49,27 @@ void Workspace::loadWorkspace()
 {
     NoteManager::Const_Iterator it;
     for(it=noteM->cbegin() ; it!=noteM->cend() ; ++it)
-        items<<(*it)->load();
+    {
+        QStandardItem* n=(*it)->getItem();
+        n->setEditable(false);
+        items<<n;
+    }
     model->appendRow(items);
-    viewer->setModel(model);
-    layout->addWidget(viewer);
 }
+
+void Workspace::setEditor(Editorspace *e)
+{
+    editor=e;
+}
+
+void Workspace::addNote(Note* n)
+{
+    noteM->addNote(n);
+    QStandardItem* a;
+    a = n->getItem();
+    a->setEditable(false);
+    model->appendRow(a);
+    if(editor!=0)
+        editor->addWidget(n);
+}
+

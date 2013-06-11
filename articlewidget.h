@@ -26,7 +26,7 @@ private:
 
 public:
     explicit ArticleWidget(Article* a,QWidget* parent=0);
-    Note* getNote(){}
+    Note* getNote();
 
    //Slots
 public slots:

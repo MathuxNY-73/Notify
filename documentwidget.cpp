@@ -75,3 +75,8 @@ void DocumentWidget::giveExport()
     //(*out)<<(const QString&)(h+c+f);
 }
 */
+
+Note* DocumentWidget::getNote()
+{
+    return dynamic_cast<Note*>(document);
+}

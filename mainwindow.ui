@@ -6,40 +6,23 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>846</width>
+    <height>579</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Note Manager</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" rowspan="2">
-     <widget class="QFrame" name="frame">
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="1" rowspan="2">
-        <widget class="QWidget" name="widget" native="true">
-         <zorder>Editeur</zorder>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="Editorspace" name="Editeur" native="true">
-         <zorder>workWidget</zorder>
-         <zorder>widget</zorder>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="Workspace" name="workWidget" native="true"/>
-       </item>
-      </layout>
-     </widget>
+    <item row="0" column="0">
+     <widget class="Workspace" name="workWidget" native="true"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QWidget" name="widget" native="true"/>
+    </item>
+    <item row="0" column="2" rowspan="2">
+     <widget class="Editorspace" name="Editeur" native="true"/>
     </item>
    </layout>
   </widget>
@@ -48,7 +31,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>846</width>
      <height>22</height>
     </rect>
    </property>
@@ -124,6 +107,9 @@
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
     <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>

@@ -17,7 +17,9 @@ NoteWidget::NoteWidget(QWidget *parent):QWidget(parent)
 }
 
 void NoteWidget::titleChanged(QString q)
-{}
+{
+    getNote()->setTitle(q);
+}
 
 void NoteWidget::updateNote()
 {

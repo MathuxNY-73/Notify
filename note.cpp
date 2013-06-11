@@ -10,3 +10,10 @@
 #include "article.h"
 #include <fstream>
 #include <QFile>
+
+Note::Note(const QString& p):title(""), path(p), modified(false){}
+Note::Note(unsigned int i, const QString& t):id(i),title(t),path(""),loaded(false),modified(false),item(0){}
+Note::~Note()
+{
+    delete item;
+}

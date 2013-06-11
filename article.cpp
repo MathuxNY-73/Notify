@@ -45,8 +45,9 @@ ArticleWidget* Article::getWidget(){
     return widget;
 }
 
-QStandardItem* Article::load() const
+QStandardItem* Article::getItem()
 {
-    QStandardItem* i = new QStandardItem(title);
-    return i;
+    if(!item)
+        item = new QStandardItem(title);
+    return item;
 }
