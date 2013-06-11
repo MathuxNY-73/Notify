@@ -15,6 +15,11 @@
 Article::Article(const QString& path):Note(path),text(""),maxW(0){}
 Article::Article(unsigned int i, const QString& ti, const QString& te): Note(i,ti),text(te), maxW(0){}
 
+Article::~Article()
+{
+    delete widget;
+}
+
 const QString& Article::getText() const { return text; }
 
 void Article::setText(const QString& t) {
@@ -40,3 +45,9 @@ ArticleWidget* Article::getWidget(){
     return widget;
 }
 
+QList<QStandardItem*> Article::load() const
+{
+    QList<QStandardItem*> l;
+    l<<(new QStandardItem(title));
+    return l;
+}

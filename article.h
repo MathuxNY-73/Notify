@@ -33,7 +33,6 @@ private:
     //Constructeurs de recopie
     Article(const Article&);
     Article& operator=(const Article&);
-    //void load();
     
 public:
     //Constructeurs
@@ -41,7 +40,7 @@ public:
     Article(unsigned int i, const QString& ti, const QString& te);
     
     //Destructeur
-    ~Article(){}
+    ~Article();
     
     //Methodes inlines
 
@@ -53,6 +52,8 @@ public:
     QString ExportNote(Exports::ExportStrategy *es);
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);
     //QTextStream& operator<<(QTextStream& f, const Article& a);
+
+    QList<QStandardItem*> load() const;
 
 
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document

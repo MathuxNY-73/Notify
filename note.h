@@ -12,7 +12,7 @@
 #include <iostream>
 #include <QString>
 #include <QTextStream>
-
+#include <QStandardItem>
 /*
 class Article;
 class Document;
@@ -53,7 +53,7 @@ protected:
     QString path;
     bool loaded;
     bool modified;
-    
+
 public:
     //Constructeurs
     Note(const QString& p):title(""), path(p), modified(false){};
@@ -81,6 +81,7 @@ public:
     virtual QString ExportNote(Exports::ExportStrategy* es) =0;		//Class ExportStrategy not yet implemented
     virtual QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) =0;		//Class ExportStrategy not yet implemented
     //virtual void load(const QString& path) =0;
+    virtual QList<QStandardItem*> load() const =0;
 
     virtual NoteWidget* getWidget()=0;
 

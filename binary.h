@@ -67,7 +67,8 @@ private:
     //Constructeurs de recopie
     Video(const Video& v);
     Video& operator=(const Video& v);
-    
+
+
 public:
     //Constructeurs
     Video(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p),maxW(0){}
@@ -76,6 +77,7 @@ public:
     QString ExportNote(Exports::ExportStrategy* es);
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);
     
+    QList<QStandardItem*> load() const;
 
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
     VideoWidget* getWidget();
@@ -93,6 +95,7 @@ private:
     Image(const Image& i);
     Image& operator=(const Image& i);
 
+
 public:
     //Constructeurs
     Image(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p),maxW(0){}
@@ -104,6 +107,8 @@ public:
 
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
     ImageWidget* getWidget();
+
+     QList<QStandardItem*> load() const;
 };
 
 
@@ -117,6 +122,7 @@ private:
     //Constructeurs de recopie
     Audio(const Audio& a);
     Audio& operator=(const Audio& a);
+
     
 public:
     //Constructeurs
@@ -129,5 +135,7 @@ public:
 
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
     AudioWidget* getWidget();
+
+    QList<QStandardItem*> load() const;
 };
 #endif // BINARY_H

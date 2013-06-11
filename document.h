@@ -36,6 +36,7 @@ private:
     Document(const Document& m);
     Document& operator=(const Document& m);
     
+
 public:
     //Constructeurs
     Document(unsigned int i, const QString& t):Note(i,t),notes(QList<Note*>()),maxW(0){}
@@ -48,7 +49,7 @@ public:
     Document(const QString& p):Note(p), notes(QList<Note*>()){}
     
     //Destructeur
-    ~Document() {}
+    ~Document();
     
     //Methodes inlines
 
@@ -62,7 +63,7 @@ public:
     void addSubNote(Note* n, unsigned int id);
     void removeSubNote(unsigned int id);
 
-    
+    QList<QStandardItem*> load() const;
     
     QString ExportNote(Exports::ExportStrategy* es);     //Class ExportStrategy not yet implemented
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);      //Class ExportStrategy not yet implemented

@@ -106,6 +106,40 @@ public:
     Iterator end(){
         return Iterator(notes.end());
     }
+
+    //Iterateur constant
+    class Const_Iterator {
+
+    private:
+        //Copain
+        friend class NoteManager;
+
+        //Attributs
+        QSet<Note*>::const_iterator it;
+
+        //Constructeur
+        Const_Iterator(QSet<Note*>::const_iterator c):it(c){}
+
+    public:
+        //Constructeur
+        Const_Iterator():it(){}
+
+        //Methodes inlines
+        Note* operator*() const {return *it;}
+        bool operator!=(const Const_Iterator& c) const {return it!=c.it;}
+        Const_Iterator& operator++() {++it; return *this;}
+        Const_Iterator operator++(int){
+            Const_Iterator* tmp=this;
+            ++it;
+            return *tmp;
+        }
+    };
+    Const_Iterator cbegin() const{
+        return Const_Iterator(notes.cbegin());
+    }
+    Const_Iterator cend() const{
+        return Const_Iterator(notes.cend());
+    }
     
 };
 

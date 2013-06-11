@@ -153,3 +153,16 @@ bool Document::notin(const Note& n) const
         if((*it)->getId()==n.getId())
             return false;
 }
+
+QList<QStandardItem*> Document::load() const
+{
+    QList<QStandardItem*> l;
+    constIterator it;
+    for(it=begin() ; it!=end() ; ++it)
+        l<<(*it)->load();
+}
+
+Document::~Document()
+{
+    delete widget;
+}
