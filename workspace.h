@@ -15,6 +15,7 @@
 #include "notewidget.h"
 #include "editorspace.h"
 #include <QTreeView>
+#include <QScrollBar>
 #include <QStandardItem>
 
 class Workspace : public QWidget
@@ -26,6 +27,7 @@ private:
     NoteManager* noteM;
     QVBoxLayout* layout;
     QTreeView* viewer;
+    QScrollBar* scroll;
     QStandardItemModel* model;
     QList<QStandardItem*> items;
     Editorspace* editor;

@@ -63,7 +63,7 @@
     layout->addWidget(onglets);
 }*/
 
-Editorspace::Editorspace(QWidget* parent):QWidget(parent),noteM(NoteManager::getInstance())
+Editorspace::Editorspace(QWidget* parent):QWidget(parent),noteM(&NoteManager::getInstance())
 {
     onglets = new QTabWidget(this);
     layout = new QVBoxLayout(this);

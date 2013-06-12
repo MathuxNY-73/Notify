@@ -69,9 +69,12 @@ public:
     void reset();
     Note* loadNote(unsigned int i);
     static bool exist() {return instance!=0;}
-    static NoteManager* getInstance();
-    static void releaseInstance();
     void saveState() const;
+
+    //Singleton
+    static NoteManager& getInstance();
+    static void releaseInstance();
+
 
     //Iterateur non constant
     class Iterator {

@@ -33,12 +33,15 @@ private:
 protected:
     QLineEdit* title;
     QVBoxLayout* layout;
+    QGridLayout* glayout;
     QFileDialog* explorer;
+    QPushButton* root;
 
 public:
     explicit NoteWidget(QWidget *parent=0);
     QVBoxLayout* getLayout() {return layout;}
     virtual Note* getNote()=0;
+    ~NoteWidget();
 
     //Slots
 public slots:

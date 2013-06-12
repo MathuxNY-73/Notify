@@ -52,7 +52,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::newWorkspace()
 {
-    NoteManager* nm=NoteManager::getInstance();
+    NoteManager* nm=&NoteManager::getInstance();
     try
     {
         if(!nm)

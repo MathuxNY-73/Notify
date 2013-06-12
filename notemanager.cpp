@@ -15,10 +15,10 @@
 
 NoteManager* NoteManager::instance=0; // pointeur sur l'unique instance
 
-NoteManager* NoteManager::getInstance(){
+NoteManager& NoteManager::getInstance(){
     if (!instance)
         instance=new NoteManager();
-    return instance;
+    return *instance;
 }
 
 void NoteManager::releaseInstance(){

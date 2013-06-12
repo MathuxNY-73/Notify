@@ -27,7 +27,7 @@ ArticleWidget::ArticleWidget(Article* a,QWidget* parent):NoteWidget(parent),arti
     //layout->addWidget(save);
 
     //Connection
-    QObject::connect(text,SIGNAL(textChanged()),this,SLOT(modification()));
+    QObject::connect(text,SIGNAL(textEdited()),this,SLOT(modification()));
     QObject::connect(title,SIGNAL(textEdited(QString)),this,SLOT(modification()));
 
 }

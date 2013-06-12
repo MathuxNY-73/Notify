@@ -17,7 +17,8 @@ HEADERS += \
     binarywidget.h \
     editorspace.h \
     mainwindow.h \
-    workspace.h
+    workspace.h \
+    tagmanager.h
 
 SOURCES += \
     article.cpp \
@@ -33,7 +34,8 @@ SOURCES += \
     binarywidget.cpp \
     editorspace.cpp \
     mainwindow.cpp \
-    workspace.cpp
+    workspace.cpp \
+    tagmanager.cpp
 
 FORMS += \
     mainwindow.ui

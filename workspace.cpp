@@ -8,20 +8,26 @@
 
 #include "workspace.h"
 
-Workspace::Workspace(QWidget* parent):QWidget(parent),items(QList<QStandardItem*>()),noteM(NoteManager::getInstance())
+Workspace::Workspace(QWidget* parent):QWidget(parent),noteM(&NoteManager::getInstance()),items(QList<QStandardItem*>())
 {
     //Allocation des widgets
     viewer = new QTreeView(this);
     layout = new QVBoxLayout(this);
     model= new QStandardItemModel();
+    scroll = new QScrollBar(Qt::Horizontal,this);
 
     viewer->setHeaderHidden(false);
     viewer->setModel(model);
+    viewer->setHorizontalScrollBar(scroll);
+    viewer->setMinimumSize(100,150);
+    viewer->setMaximumSize(150,400);
+    viewer->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
     layout->addWidget(viewer);
 }
 
 Workspace::~Workspace()
 {
+    delete scroll;
     delete viewer;
     delete model;
     delete layout;
