@@ -44,6 +44,7 @@ protected:
 
 public:
     explicit BinaryWidget(Binary* b,QWidget* parent=0);
+    ~BinaryWidget();
     Note* getNote();
 
     //slots
@@ -62,10 +63,11 @@ class AudioWidget : public BinaryWidget
 private:
     Audio* audio;
     QPushButton* play, *stop;
-    QGridLayout* glayout;
+    QHBoxLayout* hlayout;
 
 public:
     explicit AudioWidget(Audio* a,QWidget* parent=0);
+    ~AudioWidget();
     Note* getNote();
 
 //Slots
@@ -83,10 +85,11 @@ private:
     //Phonon::VideoPlayer* player;
     QPushButton* play, *pause, *stop;
     QSlider* cursor;
-    QGridLayout* glayout;
+    QHBoxLayout* hlayout;
 
 public:
     explicit VideoWidget(Video* v,QWidget* parent=0);
+    ~VideoWidget();
     Note* getNote();
 //slots
 public slots:
@@ -107,6 +110,7 @@ private:
 
 public:
     explicit ImageWidget(Image* i,QWidget* parent=0);
+    ~ImageWidget();
     Note* getNote();
 
 };

@@ -9,14 +9,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     id = 0;
 
-    ui->workWidget->setEditor(ui->Editeur);
-    ui->Editeur->setWorkspace(ui->workWidget);
-
     //Configuration
     ui->actionWorkspace->setEnabled(false);
 
     QWidget* spacer= new QWidget();
     spacer->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+
 
     //Action
     ui->actionArticle->setIcon(QIcon("/Users/Antoine/Documents/ProjetInfo/Github/Notify_Github/Icons/articleIcon48.png"));
@@ -43,11 +41,30 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->actionVideo,SIGNAL(triggered()),this,SLOT(newVideo()));
     QObject::connect(ui->actionImage_2,SIGNAL(triggered()),this,SLOT(newImage()));
     QObject::connect(ui->actionAudio,SIGNAL(triggered()),this,SLOT(newAudio()));
+
+
+    //Zone de travail
+
+    gridLayout = new QGridLayout(ui->centralwidget);
+    ui->centralwidget->setLayout(gridLayout);
+
+    work = new Workspace(ui->centralwidget);
+    editor = new Editorspace(ui->centralwidget);
+
+
+    work->setEditor(editor);
+    editor->setWorkspace(work);
+
+    gridLayout->addWidget(work,0,0,1,1);
+    gridLayout->addWidget(editor,0,1,2,1);
+    gridLayout->addWidget(&Tags::TagManagerWidget::getInstance(),1,0,1,1);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete gridLayout;
+    Tags::TagManagerWidget::releaseInstance();
 }
 
 void MainWindow::newWorkspace()
@@ -71,7 +88,7 @@ void MainWindow::newArticle()
     if(NoteManager::exist())
     {
         Article* a = new Article(id,"Titre de l'article","Texte de l'article");
-        ui->workWidget->addNote(a);
+        work->addNote(a);
         id++;
     }
 
@@ -82,7 +99,7 @@ void MainWindow::newDocument()
     if(NoteManager::exist())
     {
         Document* d = new Document(id,"Titre du document");
-        ui->workWidget->addNote(d);
+        work->addNote(d);
         id++;
     }
 
@@ -93,7 +110,7 @@ void MainWindow::newImage()
     if(NoteManager::exist())
     {
         Image* i = new Image(id,"Titre de l'image","Description de l'image","/Users/Antoine/Pictures/avion.jpg");
-        ui->workWidget->addNote(i);
+        work->addNote(i);
         id++;
     }
 
@@ -104,7 +121,7 @@ void MainWindow::newVideo()
     if(NoteManager::exist())
     {
         Video* v = new Video(id,"Titre de la video","Description de la video","/Users/Antoine/Movies/themask.avi");
-        ui->workWidget->addNote(v);
+        work->addNote(v);
         id++;
     }
 
@@ -115,7 +132,7 @@ void MainWindow::newAudio()
     if(NoteManager::exist())
     {
         Audio* a = new Audio(id,"Titre du fichier audio","Description du fichier audio","/Users/Antoine/Music/chattons.wav");
-        ui->workWidget->addNote(a);
+        work->addNote(a);
         id++;
     }
 

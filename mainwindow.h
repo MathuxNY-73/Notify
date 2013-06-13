@@ -3,12 +3,14 @@
 
 #include "editorspace.h"
 #include "workspace.h"
+#include "tagmanager.h"
 #include <QMainWindow>
 #include <QWidget>
 #include <QSizePolicy>
 #include <QException>
 #include <QIcon>
 #include <QAction>
+#include <QMenuBar>
 
 namespace Ui {
 class MainWindow;
@@ -35,6 +37,13 @@ public:
 private:
     Ui::MainWindow *ui;
     unsigned int id;
+
+    QWidget* central;
+    Tags::TagManagerWidget* tags;
+    Editorspace* editor;
+    Workspace* work;
+
+    QGridLayout* gridLayout;
 
     //slots
 private slots:

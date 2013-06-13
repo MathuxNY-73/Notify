@@ -22,6 +22,8 @@ BinaryWidget::BinaryWidget(Binary* b,QWidget* parent):NoteWidget(parent),binary(
     descpt = new QTextEdit("Description",this);
     //save = new QPushButton("Save",this);
     //save->setEnabled(false);
+    bwse->setMaximumWidth(150);
+    //bwse->setStyle();
     QObject::connect(descpt,SIGNAL(textChanged()),this,SLOT(enableSave()));
     QObject::connect(title,SIGNAL(textChanged(QString)),this,SLOT(enableSave()));
 
@@ -36,6 +38,14 @@ BinaryWidget::BinaryWidget(Binary* b,QWidget* parent):NoteWidget(parent),binary(
     path->setText("Path : "+binary->getPath());
     title->setText(binary->getTitle());
     descpt->setText(binary->getDesc());
+}
+
+BinaryWidget::~BinaryWidget()
+{
+    delete descpt;
+    delete path;
+    delete bwse;
+    delete hlayout;
 }
 
 void BinaryWidget::enableSave()
@@ -67,12 +77,18 @@ AudioWidget::AudioWidget(Audio* a, QWidget* parent):BinaryWidget(a,parent),audio
 {
     //Allocations des widgets et connection
     play = new QPushButton("Play",this);
+    play->setMaximumWidth(100);
+    play->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
     QObject::connect(play,SIGNAL(clicked()),this,SLOT(lire()));
 
     stop = new QPushButton("Stop", this);
+    stop->setMaximumWidth(100);
+    stop->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
     QObject::connect(stop,SIGNAL(clicked()),this,SLOT(arreter()));
 
-    glayout = new QGridLayout();
+    hlayout = new QHBoxLayout();
+    QWidget* spacer= new QWidget(this);
+    spacer->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
 
     //Configuration  des widgets
     play->setToolTip("Push to play");
@@ -80,11 +96,14 @@ AudioWidget::AudioWidget(Audio* a, QWidget* parent):BinaryWidget(a,parent),audio
     stop->setEnabled(false);
 
     //Mise en layout des widgets
-    glayout->addWidget(play,0,5,1,1);
-    glayout->addWidget(stop,0,6,1,1);
-    layout->addLayout(glayout);
+    hlayout->addWidget(spacer);
+    hlayout->addWidget(play);
+    hlayout->addWidget(stop);
+    layout->addLayout(hlayout);
 
 }
+
+AudioWidget::~AudioWidget(){}
 
 void AudioWidget::lire()
 {
@@ -113,6 +132,7 @@ ImageWidget::ImageWidget(Image* i,QWidget* parent):BinaryWidget(i,parent),image(
     //label->adjustSize();
     layout->addWidget(label);*/
 }
+ImageWidget::~ImageWidget(){}
 
 Note* ImageWidget::getNote()
 {
@@ -126,15 +146,24 @@ VideoWidget::VideoWidget(Video* v,QWidget* parent):BinaryWidget(v,parent),video(
 
     //Allocations des widgets et connection
     play = new QPushButton("Play",this);
+    play->setMaximumWidth(100);
+    play->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
     QObject::connect(play,SIGNAL(clicked()),this,SLOT(lire()));
 
     pause = new QPushButton("Pause",this);
+    pause->setMaximumWidth(100);
+    pause->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
     QObject::connect(pause,SIGNAL(clicked()),this,SLOT(setPause()));
 
     stop = new QPushButton("Stop", this);
+    stop->setMaximumWidth(100);
+    stop->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
     QObject::connect(stop,SIGNAL(clicked()),this,SLOT(arreter()));
 
-    glayout = new QGridLayout();
+    hlayout = new QHBoxLayout();
+
+    QWidget* spacer= new QWidget(this);
+    spacer->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
 
     //Configuration  des widgets
     play->setToolTip("Push to play");
@@ -144,11 +173,14 @@ VideoWidget::VideoWidget(Video* v,QWidget* parent):BinaryWidget(v,parent),video(
     stop->setEnabled(false);
 
     //Mise en layout des widgets
-    glayout->addWidget(play,0,5,1,1);
-    glayout->addWidget(pause,0,6,1,1);
-    glayout->addWidget(stop,0,7,1,1);
-    layout->addLayout(glayout);
+    hlayout->addWidget(spacer);
+    hlayout->addWidget(play);
+    hlayout->addWidget(pause);
+    hlayout->addWidget(stop);
+    layout->addLayout(hlayout);
 }
+
+VideoWidget::~VideoWidget(){}
 
 void VideoWidget::lire()
 {
