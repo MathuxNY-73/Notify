@@ -23,7 +23,7 @@ void TagManager::releaseInstance()
 
 TagManager::TagManager()
 {
-    tagModel = new QStandardItemModel();
+    tagModel = new QStringListModel(tagList,this);
 }
 
 TagManager::~TagManager()
@@ -34,28 +34,44 @@ TagManager::~TagManager()
 void TagManager::load(){}
 
 void TagManager::clear(){}
+
 void TagManager::addTag(const QString& name){
-    QStandardItem* item = new QStandardItem(name);
-    tags.insert(item,QSet<Note*>());
-    tagModel->appendRow(item);
+
+    try
+    {
+        if(tagList.contains(name,Qt::CaseInsensitive))
+            throw TagManagerException("Le tag que vous essayez d'jouter existe déjà");
+        else
+        {
+            tagList<<name;
+            tags.insert(name,QSet<Note*>());
+            tagModel->setStringList(tagList);
+        }
+    }
+    catch(TagManagerException& e)
+    {
+        QMessageBox::warning(&TagManagerWidget::getInstance(),"Warning",e.getInfo());
+        return;
+    }
 }
 
-void TagManager::deleteTag(int row){
-    QStandardItem* item = tagModel->item(row+1);
-    tags.remove(item);
-    tagModel->removeRow(row+1);
+void TagManager::deleteTag(const QString& name){
+    tagList.removeOne(name);
+    tags.erase(tags.find(name));
+    tagModel->setStringList(tagList);
 }
 
-void TagManager::addAssociation(int row, Note* note)
+void TagManager::addAssociation(const QString& name,const QSet<Note*>& note)
 {
-    tags[tagModel->item(row)].insert(note);
+    tags[name]= tags[name].unite(note);
+    QMessageBox::information(&TagManagerWidget::getInstance(),"info","Association successfully added");
 }
-void TagManager::deleteAssociation(int row, Note* note)
+void TagManager::deleteAssociation(const QString& name, Note* note)
 {
-    tags[tagModel->item(row)].remove(note);
+    tags[name].remove(note);
 }
 
-QStandardItemModel* TagManager::getModel() const
+QStringListModel* TagManager::getModel() const
 {
     return tagModel;
 }
@@ -88,6 +104,7 @@ TagManagerWidget::TagManagerWidget(QWidget* parent):QWidget(parent),manager(&Tag
     viewer = new QListView(this);
 
     viewer->setModel(manager->getModel());
+    viewer->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     deleteTagBtn->setEnabled(true); //Empêche de supprimer un tag sans en avoir sélectionné un.
 
@@ -133,12 +150,21 @@ void TagManagerWidget::deleteTags()
     for (int i = 0 ; i < listeSelections.size() ; i++)
     {
         QVariant elementSelectionne = manager->getModel()->data(listeSelections[i], Qt::DisplayRole);
-        manager->deleteTag(elementSelectionne.toModelIndex().row());
+        manager->deleteTag(elementSelectionne.toString());
     }
 }
 
 void TagManagerWidget::setAssociation(){
-
+    QSet<Note*> select = Workspace::getInstance().getSelectedNote();
+    if (select.isEmpty())
+        return;
+    QItemSelectionModel *selection = viewer->selectionModel();
+    QModelIndexList listeSelections = selection->selectedIndexes();
+    for (int i = 0 ; i < listeSelections.size() ; i++)
+    {
+        QVariant elementSelectionne = manager->getModel()->data(listeSelections[i], Qt::DisplayRole);
+        manager->addAssociation(elementSelectionne.toString(),select);
+    }
 }
 
 void TagManagerWidget::deleteAssociation()

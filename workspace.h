@@ -14,6 +14,7 @@
 #include "notemanager.h"
 #include "notewidget.h"
 #include "editorspace.h"
+#include "tagmanager.h"
 #include <QTreeView>
 #include <QScrollBar>
 #include <QStandardItem>
@@ -28,20 +29,32 @@ private:
     QVBoxLayout* layout;
     QTreeView* viewer;
     QScrollBar* scroll;
+    QPushButton* afficheSelection;
     QStandardItemModel* model;
-    QList<QStandardItem*> items;
+    QMap<QModelIndex,unsigned int> items;
     Editorspace* editor;
 
     void loadWorkspace();
 
-public:
+    //Singleton
+    static Workspace* Instance;
     explicit Workspace(QWidget* parent=0);
     ~Workspace();
+    Workspace(const Workspace& ws);
+    Workspace& operator=(const Workspace& ws);
+
+public:
+
+    static Workspace& getInstance(QWidget* parent=0);
+    static void releaseInstance();
+
     void setWorkspace(NoteManager* nm);
     void setEditor(Editorspace* e);
+    QSet<Note*>& getSelectedNote() const;
 
 public slots:
     void addNote(Note* a);
+    void getSelection();
 
 };
 

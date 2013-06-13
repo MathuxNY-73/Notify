@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
     gridLayout = new QGridLayout(ui->centralwidget);
     ui->centralwidget->setLayout(gridLayout);
 
-    work = new Workspace(ui->centralwidget);
+    work = &Workspace::getInstance(ui->centralwidget);
     editor = new Editorspace(ui->centralwidget);
 
 
@@ -65,6 +65,7 @@ MainWindow::~MainWindow()
     delete ui;
     delete gridLayout;
     Tags::TagManagerWidget::releaseInstance();
+    Workspace::releaseInstance();
 }
 
 void MainWindow::newWorkspace()

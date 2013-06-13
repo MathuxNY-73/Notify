@@ -10,11 +10,24 @@
 #include <QGroupBox>
 #include <QInputDialog>
 #include <QListView>
+#include <QStringListModel>
+#include <QStringList>
 
 namespace Tags
 {
 
+class TagStringList;
 class TagManagerWidget;
+
+class TagManagerException
+{
+    QString info;
+
+public:
+    TagManagerException(const QString& message):info(message){}
+    QString getInfo() const { return info; }
+};
+
 
 class TagManager : public QObject
 {
@@ -23,10 +36,11 @@ class TagManager : public QObject
     friend class TagManagerWidget;
 
 private:
-    typedef QMap<QStandardItem*,QSet<Note*> > Association;
+    typedef QMap<QString,QSet<Note*> > Association;
     Association tags;
     QList<Note*> filteredNote;
-    QList<QStandardItem*> filteredTags;
+    QList<QString> filteredTags;
+    QStringList tagList;
 
     //On le met en singleton
     TagManager();
@@ -35,9 +49,9 @@ private:
     TagManager& operator=(const TagManager& t);
 
     static TagManager* Instance;
-    QStandardItemModel* tagModel;
+    QStringListModel* tagModel;
 
-    QStandardItemModel* getModel() const;
+    QStringListModel* getModel() const;
 
 public:
 
@@ -49,9 +63,9 @@ public:
     void load();
     void clear();
     void addTag(const QString& name);
-    void deleteTag(int row);
-    void addAssociation(int row, Note* note);
-    void deleteAssociation(int row, Note* note);
+    void deleteTag(const QString& name);
+    void addAssociation(const QString& name, const QSet<Note*>& note);
+    void deleteAssociation(const QString& name, Note* note);
 
 
     typedef Association::const_iterator constAssocIterator;
@@ -68,13 +82,15 @@ public:
     constFNIterator fniEnd() const {return filteredNote.cend();}
     FNIterator fniEnd() {return filteredNote.end();}
 
-    typedef QList<QStandardItem*>::const_iterator constFTIterator;
-    typedef QList<QStandardItem*>::Iterator FTIterator;
+    typedef QList<QString>::const_iterator constFTIterator;
+    typedef QList<QString>::Iterator FTIterator;
     constFTIterator ftiBegin() const { return filteredTags.cbegin();}
     FTIterator ftiBegin() { return filteredTags.begin();}
     constFTIterator ftiEnd() const {return filteredTags.cend();}
     FTIterator ftiEnd() {return filteredTags.end();}
 };
+
+//class TagStringList : Q
 
 class TagManagerWidget : public QWidget
 {
