@@ -22,6 +22,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include "note.h"
+#include <QLabel>
 
 class NoteWidget : public QWidget
 {
@@ -33,9 +34,10 @@ private:
 protected:
     QLineEdit* title;
     QVBoxLayout* layout;
-    QGridLayout* glayout;
+    QHBoxLayout* hlayout;
     QFileDialog* explorer;
     QPushButton* root;
+    QLabel* directory;
 
 public:
     explicit NoteWidget(QWidget *parent=0);

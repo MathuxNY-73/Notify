@@ -135,12 +135,16 @@ TagManagerWidget::~TagManagerWidget()
 
 void TagManagerWidget::addTags()
 {
-    bool ok=false;
-    QString name = QInputDialog::getText(this,"New Tag","Set the name of your new tag :", QLineEdit::Normal, QString() , &ok);
-    if(ok && !name.isEmpty())
-        manager->addTag(name);
-    else
+    try{
+        bool ok=false;
+        QString name = QInputDialog::getText(this,"New Tag","Set the name of your new tag :", QLineEdit::Normal, QString() , &ok);
+        if(ok && !name.isEmpty())
+            Workspace::getInstance().addTag(name);
+            manager->addTag(name);
+    }catch(TagManagerException& e){
+        QMessageBox::warning(this,"Alert",e.getInfo());
         return;
+    }
 }
 
 void TagManagerWidget::deleteTags()

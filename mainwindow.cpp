@@ -43,7 +43,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->actionVideo,SIGNAL(triggered()),this,SLOT(newVideo()));
     QObject::connect(ui->actionImage_2,SIGNAL(triggered()),this,SLOT(newImage()));
     QObject::connect(ui->actionAudio,SIGNAL(triggered()),this,SLOT(newAudio()));
+    QObject::connect(ui->actionSave,SIGNAL(triggered()),this,SLOT(saveWorkspace()));
+    QObject::connect(ui->actionSave_As,SIGNAL(triggered()),this,SLOT(saveWorkspaceAs()));
 
+    QObject::connect(this,SIGNAL(clear()),&Workspace::getInstance(),SLOT(clear()));
 
     //Zone de travail
 
@@ -80,15 +83,10 @@ void MainWindow::newWorkspace()
         int ret = message.exec();
         switch(ret){
         case QMessageBox::Save:
-            saveInFile();
             try{
-                QString path = getPath();
-                if (path!="")
-                {
-                    Workspace::getInstance().getFile("");
-                    NoteManager::releaseInstance();
-                    NoteManager::getInstance().setPath(path);
-                }
+                saveWorkspace();
+                NoteManager::releaseInstance();
+                NoteManager::getInstance();
         }catch(MyException& e)
             {
                 QMessageBox::critical(ui->centralwidget,"Alert",e.getInfo());
@@ -107,20 +105,40 @@ void MainWindow::newWorkspace()
     }
 }
 
+void MainWindow::saveWorkspace()
+{
+    if(NoteManager::getInstance().getPath()=="")
+    {
+        saveWorkspaceAs();
+        return;
+    }
+    Workspace::getInstance().saveInFile();
+}
+
+void MainWindow::saveWorkspaceAs()
+{
+    QString dossier = QFileDialog::getSaveFileName(ui->centralwidget, "Save workspace as...", QString(), "*.*");
+    QDir workFolder(dossier);
+    if(!workFolder.mkpath(dossier))
+         throw MyException("An error occured while creating the workspace directory");
+    else
+    {
+        NoteManager::getInstance().setPath(QString(dossier)+"/");
+        QMessageBox::information(ui->centralwidget,"Information","Le chemin est :"+NoteManager::getInstance().getPath());
+        Workspace::getInstance().saveInFile();
+     }
+}
+
 QString MainWindow::getPath() const
 {
     QString dossier = QFileDialog::getSaveFileName(ui->centralwidget, "Save a workspace", QString(), "*.*");
     QDir workFolder(dossier);
-    //bool ok=false;
-    //QString name = QInputDialog::getText(ui->centralwidget,"New Workspace","Set the name of your new Workspace:", QLineEdit::Normal, QString() , &ok);
-        if(!workFolder.mkpath(dossier))
-            throw MyException("An error occured while creating the workspace directory");
-        else
-        {
-            //workPath=""+dossier+"/"+name;
-            QMessageBox::information(ui->centralwidget,"Information","Le chemin est :"+dossier);
-            return QString(dossier);
-        }
+    if(!workFolder.mkpath(dossier))
+         throw MyException("An error occured while creating the workspace directory");
+    else
+    {
+        return QString(dossier);
+     }
 }
 
 void MainWindow::newArticle()
@@ -128,7 +146,13 @@ void MainWindow::newArticle()
     if(NoteManager::exist())
     {
         Article* a = new Article(id,"Titre de l'article","Texte de l'article");
-        work->addNote(a);
+        try{
+            work->addNote(a);
+        }catch(MyException& e){
+            QMessageBox::warning(ui->centralwidget,"Error",e.getInfo());
+            delete a;
+            return;
+        }
         id++;
     }
 
@@ -139,7 +163,13 @@ void MainWindow::newDocument()
     if(NoteManager::exist())
     {
         Document* d = new Document(id,"Titre du document");
-        work->addNote(d);
+        try{
+            work->addNote(d);
+        }catch(MyException& e){
+            QMessageBox::warning(ui->centralwidget,"Error",e.getInfo());
+            delete d;
+            return;
+        }
         id++;
     }
 
@@ -150,7 +180,13 @@ void MainWindow::newImage()
     if(NoteManager::exist())
     {
         Image* i = new Image(id,"Titre de l'image","Description de l'image","/Users/Antoine/Pictures/avion.jpg");
-        work->addNote(i);
+        try{
+            work->addNote(i);
+        }catch(MyException& e){
+            QMessageBox::warning(ui->centralwidget,"Error",e.getInfo());
+            delete i;
+            return;
+        }
         id++;
     }
 
@@ -161,7 +197,13 @@ void MainWindow::newVideo()
     if(NoteManager::exist())
     {
         Video* v = new Video(id,"Titre de la video","Description de la video","/Users/Antoine/Movies/themask.avi");
-        work->addNote(v);
+        try{
+            work->addNote(v);
+        }catch(MyException& e){
+            QMessageBox::warning(ui->centralwidget,"Error",e.getInfo());
+            delete v;
+            return;
+        }
         id++;
     }
 
@@ -172,7 +214,13 @@ void MainWindow::newAudio()
     if(NoteManager::exist())
     {
         Audio* a = new Audio(id,"Titre du fichier audio","Description du fichier audio","/Users/Antoine/Music/chattons.wav");
-        work->addNote(a);
+        try{
+            work->addNote(a);
+        }catch(MyException& e){
+            QMessageBox::warning(ui->centralwidget,"Error",e.getInfo());
+            delete a;
+            return;
+        }
         id++;
     }
 

@@ -70,6 +70,7 @@ public:
 public slots:
     void changementOnglet(int i);
     void sauvegarder();
+    void clear();
 /*
 private slots:
     void changementOnglet(int);

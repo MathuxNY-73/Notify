@@ -19,6 +19,9 @@
 #include <QScrollBar>
 #include <QStandardItem>
 #include <QtXML/QDomDocument>
+#include <QtXml/QDomElement>
+#include <QtXml/QDomNode>
+#include <QtXml/QDomNodeList>
 
 
 class Workspace : public QWidget
@@ -45,7 +48,7 @@ private:
 
     //Methodes privées
     void loadWorkspace();
-    void destruct();
+    void clearAll();
 
 public:
 
@@ -56,10 +59,16 @@ public:
 
     void getFile(const QString& path);
     void setWorkspace();
+    void saveInFile();
+    void addNote(Note* a);
+    void addTag(const QString& t);
 
 public slots:
-    void addNote(Note* a);
+    void clear();
     //void getSelection();
+
+signals:
+    void clearOthers();
 
 };
 

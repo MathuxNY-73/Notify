@@ -146,6 +146,7 @@ Editorspace::Editorspace(QWidget* parent):QWidget(parent)
     }
     //Création des connexions
     QObject::connect(onglets,SIGNAL(currentChanged(int)),this,SLOT(changementOnglet(int)));
+    QObject::connect(&Workspace::getInstance(),SIGNAL(clearOthers()),this,SLOT(clear()));
 
     //Test sauvegarde
     //fen = new QTextEdit(this);
@@ -263,5 +264,15 @@ void Editorspace::sauvegarder()
             out<<(const QString&)s;
             file.close();
         }
+    }
+}
+
+void Editorspace::clear()
+{
+    QLayoutItem *item;
+    while ((item = layout_Editor->takeAt(0)) != 0)
+    {
+        delete item->widget();
+        delete item;
     }
 }

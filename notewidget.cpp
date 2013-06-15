@@ -10,15 +10,17 @@ NoteWidget::NoteWidget(QWidget *parent):QWidget(parent)
 {
     title = new QLineEdit("titre",this);
     layout = new QVBoxLayout(this);
-    glayout = new QGridLayout();
+    hlayout = new QHBoxLayout();
+    directory = new QLabel("/",this);
     root = new QPushButton("..",this);
-    glayout->addWidget(root,0,0,1,1);
-    glayout->addWidget(title,0,1,1,5);
-    layout->addLayout(glayout);
+    hlayout->addWidget(root);
+    hlayout->addWidget(directory);
+    hlayout->addWidget(title);
+    root->setMaximumWidth(80);
+    layout->addLayout(hlayout);
     this->setLayout(layout);
 
     QObject::connect(title,SIGNAL(textChanged(QString)),this,SLOT(titleChanged(QString)));
-    layout->addWidget(title);
 }
 
 void NoteWidget::titleChanged(QString q)
@@ -35,7 +37,8 @@ void NoteWidget::updateNote()
 NoteWidget::~NoteWidget()
 {
     delete title;
-    delete glayout;
-    delete layout;
     delete root;
+    delete directory;
+    delete hlayout;
+    delete layout;
 }

@@ -59,6 +59,8 @@ public slots:
     void newVideo();
     void newImage();
     void newWorkspace();
+    void saveWorkspace();
+    void saveWorkspaceAs();
 
 signals:
     void clear();

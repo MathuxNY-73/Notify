@@ -70,6 +70,7 @@ public:
         modified=true;
         title=t;
     }
+    QString getPath() const {return this->path;}
     bool isModify() const {return modified;}
     void setModify(bool m){ modified=m;}
     

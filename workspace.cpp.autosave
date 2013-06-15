@@ -181,31 +181,6 @@ void Workspace::saveInFile()
     stream.setCodec("UTF-8");
     stream << update;
     file.close();
-
-    /*getFile(NoteManager::getInstance().getPath());
-    //On s'occupe d'abord des Notes
-    NoteManager::Const_Iterator it;
-    for(it=NoteManager::getInstance().cbegin() ; it!=NoteManager::getInstance().cend() ; ++it)
-        if((*it)->isModify())
-        {
-            QDomNodeList node_list = xmlfile->elementsByTagName("notes");
-            QDomElement element = node_list.at(0).toElement();
-            QDomNodeList noteNodeList = element.elementsByTagName(note);
-            int i;
-            for(i=0 ; i<noteNodeList.size() ; i++)
-            {
-                //On recherche l'élément
-                QDomElement note = node_list.at(i).toElement();
-                if(note.attribute("id","")==QString::number((*it)->getId()))
-                    break;
-            }
-            if (i==noteNodeList.size())
-            {
-                //Il faut alors créer l'éléement
-            }
-        }
-
-    return;*/
 }
 
 void Workspace::clearAll()
