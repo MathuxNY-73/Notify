@@ -24,9 +24,10 @@ void Workspace::releaseInstance()
     Instance=0;
 }
 
-Workspace::Workspace(QWidget* parent):QWidget(parent),noteM(&NoteManager::getInstance())
+Workspace::Workspace(QWidget* parent):QWidget(parent)
 {
     //Allocation des widgets
+    xmlfile= new QDomDocument("workspace");
     viewer = new QTreeView(this);
     layout = new QVBoxLayout(this);
     model= new QStandardItemModel();
@@ -54,22 +55,13 @@ Workspace::~Workspace()
     delete model;
     delete layout;
     delete afficheSelection;
+    Editorspace::releaseInstance();
     NoteManager::releaseInstance();
 }
 
-void Workspace::setWorkspace(NoteManager *nm)
+void Workspace::setWorkspace()
 {
-    try{
-        if(noteM!=0)
-            throw WorkspaceException("Une instance de workspace existe déjà");
-        else
-            noteM=nm;
-    }
-    catch(WorkspaceException& e)
-    {
-        QMessageBox::information(this,"Warning",e.getInfo());
-    }
-    if(noteM->begin()!=noteM->end())
+    if(NoteManager::getInstance().begin()!=NoteManager::getInstance().end())
     {
         loadWorkspace();
     }
@@ -78,18 +70,13 @@ void Workspace::setWorkspace(NoteManager *nm)
 void Workspace::loadWorkspace()
 {
     NoteManager::Const_Iterator it;
-    for(it=noteM->cbegin() ; it!=noteM->cend() ; ++it)
+    for(it=NoteManager::getInstance().cbegin() ; it!=NoteManager::getInstance().cend() ; ++it)
     {
         QStandardItem* n=(*it)->getItem();
         n->setEditable(false);
         model->appendRow(n);
         items.insert(model->indexFromItem(n),(*it)->getId());
     }
-}
-
-void Workspace::setEditor(Editorspace *e)
-{
-    editor=e;
 }
 
 void Workspace::addNote(Note* n)
@@ -101,11 +88,10 @@ void Workspace::addNote(Note* n)
     model->appendRow(a);
     items.insert(model->indexFromItem(a),n->getId());
     QMessageBox::information(&Tags::TagManagerWidget::getInstance(), "Adding element"," L'élment de type"+QString::fromStdString(typeid(*n).name())+" a été ajoute avec l'id "+QString::number(n->getId()));
-    if(editor!=0)
-        editor->addWidget(n);
+    Editorspace::getInstance().addWidget(n);
 }
 
-QSet<Note*>& Workspace::getSelectedNote() const
+/*QSet<Note*>& Workspace::getSelectedNote() const
 {
     QSet<Note*>* selectedNotes = new QSet<Note*>();
     QItemSelectionModel *selection = viewer->selectionModel();
@@ -128,11 +114,27 @@ void Workspace::getSelection()
     for (int i = 0 ; i < listeSelections.size() ; i++)
     {
         QVariant elementSelectionne = model->data(listeSelections[i], Qt::DisplayRole);
-        unsigned int idSelect=*(items.find(elementSelectionne.toModelIndex()));
-        *selectedNotes<<NoteManager::getInstance().getNote(idSelect);
         selectedItems+="1 : "+NoteManager::getInstance().getNote(idSelect)->getTitle()+"  "+QString::number(idSelect)+"\n";
     }
     QMessageBox::information(&Tags::TagManagerWidget::getInstance(), "Eléments sélectionnés", selectedItems);
     return *selectedNotes;
+}*/
+
+void Workspace::getFile(const QString& path)
+{
+   /* destruct();
+    QFile file(path+"/\.workspace");
+    if(!file.exists())
+    {
+        //On crée un nouveau
+    }*/
+    return;
 }
 
+void Workspace::destruct()
+{
+    xmlfile->clear();
+    model->clear();
+    items.clear();
+    //editor->clear();
+}

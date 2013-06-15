@@ -63,7 +63,23 @@
     layout->addWidget(onglets);
 }*/
 
-Editorspace::Editorspace(QWidget* parent):QWidget(parent),noteM(&NoteManager::getInstance())
+Editorspace* Editorspace::instance=0;
+
+Editorspace& Editorspace::getInstance(QWidget* parent)
+{
+    if(!instance)
+        instance = new Editorspace(parent);
+    return *instance;
+}
+
+void Editorspace::releaseInstance()
+{
+    if(instance)
+        delete instance;
+    instance=0;
+}
+
+Editorspace::Editorspace(QWidget* parent):QWidget(parent)
 {
     onglets = new QTabWidget(this);
     layout = new QVBoxLayout(this);
@@ -121,10 +137,10 @@ Editorspace::Editorspace(QWidget* parent):QWidget(parent),noteM(&NoteManager::ge
     layout->addWidget(onglets);
 
     //Ajout des widgets dans l'editeur
-    if(noteM!=0)
+    if(NoteManager::exist())
     {
         NoteManager::Iterator it;
-        for(it=noteM->begin();it!=noteM->end() ; ++it)
+        for(it=NoteManager::getInstance().begin();it!=NoteManager::getInstance().end() ; ++it)
             layout_Editor->addWidget((*it)->getWidget());
 
     }
@@ -137,6 +153,20 @@ Editorspace::Editorspace(QWidget* parent):QWidget(parent),noteM(&NoteManager::ge
 
     //QObject::connect(save,SIGNAL(clicked()),this,SLOT(sauvegarder()));
 }
+
+Editorspace::~Editorspace()
+{
+    delete onglets;
+    /*delete HEdit;
+    delete TXEdit;
+    delete TxtEdit;
+    delete layout; delete layout_HTML; delete layout_TeX; delete layout_Text; delete layout_Editor;
+    delete scroll_HTML; delete scroll_TeX; delete scroll_Text; delete scroll_Editor;
+    delete explorer;
+    delete container;
+    delete save;*/
+}
+
 /*
 void Editorspace::updateManager(NoteManager *nm)
 {
@@ -149,60 +179,57 @@ void Editorspace::updateManager(NoteManager *nm)
     }
 }*/
 
-void Editorspace::setWorkspace(Workspace * w)
-{
-    work=w;
-}
 
 void Editorspace::addWidget(Note* n)
 {
-    if(noteM->getNote(n->getId())==NULL)
-        noteM->addNote(n);
+    if(NoteManager::getInstance().getNote(n->getId())==NULL)
+        NoteManager::getInstance().addNote(n);
     layout_Editor->addWidget(n->getWidget());
     QMessageBox::information(this,"Success","Layout succesfully added");
 }
 
 void Editorspace::changementOnglet(int i)
 {
-    if(noteM!=0)
+    if(NoteManager::exist())
     {
         NoteManager::Iterator it;
-        for(it=noteM->begin();it!=noteM->end() ; ++it)
+
+        for(it=NoteManager::getInstance().begin();it!=NoteManager::getInstance().end() ; ++it)
             (*it)->getWidget()->updateNote();
         QString s="";
         Exports::ExportStrategy* es;
         switch(i)
         {
         case 1:
-            es=noteM->getStrategy("html");
+            es=NoteManager::getInstance().getStrategy("html");
             if(es==0)
             {
                 HEdit->setText("Cet export n'existe pas");
                 break;
             }
-            for(it=noteM->begin();it!=noteM->end() ; ++it)
+            for(it=NoteManager::getInstance().begin();it!=NoteManager::getInstance().end() ; ++it)
                 s+=(*it)->ExportNote(es);
             HEdit->setText(s);
             break;
         case 2:
-            es=noteM->getStrategy("TeX");
+            es=NoteManager::getInstance().getStrategy("TeX");
             if(es==0)
             {
                 TXEdit->setText("Cet export n'existe pas");
                 break;
             }
-            for(it=noteM->begin();it!=noteM->end() ; ++it)
+            for(it=NoteManager::getInstance().begin();it!=NoteManager::getInstance().end() ; ++it)
                 s+=(*it)->ExportNote(es);
                 TXEdit->setText(s);
             break;
         case 3:
-            es=noteM->getStrategy("text");
+            es=NoteManager::getInstance().getStrategy("text");
             if(es==0)
             {
                 TxtEdit->setText("Cet export n'existe pas");
                 break;
             }
-            for(it=noteM->begin();it!=noteM->end() ; ++it)
+            for(it=NoteManager::getInstance().begin();it!=NoteManager::getInstance().end() ; ++it)
                 s+=(*it)->ExportNote(es);
                 TxtEdit->setText(s);
             break;
@@ -212,15 +239,15 @@ void Editorspace::changementOnglet(int i)
 
 void Editorspace::sauvegarder()
 {
-    if(noteM==0)
+    if(!NoteManager::exist())
         return;
-    else if (noteM!=0)
+    else if (NoteManager::exist())
     {
         NoteManager::Iterator it;
-        for(it=noteM->begin();it!=noteM->end() ; ++it)
+        for(it=NoteManager::getInstance().begin();it!=NoteManager::getInstance().end() ; ++it)
         {
             (*it)->getWidget()->updateNote();
-            QString s=(*it)->ExportNote(noteM->getStrategy("save"));
+            QString s=(*it)->ExportNote(NoteManager::getInstance().getStrategy("save"));
             QFile file(this);
             file.setFileName("/Users/Antoine/Documents/ProjetInfo/Github/Notify_Github/"+QString::number((*it)->getId())+".txt");
             try

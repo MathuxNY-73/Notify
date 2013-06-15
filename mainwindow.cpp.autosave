@@ -111,16 +111,14 @@ QString MainWindow::getPath() const
 {
     QString dossier = QFileDialog::getSaveFileName(ui->centralwidget, "Save a workspace", QString(), "*.*");
     QDir workFolder(dossier);
-    //bool ok=false;
-    //QString name = QInputDialog::getText(ui->centralwidget,"New Workspace","Set the name of your new Workspace:", QLineEdit::Normal, QString() , &ok);
-        if(!workFolder.mkpath(dossier))
-            throw MyException("An error occured while creating the workspace directory");
-        else
-        {
-            //workPath=""+dossier+"/"+name;
-            QMessageBox::information(ui->centralwidget,"Information","Le chemin est :"+dossier);
-            return QString(dossier);
-        }
+    if(!workFolder.mkpath(dossier))
+         throw MyException("An error occured while creating the workspace directory");
+    else
+    {
+        //workPath=""+dossier+"/"+name;
+        QMessageBox::information(ui->centralwidget,"Information","Le chemin est :"+dossier);
+        return QString(dossier);
+     }
 }
 
 void MainWindow::newArticle()

@@ -18,6 +18,8 @@
 #include <QTreeView>
 #include <QScrollBar>
 #include <QStandardItem>
+#include <QtXML/QDomDocument>
+
 
 class Workspace : public QWidget
 {
@@ -25,16 +27,14 @@ class Workspace : public QWidget
     Q_OBJECT
 
 private:
-    NoteManager* noteM;
     QVBoxLayout* layout;
     QTreeView* viewer;
     QScrollBar* scroll;
     QPushButton* afficheSelection;
     QStandardItemModel* model;
     QMap<QModelIndex,unsigned int> items;
-    Editorspace* editor;
+    QDomDocument* xmlfile;
 
-    void loadWorkspace();
 
     //Singleton
     static Workspace* Instance;
@@ -43,18 +43,23 @@ private:
     Workspace(const Workspace& ws);
     Workspace& operator=(const Workspace& ws);
 
+    //Methodes privées
+    void loadWorkspace();
+    void destruct();
+
 public:
 
     static Workspace& getInstance(QWidget* parent=0);
     static void releaseInstance();
 
-    void setWorkspace(NoteManager* nm);
-    void setEditor(Editorspace* e);
     QSet<Note*>& getSelectedNote() const;
+
+    void getFile(const QString& path);
+    void setWorkspace();
 
 public slots:
     void addNote(Note* a);
-    void getSelection();
+    //void getSelection();
 
 };
 

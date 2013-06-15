@@ -155,7 +155,7 @@ void TagManagerWidget::deleteTags()
 }
 
 void TagManagerWidget::setAssociation(){
-    QSet<Note*> select = Workspace::getInstance().getSelectedNote();
+    /*QSet<Note*> select = Workspace::getInstance().getSelectedNote();
     if (select.isEmpty())
         return;
     QItemSelectionModel *selection = viewer->selectionModel();
@@ -164,10 +164,10 @@ void TagManagerWidget::setAssociation(){
     {
         QVariant elementSelectionne = manager->getModel()->data(listeSelections[i], Qt::DisplayRole);
         manager->addAssociation(elementSelectionne.toString(),select);
-    }
+    }*/
 }
 
 void TagManagerWidget::deleteAssociation()
 {
-
+    return;
 }

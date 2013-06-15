@@ -8,9 +8,11 @@
 #include <QWidget>
 #include <QSizePolicy>
 #include <QException>
+#include <QMessageBox>
 #include <QIcon>
 #include <QAction>
 #include <QMenuBar>
+#include <QFileDialog>
 
 namespace Ui {
 class MainWindow;
@@ -33,6 +35,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    QString getPath() const;
+    void saveInFile() const;
 
 private:
     Ui::MainWindow *ui;
@@ -42,6 +46,7 @@ private:
     Tags::TagManagerWidget* tags;
     Editorspace* editor;
     Workspace* work;
+    QString workPath;
 
     QGridLayout* gridLayout;
 
@@ -53,8 +58,10 @@ public slots:
     void newAudio();
     void newVideo();
     void newImage();
-
     void newWorkspace();
+
+signals:
+    void clear();
 };
 
 #endif // MAINWINDOW_H

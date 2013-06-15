@@ -1,5 +1,5 @@
 //
-//  workspace.h
+//  editorspace.h
 //  LO21_Projet
 //
 //  Created by Anthony WEIBEL and Antoine POUILLAUDE on 09/06/13.
@@ -45,19 +45,25 @@ private:
     QScrollArea* scroll_HTML,*scroll_TeX,*scroll_Text,*scroll_Editor;
     QFileDialog* explorer;
     QFrame* container;
-    NoteManager* noteM;
     QPushButton* save;
-    Workspace* work;
     //QTextEdit* fen;
     //QFile* file;
     //QTextStream* out;
 
+    //Singleton
+    static Editorspace* instance;
+    explicit Editorspace(QWidget *parent=0);
+    ~Editorspace();
+    Editorspace(const Editorspace& es);
+    Editorspace& operator=(const Editorspace& es);
 
 public:
-    explicit Editorspace(QWidget *parent=0);
+
     QVBoxLayout* getLayout() {return layout;}
-    void setWorkspace(Workspace* nm);
     void addWidget(Note* n);
+
+    static Editorspace& getInstance(QWidget* parent=0);
+    static void releaseInstance();
 
   //Slots
 
