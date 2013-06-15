@@ -46,6 +46,10 @@ class Note {
 private:
     //Attributs privés
     unsigned int id;
+
+    //Construction
+    Note(const Note& n);
+    Note& operator=(const Note& n);
     
 protected:
     //Attributs protégés
@@ -71,6 +75,10 @@ public:
         title=t;
     }
     QString getPath() const {return this->path;}
+    void setPath(const QString& p) {
+        modified=true;
+        path=p;
+    }
     bool isModify() const {return modified;}
     void setModify(bool m){ modified=m;}
     

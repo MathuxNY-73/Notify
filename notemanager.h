@@ -37,7 +37,7 @@ private:
     QSet<Note*> notes;
     static NoteManager* instance;
     QString path;
-    //QMap<QString, NoteFactory*> factories;
+    QMap<QString, NoteFactory*> factories;
     QMap<QString, Exports::ExportStrategy*> strategies;
     
     //Constructeurs

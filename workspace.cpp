@@ -171,8 +171,15 @@ void Workspace::getFile(const QString& path)
 
 void Workspace::saveInFile()
 {
+    NoteManager::Iterator it;
+    for(it=NoteManager::getInstance().begin() ; it!=NoteManager::getInstance().end() ; ++it)
+    {
+        (*it)->setPath(NoteManager::getInstance().getPath()+QString::number((*it)->getId())+".txt");
+        (*it)->getWidget()->updateNote();
+    }
+    updateFile();
     QFile file(NoteManager::getInstance().getPath()+"test.workspace");
-    QString update = xmlfile->toString();
+    QString update = "<?xml version='1.0' encoding='UTF-8'?> \n"+xmlfile->toString();
     if(!file.open(QIODevice::WriteOnly)){
         file.close();
         throw MyException("Error while writing in the file.");
@@ -181,31 +188,48 @@ void Workspace::saveInFile()
     stream.setCodec("UTF-8");
     stream << update;
     file.close();
+    for(it=NoteManager::getInstance().begin();it!=NoteManager::getInstance().end() ; ++it)
+    {
+        QString s=(*it)->ExportNote(NoteManager::getInstance().getStrategy("save"));
+        QFile file((*it)->getPath());
+        if(!file.open(QIODevice::WriteOnly))
+            throw MyException("Ne parvient pas ouvrir le fichier "+ (*it)->getPath());
+        QTextStream out(&file);
+        out.setCodec("UTF-8");
+        out<<(const QString&)s;
+        file.close();
+    }
+}
 
-    /*getFile(NoteManager::getInstance().getPath());
-    //On s'occupe d'abord des Notes
-    NoteManager::Const_Iterator it;
-    for(it=NoteManager::getInstance().cbegin() ; it!=NoteManager::getInstance().cend() ; ++it)
-        if((*it)->isModify())
+void Workspace::updateFile()
+{
+    QDomNodeList node_list = xmlfile->elementsByTagName("notes");
+    QDomElement notesNode = node_list.at(0).toElement();
+    QDomNodeList nodeNotesList = notesNode.elementsByTagName("note");
+    for(int i=0 ; i<nodeNotesList.size() ; i++)
+    {
+        QDomElement oldNote = nodeNotesList.at(i).toElement();
+        QDomElement newNote = oldNote;
+        int noteId = oldNote.attribute("id","-1").toInt();
+        if(noteId<0)
+            continue;
+        Note* n;
+        if(!(n=NoteManager::getInstance().getNote(noteId)))
         {
-            QDomNodeList node_list = xmlfile->elementsByTagName("notes");
-            QDomElement element = node_list.at(0).toElement();
-            QDomNodeList noteNodeList = element.elementsByTagName(note);
-            int i;
-            for(i=0 ; i<noteNodeList.size() ; i++)
-            {
-                //On recherche l'élément
-                QDomElement note = node_list.at(i).toElement();
-                if(note.attribute("id","")==QString::number((*it)->getId()))
-                    break;
-            }
-            if (i==noteNodeList.size())
-            {
-                //Il faut alors créer l'éléement
-            }
+            notesNode.removeChild(oldNote);
+            continue;
         }
+        /*if(!n->isModify())
+            continue;*/
+        QString type =QString::fromStdString(typeid(*n).name());
+        type.remove(0,1);
+        newNote.setAttribute("id",n->getId());
+        newNote.setAttribute("type",type);
+        newNote.setAttribute("title",n->getTitle());
+        newNote.setAttribute("path",n->getPath());
 
-    return;*/
+        notesNode.removeChild(notesNode.replaceChild(newNote,oldNote));
+    }
 }
 
 void Workspace::clearAll()

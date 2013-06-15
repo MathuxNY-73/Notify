@@ -118,13 +118,13 @@ namespace Exports{
         //using ExportStrategy::exportNote;
     };
 
-    class SaveTextExport : public ExportStrategy{
+    class SaveXMLExport : public ExportStrategy{
     
     private:
     
     public:
         //Constructeurs
-        SaveTextExport(){}
+        SaveXMLExport(){}
         
         //Methodes inlines
         

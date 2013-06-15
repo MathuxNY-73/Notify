@@ -11,7 +11,7 @@
 
 //Methodes de Binary
 
-Binary::Binary(unsigned int i,const QString& t, const QString& d, const QString& p):Note(i,t),desc(d),path(p),maxW(0){}
+Binary::Binary(unsigned int i,const QString& t, const QString& d, const QString& p):Note(i,t),desc(d),binPath(p),maxW(0),widget(0){}
 
 QString Binary::getDesc() const {
     return desc;
@@ -22,13 +22,13 @@ void Binary::setDesc(const QString& d) {
     desc=d;
 }
 
-QString Binary::getPath() const {
-    return path;
+QString Binary::getBinPath() const {
+    return binPath;
 }
 
-void Binary::setPath(const QString& p) {
+void Binary::setBinPath(const QString& p) {
     modified=true;
-    path=p;
+    binPath=p;
 }
 
 BinaryWidget* Binary::getWidget()
@@ -39,6 +39,12 @@ BinaryWidget* Binary::getWidget()
         maxW++;
     }
     return widget;
+}
+
+Binary::~Binary()
+{
+    if(widget)
+        delete widget;
 }
 
 //Methodes de Audio
@@ -69,6 +75,11 @@ AudioWidget* Audio::getWidget()
     return widget;
 }
 
+Audio::~Audio(){
+    if(widget)
+        delete widget;
+}
+
 //Methodes de Image
 QString Image::ExportNote(Exports::ExportStrategy* es)
 {
@@ -94,6 +105,12 @@ QStandardItem* Image::getItem()
     if(!item)
         item = new QStandardItem(title);
     return item;
+}
+
+Image::~Image()
+{
+    if(widget)
+        delete widget;
 }
 
 //Methodes de Video
@@ -122,6 +139,12 @@ QStandardItem* Video::getItem()
         item = new QStandardItem(title);
     return item;
 }
+
+Video::~Video(){
+    if(widget)
+        delete widget;
+}
+
 
 
 //Constructeurs de recopie

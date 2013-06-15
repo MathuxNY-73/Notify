@@ -14,27 +14,7 @@
 #include <QList>
 
 
-//Les deux fonctions qui suivent sont des constructeurs de recopie cependant on ne les utilisent pas pour le moment.
-
-/*Document::Document(const Document& m):      //I wonder why we have implemented this function
-notes(m.notes),Note(m.id,l.title)
-{}
-*/
-/*
-Document& Document::operator=(const Document& m){   //Idem for that function
-    if (this!=&m){
-        notes=m.notes;
-        id=m.id;                //Since Id is private in the class Note we cannot give it a value here.
-        title=m.title;
-    }
-    return *this;
-}
-*/
-
 void load(const QString& path){}
-
-//QString ExportNote(ExportStrategy* es) const {}
-//QString ExportAsPart(ExportStrategy* es, unsigned int tl) const{}
 
 
 //Cette fonction va ajouter une Note au document. Attention, je n'ai pas le cas où la note est déjà dans la list.
@@ -165,9 +145,4 @@ QStandardItem* Document::getItem()
     for(it=begin() ; it!=end() ; ++it)
         item->appendRow((*it)->getItem());
     return item;
-}
-
-Document::~Document()
-{
-    delete widget;
 }

@@ -19,6 +19,7 @@ BinaryWidget::BinaryWidget(Binary* b,QWidget* parent):NoteWidget(parent),binary(
     hlayout = new QHBoxLayout();
     bwse = new QPushButton("Browse",this);
     path = new QLabel("Path : ",this);
+    pathEdit = new QLabel(this);
     descpt = new QTextEdit("Description",this);
     //save = new QPushButton("Save",this);
     //save->setEnabled(false);
@@ -29,13 +30,16 @@ BinaryWidget::BinaryWidget(Binary* b,QWidget* parent):NoteWidget(parent),binary(
 
     //Layout
     hlayout->addWidget(path);
+    hlayout->addWidget(pathEdit);
     hlayout->addWidget(bwse);
     layout->addLayout(hlayout);
     layout->addWidget(descpt);
     //layout->addWidget(save);
 
-     //Je pense que cette est à écrire plutôt dans les classes filles.
-    path->setText("Path : "+binary->getPath());
+    pathEdit->setText(binary->getBinPath());
+    path->setMaximumWidth(35);
+    path->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
+
     title->setText(binary->getTitle());
     descpt->setText(binary->getDesc());
 }
@@ -57,7 +61,7 @@ void BinaryWidget::updateNote()
 {
     binary->setTitle(title->text());
     binary->setDesc(descpt->toPlainText());
-    binary->setPath(path->text());
+    binary->setBinPath(pathEdit->text());
     binary->setModify(false);
 }
 void BinaryWidget::modification()

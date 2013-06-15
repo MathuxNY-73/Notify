@@ -38,17 +38,18 @@ private:
 protected:
     //Attributs protégés
     QString desc;
-    QString path;
+    QString binPath;
 
 public:
     //Constructeur
     Binary(unsigned int i,const QString& t, const QString& d, const QString& p);
-    
+    ~Binary();
+
     //Méthodes non-inlines
     QString getDesc() const;
     void setDesc(const QString& d);
-    QString getPath() const;
-    void setPath(const QString& p);
+    QString getBinPath() const;
+    void setBinPath(const QString& p);
 
 
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
@@ -70,8 +71,9 @@ private:
 
 public:
     //Constructeurs
-    Video(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p),maxW(0){}
-    
+    Video(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p),maxW(0),widget(0){}
+    ~Video();
+
     //Méthodes non inline
     QString ExportNote(Exports::ExportStrategy* es);
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);
@@ -97,8 +99,9 @@ private:
 
 public:
     //Constructeurs
-    Image(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p),maxW(0){}
-    
+    Image(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p),maxW(0),widget(0){}
+    ~Image();
+
     //Méthodes non inline
     QString ExportNote(Exports::ExportStrategy* es);
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);
@@ -125,8 +128,9 @@ private:
     
 public:
     //Constructeurs
-    Audio(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p),maxW(0){}
-    
+    Audio(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p),maxW(0),widget(0){}
+    ~Audio();
+
     //Méthodes non inline
     QString ExportNote(Exports::ExportStrategy* es);
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);

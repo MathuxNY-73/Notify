@@ -60,6 +60,7 @@ public:
     void getFile(const QString& path);
     void setWorkspace();
     void saveInFile();
+    void updateFile();
     void addNote(Note* a);
     void addTag(const QString& t);
 

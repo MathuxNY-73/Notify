@@ -36,7 +36,7 @@ private:
 protected:
     QHBoxLayout* hlayout;
     QPushButton* bwse;
-    QLabel* path;
+    QLabel* path,*pathEdit;
     QTextEdit* descpt;
     Binary* binary;
     //QPushButton* save;

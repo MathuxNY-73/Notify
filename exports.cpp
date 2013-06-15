@@ -23,7 +23,7 @@ QMap<QString, ExportStrategy*> ExportStrategy::getExport(){
     map["text"]=new TextExport();
     map["TeX"]=new TeXExport();
     map["html"]=new HTMLExport();
-    map["save"]=new SaveTextExport();
+    map["save"]=new SaveXMLExport();
     return map;
 }
 
@@ -74,7 +74,7 @@ QString TextExport::exportNote(Video* v, unsigned int tl){
     for(unsigned int i=0 ; i<tl ; i++)
         tab+="    ";
     s=tab+v->getTitle()+"\n";
-    s=s+tab+"    "+"path : "+v->getPath()+"\n";
+    s=s+tab+"    "+"path : "+v->getBinPath()+"\n";
     s=s+tab+"    "+"description : "+v->getDesc()+"\n";
     return s;
 }
@@ -84,7 +84,7 @@ QString TextExport::exportNote(Image* i, unsigned int tl){
     for(unsigned int j=0 ; j<tl ; j++)
         tab+="    ";
     s=tab+i->getTitle()+"\n";
-    s=s+tab+"    "+"path : "+i->getPath()+"\n";
+    s=s+tab+"    "+"path : "+i->getBinPath()+"\n";
     s=s+tab+"    "+"description : "+i->getDesc()+"\n";
     return s;
 }
@@ -94,7 +94,7 @@ QString TextExport::exportNote(Audio* a, unsigned int tl){
     for(unsigned int j=0 ; j<tl ; j++)
         tab+="    ";
     s=tab+a->getTitle()+"\n";
-    s=s+tab+"    "+"path : "+a->getPath()+"\n";
+    s=s+tab+"    "+"path : "+a->getBinPath()+"\n";
     s=s+tab+"    "+"description : "+a->getDesc()+"\n";
     return s;
 }
@@ -174,7 +174,7 @@ QString TeXExport::exportNote(Document* d, unsigned int tl){
 QString TeXExport::exportNote(Video* v, unsigned int tl){
     QString s;
     s=docStruct(tl)+v->getTitle()+"} \n";
-    s=s+"path : "+v->getPath()+"\n";
+    s=s+"path : "+v->getBinPath()+"\n";
     s=s+"description : "+v->getDesc()+"\n";
     return s;
 }
@@ -183,7 +183,7 @@ QString TeXExport::exportNote(Image* i, unsigned int tl){
     QString s;
     s="\\begin{figure} \n"
         "\\begin{center} \n";
-    s=s+"\\includegraphics{"+i->getPath()+"} \n";
+    s=s+"\\includegraphics{"+i->getBinPath()+"} \n";
     s=s+"\\end{center} \n"
         "\\label{"+i->getTitle()+"} \n";
     s=s+"\\end{figure} \n";
@@ -195,7 +195,7 @@ QString TeXExport::exportNote(Image* i, unsigned int tl){
 QString TeXExport::exportNote(Audio* a, unsigned int tl){
     QString s;
     s=docStruct(tl)+a->getTitle()+"} \n";
-    s=s+a->getPath()+"\n";
+    s=s+a->getBinPath()+"\n";
     s=s+"description : "+a->getDesc()+"\n";
     return s;
 }
@@ -255,7 +255,7 @@ QString HTMLExport::exportNote(Video* v, unsigned int tl){
     for(unsigned int i=0 ; i<tl ; i++)
         indent+="    ";
     s=indent+"<p> \n";
-    s=s+indent+"<a href=file://"+v->getPath()+">"+v->getTitle()+"</a> \n";
+    s=s+indent+"<a href=file://"+v->getBinPath()+">"+v->getTitle()+"</a> \n";
     s=s+indent+" \n Description : \n"+v->getDesc()+"\n </p> \n";
     return s;
 }
@@ -268,7 +268,7 @@ QString HTMLExport::exportNote(Image* i, unsigned int tl){
         tl=6;
     s=indent+"<h"+(QString)tl+">"+i->getTitle()+"</h"+(QString)tl+"> \n";
     s=s+indent+"<p> \n";
-    s=s+indent+"    "+"<img src=file://"+i->getPath()+"> \n";
+    s=s+indent+"    "+"<img src=file://"+i->getBinPath()+"> \n";
     s=s+indent+"Description : \n"+i->getDesc()+"\n </p> \n";
     return s;
 }
@@ -278,71 +278,72 @@ QString HTMLExport::exportNote(Audio* a, unsigned int tl){
     for(unsigned int i=0 ; i<tl ; i++)
         indent+="    ";
     s=indent+"<p> /n";
-    s=s+indent+"<a href=file://"+a->getPath()+">"+a->getTitle()+"</a> \n";
+    s=s+indent+"<a href=file://"+a->getBinPath()+">"+a->getTitle()+"</a> \n";
     s=s+indent+"Description : \n"+a->getDesc()+"\n </p> \n";
     return s;
 }
 
-//Export SaveText
+//Export SaveXML
 
-QString SaveTextExport::header(Note* n){
+QString SaveXMLExport::header(Note* n){
     QString s;
-    s=""+QString::fromStdString(typeid(*n).name())+"\n"
-            ">"+QString::number(n->getId())+"\n"
-            ">"+n->getTitle()+"\n"
-            ">>>>>>>>>>>>BEGIN";
+    QString type =QString::fromStdString(typeid(*n).name());
+    type.remove(0,1);
+    s="<?xml version='1.0' encoding='UTF-8'?> \n\n"
+            "<"+type+" id='"+QString::number(n->getId())+"'> \n"
+            "    <title>"+n->getTitle()+"</title> \n";
     return s;
 }
 
-QString SaveTextExport::footer(Note* n){
+QString SaveXMLExport::footer(Note* n){
 
     QString s;
-    s=">>>>>>>>>>>>END \n"
-            ">"+QString::number(n->getId())+"\n";
+    QString type =QString::fromStdString(typeid(*n).name());
+    type.remove(0,1);
+    s="</"+type+"> \n";
     return s;
 }
 
-QString SaveTextExport::exportNote(Article* a, unsigned int tl){
+QString SaveXMLExport::exportNote(Article* a, unsigned int tl){
     QString s,indent="";
     for(unsigned int i=0 ; i<tl ; i++)
-        indent+=">>>>";
-    s=s+indent+a->getText()+"\n";
+        indent+="    ";
+    s=s+indent+"<text>"+a->getText()+"</text>\n";
     return s;
 }
 
-QString SaveTextExport::exportNote(Document* d, unsigned int tl){
+QString SaveXMLExport::exportNote(Document* d, unsigned int tl){
     QString s,indent="";
     for(unsigned int i=0 ; i<tl+1 ; i++)
-        indent+=">>>>";
+        indent+="    ";
     Document::Iterator it;
     for(it=d->begin() ; it!=d->end() ; ++it)
-        s=s+indent+QString::number((*it)->getId())+"\n";
+        s=s+indent+"<note>"+QString::number((*it)->getId())+"</note> \n";
     return s;
 }
 
-QString SaveTextExport::exportNote(Video* v, unsigned int tl){
+QString SaveXMLExport::exportNote(Video* v, unsigned int tl){
     QString s,tab;
     for(unsigned int i=0 ; i<tl ; i++)
-        tab+=">>>>";
-    s=s+tab+v->getPath()+"\n";
-    s=s+tab+v->getDesc()+"\n";
+        tab+="    ";
+    s=s+tab+"<path>"+v->getBinPath()+"</path>\n";
+    s=s+tab+"<desc>"+v->getDesc()+"</desc> \n";
+    return s;
+}
+QString SaveXMLExport::exportNote(Image* i, unsigned int tl){
+    QString s,tab;
+    for(unsigned int j=0 ; j<tl ; j++)
+        tab+="    ";
+    s=s+tab+"<path>"+i->getBinPath()+"</path>\n";
+    s=s+tab+"<desc>"+i->getDesc()+"</desc> \n";
     return s;
 }
 
-QString SaveTextExport::exportNote(Image* i, unsigned int tl){
+QString SaveXMLExport::exportNote(Audio* a, unsigned int tl){
     QString s,tab;
     for(unsigned int j=0 ; j<tl ; j++)
-        tab+=">>>>";
-    s=s+tab+i->getPath()+"\n";
-    s=s+tab+i->getDesc()+"\n";
-    return s;
-}
-
-QString SaveTextExport::exportNote(Audio* a, unsigned int tl){
-    QString s,tab;
-    for(unsigned int j=0 ; j<tl ; j++)
-        tab+=">>>>";
-    s=s+tab+a->getPath()+"\n";
-    s=s+tab+a->getDesc()+"\n";
+        tab+="    ";
+    s=s+tab+"<path>"+a->getBinPath()+"</path> \n";
+    s=s+tab+"<desc>"+a->getDesc()+"</desc> \n";
     return s;
 }

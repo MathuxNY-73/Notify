@@ -12,12 +12,13 @@
 #include "article.h"
 
 
-Article::Article(const QString& path):Note(path),text(""),maxW(0){}
+Article::Article(const QString& path):Note(path),text(""),maxW(0),widget(0){}
 Article::Article(unsigned int i, const QString& ti, const QString& te): Note(i,ti),text(te), maxW(0){}
 
 Article::~Article()
 {
-    delete widget;
+    if(widget)
+        delete widget;
 }
 
 const QString& Article::getText() const { return text; }
