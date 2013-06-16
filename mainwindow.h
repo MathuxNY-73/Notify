@@ -4,6 +4,7 @@
 #include "editorspace.h"
 #include "workspace.h"
 #include "tagmanager.h"
+#include "factories.h"
 #include <QMainWindow>
 #include <QWidget>
 #include <QSizePolicy>

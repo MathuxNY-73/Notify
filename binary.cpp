@@ -11,8 +11,9 @@
 
 //Methodes de Binary
 
-Binary::Binary(unsigned int i,const QString& t, const QString& d, const QString& p):Note(i,t),desc(d),binPath(p),maxW(0),widget(0){}
-
+Binary::Binary(unsigned int i,const QString& t, const QString& d, const QString& p):Note(i,t),widget(0),maxW(0),desc(d),binPath(p){}
+Binary::Binary(const QString& p):Note(p),widget(0),maxW(0){}
+Binary::Binary(unsigned int i, const QString& path):Note(i,path),widget(0),maxW(0),desc(""),binPath(""){}
 QString Binary::getDesc() const {
     return desc;
 }

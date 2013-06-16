@@ -18,6 +18,7 @@
 #include <QTreeView>
 #include <QScrollBar>
 #include <QStandardItem>
+#include <QStandardItemModel>
 #include <QtXML/QDomDocument>
 #include <QtXml/QDomElement>
 #include <QtXml/QDomNode>
@@ -66,11 +67,20 @@ public:
 
 public slots:
     void clear();
-    //void getSelection();
+    void getSelection(QModelIndex index);
 
 signals:
     void clearOthers();
 
+};
+
+class NoteItem : public QStandardItem
+{
+private:
+    Note* note;
+public:
+    NoteItem(const QString& title, Note* n):QStandardItem(title),note(n){}
+    Note* getNote() const{ return note;}
 };
 
 class WorkspaceException

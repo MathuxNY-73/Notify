@@ -145,7 +145,7 @@ void MainWindow::newArticle()
 {
     if(NoteManager::exist())
     {
-        Article* a = new Article(id,"Titre de l'article","Texte de l'article");
+        Article* a =NoteManager::getInstance().getFactory()["Article"]->buildNewNote("Titre de l'article");
         try{
             work->addNote(a);
         }catch(MyException& e){
@@ -162,7 +162,7 @@ void MainWindow::newDocument()
 {
     if(NoteManager::exist())
     {
-        Document* d = new Document(id,"Titre du document");
+        Document* d =NoteManager::getInstance().getFactory()["Document"]->buildNewNote("Titre du document");
         try{
             work->addNote(d);
         }catch(MyException& e){
@@ -179,7 +179,7 @@ void MainWindow::newImage()
 {
     if(NoteManager::exist())
     {
-        Image* i = new Image(id,"Titre de l'image","Description de l'image","/Users/Antoine/Pictures/avion.jpg");
+        Image* i =NoteManager::getInstance().getFactory()["Image"]->buildNewNote("Titre de l'image");
         try{
             work->addNote(i);
         }catch(MyException& e){
@@ -196,7 +196,7 @@ void MainWindow::newVideo()
 {
     if(NoteManager::exist())
     {
-        Video* v = new Video(id,"Titre de la video","Description de la video","/Users/Antoine/Movies/themask.avi");
+        Video* v = NoteManager::getInstance().getFactory()["Video"]->buildNewNote("Titre de la video");
         try{
             work->addNote(v);
         }catch(MyException& e){
@@ -213,7 +213,7 @@ void MainWindow::newAudio()
 {
     if(NoteManager::exist())
     {
-        Audio* a = new Audio(id,"Titre du fichier audio","Description du fichier audio","/Users/Antoine/Music/chattons.wav");
+        Audio* a = NoteManager::getInstance().getFactory()["Audio"]->buildNewNote("Titre de l'audio");
         try{
             work->addNote(a);
         }catch(MyException& e){

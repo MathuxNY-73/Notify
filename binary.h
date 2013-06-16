@@ -43,6 +43,8 @@ protected:
 public:
     //Constructeur
     Binary(unsigned int i,const QString& t, const QString& d, const QString& p);
+    Binary(unsigned int i, const QString& path);
+    Binary(const QString& path);
     ~Binary();
 
     //Méthodes non-inlines
@@ -71,7 +73,9 @@ private:
 
 public:
     //Constructeurs
-    Video(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p),maxW(0),widget(0){}
+    Video(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p),widget(0),maxW(0){}
+    Video(const QString& path):Binary(path),widget(0),maxW(0){}
+    Video(unsigned int i, const QString &t):Binary(i,t),widget(0),maxW(0){}
     ~Video();
 
     //Méthodes non inline
@@ -99,7 +103,9 @@ private:
 
 public:
     //Constructeurs
-    Image(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p),maxW(0),widget(0){}
+    Image(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p),widget(0),maxW(0){}
+    Image(const QString& path):Binary(path),widget(0),maxW(0){}
+    Image(unsigned int i, const QString &t):Binary(i,t),widget(0),maxW(0){}
     ~Image();
 
     //Méthodes non inline
@@ -128,7 +134,9 @@ private:
     
 public:
     //Constructeurs
-    Audio(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p),maxW(0),widget(0){}
+    Audio(unsigned int i,const QString& t, const QString& d, const QString& p):Binary(i,t,d,p),widget(0),maxW(0){}
+    Audio(const QString& path):Binary(path),widget(0),maxW(0){}
+    Audio(unsigned int i, const QString &t):Binary(i,t),widget(0),maxW(0){}
     ~Audio();
 
     //Méthodes non inline

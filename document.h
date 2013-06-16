@@ -39,14 +39,13 @@ private:
 
 public:
     //Constructeurs
-    Document(unsigned int i, const QString& t):Note(i,t),notes(QList<Note*>()),maxW(0),widget(0){}
-    Document(unsigned int i, const QString& t, const QList<Note*>& listNote):Note(i,t),maxW(0),widget(0){
+    Document(unsigned int i, const QString& t):Note(i,t),notes(QList<Note*>()),widget(0),maxW(0){}
+    Document(unsigned int i, const QString& t, const QList<Note*>& listNote):Note(i,t),widget(0),maxW(0){
         notes=QList<Note*>();
         QList<Note*>::const_iterator it;                 //Il faudra vérifier si le const est justifié et correct ici.
         for(it=listNote.begin() ; it!=listNote.end() ; ++it)
             notes<<(*it);
     }
-    Document(const QString& p):Note(p), notes(QList<Note*>()),widget(0){}
     
     //Destructeur
     ~Document()

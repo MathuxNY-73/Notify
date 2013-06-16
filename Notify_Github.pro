@@ -19,7 +19,8 @@ HEADERS += \
     editorspace.h \
     mainwindow.h \
     workspace.h \
-    tagmanager.h
+    tagmanager.h \
+    factories.h
 
 SOURCES += \
     article.cpp \
@@ -36,7 +37,8 @@ SOURCES += \
     editorspace.cpp \
     mainwindow.cpp \
     workspace.cpp \
-    tagmanager.cpp
+    tagmanager.cpp \
+    factories.cpp
 
 FORMS += \
     mainwindow.ui

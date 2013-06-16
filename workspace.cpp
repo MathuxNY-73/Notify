@@ -8,6 +8,8 @@
 
 #include "workspace.h"
 #include "mainwindow.h"
+#include <QVariant>
+#include <QModelIndex>
 
 Workspace* Workspace::Instance=0;
 
@@ -54,7 +56,7 @@ Workspace::Workspace(QWidget* parent):QWidget(parent)
     layout->addWidget(viewer);
     layout->addWidget(afficheSelection);
 
-    QObject::connect(afficheSelection,SIGNAL(clicked()),this,SLOT(getSelection()));
+    QObject::connect(viewer, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(getSelection(QModelIndex)));
 }
 
 Workspace::~Workspace()
@@ -94,7 +96,9 @@ void Workspace::addNote(Note* n)
     //On créer le noeud correspondant à la note.
     QDomElement createdNote=xmlfile->createElement("note");
     createdNote.setAttribute("id",n->getId());
-    createdNote.setAttribute("type",QString::fromStdString(typeid(*n).name()));
+    QString type =QString::fromStdString(typeid(*n).name());
+    type.remove(0,1);
+    createdNote.setAttribute("type",type);
     createdNote.setAttribute("title",n->getTitle());
     createdNote.setAttribute("path",n->getPath());
     QDomNodeList node_list=xmlfile->elementsByTagName("notes");
@@ -104,12 +108,9 @@ void Workspace::addNote(Note* n)
 
 
     NoteManager::getInstance().addNote(n);
-    QStandardItem* a;
-    a = n->getItem();
+    NoteItem* a = new NoteItem(n->getTitle(),n);
     a->setEditable(false);
     model->appendRow(a);
-    items.insert(model->indexFromItem(a),n->getId());
-    QMessageBox::information(&Tags::TagManagerWidget::getInstance(), "Adding element"," L'élment de type"+QString::fromStdString(typeid(*n).name())+" a été ajoute avec l'id "+QString::number(n->getId()));
     Editorspace::getInstance().addWidget(n);
 }
 
@@ -137,21 +138,15 @@ void Workspace::addTag(const QString &t)
     }
     return *selectedNotes;
 }
-
-void Workspace::getSelection()
-{
-    QSet<Note*>* selectedNotes = new QSet<Note*>();
-    QItemSelectionModel *selection = viewer->selectionModel();
-    QModelIndexList listeSelections = selection->selectedIndexes();
-    QString selectedItems="";
-    for (int i = 0 ; i < listeSelections.size() ; i++)
-    {
-        QVariant elementSelectionne = model->data(listeSelections[i], Qt::DisplayRole);
-        selectedItems+="1 : "+NoteManager::getInstance().getNote(idSelect)->getTitle()+"  "+QString::number(idSelect)+"\n";
-    }
+*/
+void Workspace::getSelection(QModelIndex index)
+{     
+    NoteItem* itemNote = dynamic_cast<NoteItem*>(model->itemFromIndex(index));
+    Note* n=itemNote->getNote();
+    QString selectedItems="1 : "+n->getTitle()+"  "+QString::number(n->getId())+"\n";
     QMessageBox::information(&Tags::TagManagerWidget::getInstance(), "Eléments sélectionnés", selectedItems);
-    return *selectedNotes;
-}*/
+    //return *selectedNotes;
+}
 
 void Workspace::getFile(const QString& path)
 {
@@ -190,8 +185,10 @@ void Workspace::saveInFile()
     file.close();
     for(it=NoteManager::getInstance().begin();it!=NoteManager::getInstance().end() ; ++it)
     {
-        QString s=(*it)->ExportNote(NoteManager::getInstance().getStrategy("save"));
         QFile file((*it)->getPath());
+        if(file.exists() && (*it)->isModify())
+            continue;
+        QString s=(*it)->ExportNote(NoteManager::getInstance().getStrategy("save"));
         if(!file.open(QIODevice::WriteOnly))
             throw MyException("Ne parvient pas ouvrir le fichier "+ (*it)->getPath());
         QTextStream out(&file);
@@ -231,6 +228,8 @@ void Workspace::updateFile()
         notesNode.removeChild(notesNode.replaceChild(newNote,oldNote));
     }
 }
+
+
 
 void Workspace::clearAll()
 {

@@ -11,7 +11,7 @@
 #include <fstream>
 #include <QFile>
 
-Note::Note(const QString& p):title(""), path(p), modified(true){}
+Note::Note(const QString& p):title(""),path(p), modified(true){}
 Note::Note(unsigned int i, const QString& t):id(i),title(t),path(""),loaded(false),modified(true),item(0){}
 Note::~Note()
 {

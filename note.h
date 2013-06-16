@@ -62,7 +62,7 @@ protected:
 
 public:
     //Constructeurs
-    Note(const QString& p);
+    Note(const QString& path);
     Note(unsigned int i, const QString& t);
     ~Note();
     
