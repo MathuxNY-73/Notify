@@ -17,3 +17,12 @@ Note::~Note()
 {
     delete item;
 }
+
+QStandardItem* Note::getItem(){
+    if(!item)
+    {
+        item = new QStandardItem(title);
+        item->setAccessibleDescription(QString::number(getId()));
+    }
+    return item;
+}

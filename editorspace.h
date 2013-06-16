@@ -27,6 +27,7 @@
 #include <QTableWidget>
 #include <QFileDialog>
 #include <QSet>
+#include <QStack>
 #include "notemanager.h"
 #include "notewidget.h"
 
@@ -44,6 +45,7 @@ private:
     QVBoxLayout* layout_HTML,*layout_TeX,*layout_Text,*layout_Editor;
     QScrollArea* scroll_HTML,*scroll_TeX,*scroll_Text,*scroll_Editor;
     QFileDialog* explorer;
+    QStack<NoteWidget*> widgetList;
     QFrame* container;
     QPushButton* save;
     //QTextEdit* fen;
@@ -61,6 +63,7 @@ public:
 
     QVBoxLayout* getLayout() {return layout;}
     void addWidget(Note* n);
+    void clearEditor();
 
     static Editorspace& getInstance(QWidget* parent=0);
     static void releaseInstance();

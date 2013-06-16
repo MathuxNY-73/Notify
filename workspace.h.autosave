@@ -13,7 +13,6 @@
 
 #include "notemanager.h"
 #include "modelManager.h"
-#include "notewidget.h"
 #include "editorspace.h"
 #include "tagmanager.h"
 #include <QTreeView>
@@ -67,6 +66,7 @@ public:
 public slots:
     void clear();
     void getSelectedItem(QModelIndex intdex);
+    void rootChange();
 
 signals:
     void clearOthers();

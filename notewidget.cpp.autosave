@@ -4,7 +4,7 @@
 //
 
 #include "notewidget.h"
-
+#include "workspace.h"
 
 NoteWidget::NoteWidget(QWidget *parent):QWidget(parent)
 {
@@ -23,7 +23,9 @@ NoteWidget::NoteWidget(QWidget *parent):QWidget(parent)
     tag->setMaximumWidth(85);
     tag->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
     this->setLayout(layout);
-
+    
+    
+    QObject::connect(root,SIGNAL(clicked()),&Workspace::getInstance(),SLOT(rootChange()));
     QObject::connect(title,SIGNAL(textChanged(QString)),this,SLOT(titleChanged(QString)));
 }
 

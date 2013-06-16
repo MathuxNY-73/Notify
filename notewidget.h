@@ -36,7 +36,7 @@ protected:
     QVBoxLayout* layout;
     QHBoxLayout* hlayout;
     QFileDialog* explorer;
-    QPushButton* root;
+    QPushButton* root,*tag;
     QLabel* directory;
 
 public:

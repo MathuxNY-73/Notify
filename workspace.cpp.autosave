@@ -218,6 +218,18 @@ public slots :
     void cancel();
 };*/
 
+void Workspace::rootChange()
+{
+    QComboBox comboBox;
+    QString noteId;
+    QMap<int,Document*> correspondance;
+    NoteManager::Iterator it;
+    for(it = NoteManager::getInstance().begin() ; it!=NoteManager::getInstance().end() ; ++it)
+    {
+        if(typeid(*(*it)).name=="Document")
+            QListWidgetItem
+    }
+}
 
 void Workspace::clearAll()
 {

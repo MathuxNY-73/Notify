@@ -20,7 +20,8 @@ HEADERS += \
     mainwindow.h \
     workspace.h \
     tagmanager.h \
-    factories.h
+    factories.h \
+    modelManager.h
 
 SOURCES += \
     article.cpp \

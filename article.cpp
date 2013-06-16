@@ -45,10 +45,3 @@ ArticleWidget* Article::getWidget(){
     }
     return widget;
 }
-
-QStandardItem* Article::getItem()
-{
-    if(!item)
-        item = new QStandardItem(title);
-    return item;
-}

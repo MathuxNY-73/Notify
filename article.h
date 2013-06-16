@@ -53,7 +53,6 @@ public:
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);
     //QTextStream& operator<<(QTextStream& f, const Article& a);
 
-    QStandardItem* getItem();
 
 
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document

@@ -47,5 +47,4 @@ void ArticleWidget::updateNote()
 {
      article->setTitle(title->text());
      article->setText(text->toPlainText());
-     article->setModify(false);
 }

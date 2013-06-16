@@ -140,6 +140,7 @@ QStandardItem* Document::getItem()
     if(!item)
     {
         item = new QStandardItem(title);
+        item->setAccessibleDescription(QString::number(getId()));
     }
     Iterator it;
     for(it=begin() ; it!=end() ; ++it)

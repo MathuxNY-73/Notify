@@ -82,7 +82,6 @@ public:
     QString ExportNote(Exports::ExportStrategy* es);
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);
     
-    QStandardItem* getItem();
 
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
     VideoWidget* getWidget();
@@ -116,7 +115,6 @@ public:
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
     ImageWidget* getWidget();
 
-     QStandardItem* getItem();
 };
 
 
@@ -146,7 +144,5 @@ public:
 
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
     AudioWidget* getWidget();
-
-    QStandardItem* getItem();
 };
 #endif // BINARY_H

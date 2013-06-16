@@ -132,6 +132,8 @@ void MainWindow::saveWorkspaceAs()
 QString MainWindow::getPath() const
 {
     QString dossier = QFileDialog::getSaveFileName(ui->centralwidget, "Save a workspace", QString(), "*.*");
+    if(dossier=="")
+        return "";
     QDir workFolder(dossier);
     if(!workFolder.mkpath(dossier))
          throw MyException("An error occured while creating the workspace directory");

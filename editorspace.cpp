@@ -11,58 +11,6 @@
 #include "workspace.h"
 #include <iostream>
 
-
-/*Editorspace::Editorspace(QWidget* parent):QWidget(parent)
-{
-    onglets = new QTabWidget(this);
-    layout = new QVBoxLayout(this);
-    editor= new QSet<Note*>();
-
-    //Editeurs
-    HEdit = new QTextEdit(this);
-    TXEdit = new QTextEdit(this);
-    TxtEdit = new QTextEdit(this);
-
-    //Layout
-    layout_HTML= new QVBoxLayout(onglets);
-    layout_TeX= new QVBoxLayout(onglets);
-    layout_Text= new QVBoxLayout(onglets);
-    /*layout_HTML->setSizeConstraint(QLayout::SetFixedSize);
-    layout_TeX->setSizeConstraint(QLayout::SetFixedSize);
-    layout_Text->setSizeConstraint(QLayout::SetFixedSize);
-
-
-    //Ajout des editeurs aux layouts
-    layout_HTML->addWidget(HEdit);
-    layout_TeX->addWidget(TXEdit);
-    layout_Text->addWidget(TxtEdit);
-
-    //Déclaration de scrolling
-    scroll_HTML= new QScrollArea(this);
-    scroll_TeX= new QScrollArea(this);
-    scroll_Text= new QScrollArea(this);
-    scroll_Editor= new QScrollArea(this);
-
-    //Configuration des scrolls
-    scroll_HTML->setWidgetResizable(true);
-    scroll_TeX->setWidgetResizable(true);
-    scroll_Text->setWidgetResizable(true);
-    scroll_Editor->setWidgetResizable(true);
-
-    //Ajout des Widgets aux scrollAera
-    scroll_HTML->setWidget(HEdit);
-    scroll_TeX->setWidget(TXEdit);
-    scroll_Text->setWidget(TxtEdit);
-
-    //Mise en conteneur
-    onglets->addTab(scroll_Editor,"Editor");
-    onglets->addTab(scroll_HTML,"HTML");
-    onglets->addTab(scroll_TeX,"TeX");
-    onglets->addTab(scroll_Text,"Text");
-
-    layout->addWidget(onglets);
-}*/
-
 Editorspace* Editorspace::instance=0;
 
 Editorspace& Editorspace::getInstance(QWidget* parent)
@@ -147,12 +95,7 @@ Editorspace::Editorspace(QWidget* parent):QWidget(parent)
     //Création des connexions
     QObject::connect(onglets,SIGNAL(currentChanged(int)),this,SLOT(changementOnglet(int)));
     QObject::connect(&Workspace::getInstance(),SIGNAL(clearOthers()),this,SLOT(clear()));
-
-    //Test sauvegarde
-    //fen = new QTextEdit(this);
-
-
-    //QObject::connect(save,SIGNAL(clicked()),this,SLOT(sauvegarder()));
+    QObject::connect(&Workspace::getInstance(),SIGNAL(clearEditor()),this,SLOT(clear()));
 }
 
 Editorspace::~Editorspace()
@@ -168,25 +111,15 @@ Editorspace::~Editorspace()
     delete save;*/
 }
 
-/*
-void Editorspace::updateManager(NoteManager *nm)
-{
-    noteM=nm;
-    if(noteM!=0)
-    {
-        NoteManager::Iterator it;
-        for(it=noteM->begin();it!=noteM->end() ; ++it)
-            layout_Editor->addWidget((*it)->getWidget());
-    }
-}*/
-
-
 void Editorspace::addWidget(Note* n)
 {
     if(NoteManager::getInstance().getNote(n->getId())==NULL)
         NoteManager::getInstance().addNote(n);
+    //widgetList.push(n->getWidget());
     layout_Editor->addWidget(n->getWidget());
-    QMessageBox::information(this,"Success","Layout succesfully added");
+    QString type =QString::fromStdString(typeid(*n).name());
+    type.remove(0,1);
+    QMessageBox::information(this,"Success","Layout succesfully added type : "+type);
 }
 
 void Editorspace::changementOnglet(int i)
@@ -266,6 +199,14 @@ void Editorspace::sauvegarder()
         }
     }
 }
+
+/*void Editorspace::clearEditor()
+{
+    if(widgetList.isEmpty())
+        return;
+    while(!widgetList.isEmpty())
+        layout_Editor->removeWidget(widgetList.pop());
+}*/
 
 void Editorspace::clear()
 {

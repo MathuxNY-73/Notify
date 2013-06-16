@@ -58,13 +58,6 @@ QString Audio::ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) {
     return es->exportNote(this,tl);
 }
 
-QStandardItem* Audio::getItem()
-{
-    if(!item)
-        item = new QStandardItem(title);
-    return item;
-}
-
 
 AudioWidget* Audio::getWidget()
 {
@@ -101,12 +94,6 @@ ImageWidget* Image::getWidget()
     return widget;
 }
 
-QStandardItem* Image::getItem()
-{
-    if(!item)
-        item = new QStandardItem(title);
-    return item;
-}
 
 Image::~Image()
 {
@@ -134,12 +121,6 @@ VideoWidget* Video::getWidget()
     return widget;
 }
 
-QStandardItem* Video::getItem()
-{
-    if(!item)
-        item = new QStandardItem(title);
-    return item;
-}
 
 Video::~Video(){
     if(widget)
