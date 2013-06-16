@@ -12,6 +12,8 @@
 #include <QListView>
 #include <QStringListModel>
 #include <QStringList>
+#include <QListWidget>
+#include <QListWidgetItem>
 
 namespace Tags
 {
@@ -41,22 +43,22 @@ private:
     QList<Note*> filteredNote;
     QList<QString> filteredTags;
     QStringList tagList;
+    QListWidget* tagChosing;
 
     //On le met en singleton
-    TagManager();
+    TagManager(QWidget* parent=0);
     ~TagManager();
     TagManager(const TagManager& t);
     TagManager& operator=(const TagManager& t);
 
     static TagManager* Instance;
-    QStringListModel* tagModel;
 
-    QStringListModel* getModel() const;
+    QListWidget* getModel() const;
 
 public:
 
     //Singleton
-    static TagManager& getInstance();
+    static TagManager& getInstance(QWidget* parent=0);
     static void releaseInstance();
 
     //Methodes
@@ -64,7 +66,7 @@ public:
     void clear();
     void addTag(const QString& name);
     void deleteTag(const QString& name);
-    void addAssociation(const QString& name, const QSet<Note*>& note);
+    void addAssociation(const QString& name, Note* note);
     void deleteAssociation(const QString& name, Note* note);
 
 
@@ -98,6 +100,7 @@ class TagManagerWidget : public QWidget
 
 private:
     Tags::TagManager* manager;
+    QList<QListWidgetItem*> selectedItems;
 
     //singleton
     TagManagerWidget(QWidget* parent=0);
@@ -109,19 +112,37 @@ private:
     QComboBox* searchField;
     QVBoxLayout* layout;
     QGroupBox* tagging;
-    QListView* viewer;
     QPushButton* deleteTagBtn, *addTagBtn;
 
 public:
     static TagManagerWidget& getInstance(QWidget* parent=0);
     static void releaseInstance();
 
+    void setAssociation(Note* n);
+    void deleteAssociation(Note* n);
+
 public slots :
     void addTags();
     void deleteTags();
-    void setAssociation();
-    void deleteAssociation();
+    void selectedTags(QListWidgetItem*);
+};
 
+/**
+ * @brief The DeleteAssociationDialog class
+ */
+
+class DeleteAssociationDialog : public QDialog
+{
+    Q_OBJECT
+private:
+    QComboBox box;
+    QString selectedTag;
+public:
+    DeleteAssociationDialog(Note* n,QWidget* parent=0);
+    QString getTag() const { return selectedTag; }
+public slots :
+    void ok();
+    void cancel();
 };
 
 }

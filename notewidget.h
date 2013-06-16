@@ -34,9 +34,9 @@ private:
 protected:
     QLineEdit* title;
     QVBoxLayout* layout;
-    QHBoxLayout* hlayout;
+    QHBoxLayout* hlayout,*hlayoutTag;
     QFileDialog* explorer;
-    QPushButton* root,*tag;
+    QPushButton* root,*tag,*untag;
     QLabel* directory;
 
 public:
@@ -49,6 +49,8 @@ public:
 public slots:
     virtual void modification()=0;
     virtual void updateNote();
+    void tagAssociation();
+    void unTagAssociation();
 
 private slots:
     void titleChanged(QString q);
