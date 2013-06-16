@@ -13,7 +13,6 @@
 
 #include "notemanager.h"
 #include "modelManager.h"
-#include "notewidget.h"
 #include "editorspace.h"
 #include "tagmanager.h"
 #include <QTreeView>
@@ -24,8 +23,13 @@
 #include <QtXml/QDomElement>
 #include <QtXml/QDomNode>
 #include <QtXml/QDomNodeList>
+#include <QListWidget>
+#include <QComboBox>
 
 
+/**
+ * @brief The Workspace class
+ */
 class Workspace : public QWidget
 {
     //Macro
@@ -37,7 +41,7 @@ private:
     QScrollBar* scroll;
     QStandardItemModel* model;
     QDomDocument* xmlfile;
-
+    Note* selectedNote;
 
     //Singleton
     static Workspace* Instance;
@@ -55,24 +59,46 @@ public:
     static Workspace& getInstance(QWidget* parent=0);
     static void releaseInstance();
 
-    QSet<Note*>& getSelectedNote() const;
-
     void getFile(const QString& path);
-    void setWorkspace();
+    //void setWorkspace();
     void saveInFile();
     void updateFile();
     void addNote(Note* a);
     void addTag(const QString& t);
+    void rootChange(Note* n);
 
 public slots:
     void clear();
     void getSelectedItem(QModelIndex intdex);
+    void updateNoteModel();
 
 signals:
     void clearOthers();
     void clearEditor();
 
 };
+
+/**
+ * @brief The DocumentAddNoteDialog class
+ */
+class DocumentAddNoteDialog : public QDialog
+{
+    Q_OBJECT
+private:
+    QComboBox box;
+    Document* document;
+    QMap<QListWidgetItem*,Document*> correspondance;
+public:
+    DocumentAddNoteDialog(Note* n,QWidget* parent=0);
+    Document* getDocument() const { return document; }
+public slots :
+    void ok();
+    void cancel();
+};
+
+/**
+ * @brief The WorkspaceException class
+ */
 
 class WorkspaceException
 {

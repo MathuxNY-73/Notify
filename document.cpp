@@ -12,6 +12,7 @@
 #include <iostream>
 #include <QFile>
 #include <QList>
+#include"notemanager.h"
 
 
 void load(const QString& path){}
@@ -52,6 +53,7 @@ void Document::addSubNote(Note* n, unsigned int id){
         {
             modified=true;
             notes<<n;
+            item->appendRow(n->getCopy().getItem());
         }
     }
     catch(DocumentException& e){
@@ -116,11 +118,17 @@ QString Document::ExportNote(Exports::ExportStrategy* es)
 
 DocumentWidget* Document::getWidget()
 {
-    if(maxW==0)
-    {
-        widget = new DocumentWidget(this);
-        maxW++;
-    }
+    if(modified)
+        if(maxW)
+        {
+            delete widget;
+            maxW--;
+        }
+        if(maxW==0)
+        {
+            widget = new DocumentWidget(this);
+            maxW++;
+        }
     return widget;
 }
 
@@ -146,4 +154,15 @@ QStandardItem* Document::getItem()
     for(it=begin() ; it!=end() ; ++it)
         item->appendRow((*it)->getItem());
     return item;
+}
+
+Document& Document::getCopy(){
+    Document* d=dynamic_cast<Document*>(NoteManager::getInstance().getFactory()["Document"]->buildNoteCopy());
+    Document::Iterator it;
+    for(it=begin() ; it!=end() ; ++it)
+    {
+        Note* note=&((*it)->getCopy());
+        d->addSubNote(note,note->getId());
+    }
+    return *d;
 }

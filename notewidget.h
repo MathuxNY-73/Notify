@@ -30,7 +30,7 @@ class NoteWidget : public QWidget
     Q_OBJECT
 
 private:
-
+    Note* note;
 protected:
     QLineEdit* title;
     QVBoxLayout* layout;
@@ -40,7 +40,7 @@ protected:
     QLabel* directory;
 
 public:
-    explicit NoteWidget(QWidget *parent=0);
+    explicit NoteWidget(Note *n, QWidget *parent=0);
     QVBoxLayout* getLayout() {return layout;}
     virtual Note* getNote()=0;
     ~NoteWidget();
@@ -52,6 +52,7 @@ public slots:
 
 private slots:
     void titleChanged(QString q);
+    void choseDoc();
 
     //signal
 signals:

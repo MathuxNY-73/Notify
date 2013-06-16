@@ -12,7 +12,7 @@
 #include "exports.h"
 #include <iostream>
 
-DocumentWidget::DocumentWidget(Document* d, QWidget* parent):NoteWidget(parent),document(d)
+DocumentWidget::DocumentWidget(Document* d, QWidget* parent):NoteWidget(d,parent),document(d)
 {
     //save = new QPushButton("Sauvegarder",this);
     //exp = new QPushButton("Exporter",this);

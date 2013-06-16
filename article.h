@@ -48,6 +48,7 @@ public:
     //Methodes non-inlines
     void setText(const QString& t);
     const QString& getText() const;
+    Article& getCopy();
 
     QString ExportNote(Exports::ExportStrategy *es);
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);

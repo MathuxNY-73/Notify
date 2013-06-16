@@ -7,7 +7,7 @@
 //
 
 #include "binary.h"
-
+#include "notemanager.h"
 
 //Methodes de Binary
 
@@ -74,6 +74,15 @@ Audio::~Audio(){
         delete widget;
 }
 
+Audio& Audio::getCopy()
+{
+    Audio* a=dynamic_cast<Audio*>(NoteManager::getInstance().getFactory()["Audio"]->buildNoteCopy());
+    a->setDesc(desc);
+    a->setBinPath(binPath);
+    return *a;
+}
+
+
 //Methodes de Image
 QString Image::ExportNote(Exports::ExportStrategy* es)
 {
@@ -101,6 +110,15 @@ Image::~Image()
         delete widget;
 }
 
+Image& Image::getCopy()
+{
+    Image* i=dynamic_cast<Image*>(NoteManager::getInstance().getFactory()["Image"]->buildNoteCopy());
+    i->setDesc(desc);
+    i->setBinPath(binPath);
+    return *i;
+}
+
+
 //Methodes de Video
 QString Video::ExportNote(Exports::ExportStrategy* es)
 {
@@ -127,6 +145,13 @@ Video::~Video(){
         delete widget;
 }
 
+Video& Video::getCopy()
+{
+    Video* v=dynamic_cast<Video*>(NoteManager::getInstance().getFactory()["Video"]->buildNoteCopy());
+    v->setDesc(desc);
+    v->setBinPath(binPath);
+    return *v;
+}
 
 
 //Constructeurs de recopie

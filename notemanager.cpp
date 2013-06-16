@@ -8,8 +8,8 @@
 
 #include <fstream>
 #include <QFile>
-#include "note.h"
 #include "notemanager.h"
+#include "note.h"
 #include "article.h"
 #include "document.h"
 

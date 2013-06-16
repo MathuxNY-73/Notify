@@ -10,9 +10,19 @@
 #include "mainwindow.h"
 #include <QVariant>
 #include <QModelIndex>
+#include <string>
+
+/**
+ * @brief Workspace::Instance
+ */
 
 Workspace* Workspace::Instance=0;
 
+/**
+ * @brief Workspace::getInstance
+ * @param parent
+ * @return Workspace&
+ */
 Workspace& Workspace::getInstance(QWidget* parent)
 {
     if(!Instance)
@@ -20,6 +30,9 @@ Workspace& Workspace::getInstance(QWidget* parent)
     return *Instance;
 }
 
+/**
+ * @brief Workspace::releaseInstance
+ */
 void Workspace::releaseInstance()
 {
     if(Instance)
@@ -27,6 +40,10 @@ void Workspace::releaseInstance()
     Instance=0;
 }
 
+/**
+ * @brief Workspace::Workspace
+ * @param parent
+ */
 Workspace::Workspace(QWidget* parent):QWidget(parent)
 {
     //Allocation des widgets
@@ -57,6 +74,9 @@ Workspace::Workspace(QWidget* parent):QWidget(parent)
     QObject::connect(viewer, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(getSelectedItem(QModelIndex)));
 }
 
+/**
+ * @brief Workspace::~Workspace
+ */
 Workspace::~Workspace()
 {
     delete scroll;
@@ -68,15 +88,21 @@ Workspace::~Workspace()
     delete xmlfile;
 }
 
-void Workspace::setWorkspace()
+/**
+ * @brief Workspace::setWorkspace
+ */
+/*void Workspace::setWorkspace()
 {
     if(NoteManager::getInstance().begin()!=NoteManager::getInstance().end())
     {
         loadWorkspace();
     }
-}
+}*/
 
-void Workspace::loadWorkspace()
+/**
+ * @brief Workspace::loadWorkspace
+ */
+void Workspace::updateNoteModel()
 {
     NoteManager::Iterator it;
     for(it=NoteManager::getInstance().begin() ; it!=NoteManager::getInstance().end() ; ++it)
@@ -86,6 +112,10 @@ void Workspace::loadWorkspace()
     }
 }
 
+/**
+ * @brief Workspace::addNote
+ * @param n
+ */
 void Workspace::addNote(Note* n)
 {
     //On créer le noeud correspondant à la note.
@@ -109,6 +139,10 @@ void Workspace::addNote(Note* n)
     Editorspace::getInstance().addWidget(n);
 }
 
+/**
+ * @brief Workspace::addTag
+ * @param t
+ */
 void Workspace::addTag(const QString &t)
 {
     //On créer le noeud correspondant à la note.
@@ -119,7 +153,10 @@ void Workspace::addTag(const QString &t)
     if(tagsNode.appendChild(createdNote)==0)
             throw Tags::TagManagerException("Error while trying to add tag");
 }
-
+/**
+ * @brief Workspace::getSelectedItem
+ * @param index
+ */
 void Workspace::getSelectedItem(QModelIndex index)
 {
     unsigned int id;
@@ -140,6 +177,9 @@ void Workspace::getSelectedItem(QModelIndex index)
     Editorspace::getInstance().addWidget(NoteManager::getInstance().getNote(id));
 }
 
+/**
+ * @brief Workspace::saveInFile
+ */
 void Workspace::saveInFile()
 {
     NoteManager::Iterator it;
@@ -173,6 +213,10 @@ void Workspace::saveInFile()
         file.close();
     }
 }
+
+/**
+ * @brief Workspace::updateFile
+ */
 
 void Workspace::updateFile()
 {
@@ -218,6 +262,77 @@ public slots :
     void cancel();
 };*/
 
+/**
+ * @brief Workspace::rootChange
+ * @param n
+ */
+
+void Workspace::rootChange(Note* n)
+{
+    DocumentAddNoteDialog dialog(n,this);
+    try {
+          dialog.exec();
+          if (dialog.result()){
+              dialog.getDocument()->addSubNote(n,n->getId());
+              Editorspace::getInstance().addWidget(dialog.getDocument());
+              updateNoteModel();
+          }
+      } catch (WorkspaceException& e){
+          QMessageBox::information(this, "Erreur", e.getInfo());
+      }
+}
+
+/**
+ * @brief DocumentAddNoteDialog::DocumentAddNoteDialog
+ * @param n
+ * @param parent
+ */
+
+DocumentAddNoteDialog::DocumentAddNoteDialog(Note* n,QWidget *parent):QDialog(parent),correspondance(QMap<QListWidgetItem*,Document*>())
+{
+    setWindowTitle("Ajouter une note à un document");
+    NoteManager::Iterator it;
+    for(it = NoteManager::getInstance().begin(); it != NoteManager::getInstance().end(); ++it){
+        QString type = QString::fromStdString(typeid(*(*it)).name());
+        type.remove(0,1);
+        if (type=="Document" && (*it)->getId()!=n->getId()){
+            box.addItem((*it)->getTitle(), QVariant((*it)->getId()));
+        }
+    }
+    QPushButton* ok = new QPushButton("Ajouter");
+    QObject::connect(ok, SIGNAL(clicked()), this, SLOT(ok()));
+    QPushButton* cancel = new QPushButton("Annuler");
+    QObject::connect(cancel, SIGNAL(clicked()), this, SLOT(cancel()));
+    QHBoxLayout* hLayout = new QHBoxLayout;
+    hLayout->addWidget(ok);
+    hLayout->addWidget(cancel);
+    QVBoxLayout* vLayout = new QVBoxLayout;
+    vLayout->addWidget(&box);
+    vLayout->addLayout(hLayout);
+    setLayout(vLayout);
+}
+
+/**
+ * @brief DocumentAddNoteDialog::cancel
+ */
+void DocumentAddNoteDialog::cancel()
+{
+    done(0);
+}
+
+/**
+ * @brief DocumentAddNoteDialog::ok
+ */
+
+void DocumentAddNoteDialog::ok(){
+    unsigned int noteId = box.itemData(box.currentIndex()).toUInt();
+    document=dynamic_cast<Document*>(NoteManager::getInstance().getNote(noteId));
+    done(1);
+}
+
+/**
+ * @brief Workspace::clearAll
+ */
 
 void Workspace::clearAll()
 {
@@ -227,6 +342,10 @@ void Workspace::clearAll()
     viewer->setModel(model);
     emit clearOthers();
 }
+
+/**
+ * @brief Workspace::clear
+ */
 
 void Workspace::clear()
 {

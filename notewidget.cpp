@@ -4,9 +4,9 @@
 //
 
 #include "notewidget.h"
+#include "workspace.h"
 
-
-NoteWidget::NoteWidget(QWidget *parent):QWidget(parent)
+NoteWidget::NoteWidget(Note* n,QWidget *parent):QWidget(parent),note(n)
 {
     title = new QLineEdit("titre",this);
     layout = new QVBoxLayout(this);
@@ -24,6 +24,8 @@ NoteWidget::NoteWidget(QWidget *parent):QWidget(parent)
     tag->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
     this->setLayout(layout);
 
+
+    QObject::connect(root,SIGNAL(clicked()),this,SLOT(choseDoc()));
     QObject::connect(title,SIGNAL(textChanged(QString)),this,SLOT(titleChanged(QString)));
 }
 
@@ -45,4 +47,8 @@ NoteWidget::~NoteWidget()
     delete directory;
     delete hlayout;
     delete layout;
+}
+
+void NoteWidget::choseDoc(){
+    Workspace::getInstance().rootChange(note);
 }

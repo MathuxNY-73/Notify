@@ -12,7 +12,7 @@
 
 //Methodes de Binary Widgets
 
-BinaryWidget::BinaryWidget(Binary* b,QWidget* parent):NoteWidget(parent),binary(b)
+BinaryWidget::BinaryWidget(Binary* b,QWidget* parent):NoteWidget(b,parent),binary(b)
 {
 
     //Allocation des Widgets

@@ -81,7 +81,7 @@ public:
     //Méthodes non inline
     QString ExportNote(Exports::ExportStrategy* es);
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);
-    
+    Video& getCopy();
 
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
     VideoWidget* getWidget();
@@ -110,7 +110,7 @@ public:
     //Méthodes non inline
     QString ExportNote(Exports::ExportStrategy* es);
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);
-
+    Image& getCopy();
 
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
     ImageWidget* getWidget();
@@ -140,7 +140,7 @@ public:
     //Méthodes non inline
     QString ExportNote(Exports::ExportStrategy* es);
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);
-
+    Audio& getCopy();
 
     //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
     AudioWidget* getWidget();

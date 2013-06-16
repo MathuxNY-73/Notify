@@ -10,7 +10,7 @@
 //#include <fstream>
 //#include <QFile>
 #include "article.h"
-
+#include "notemanager.h"
 
 Article::Article(const QString& p):Note(p),text(""),widget(0),maxW(0){}
 Article::Article(unsigned int i, const QString& ti, const QString& te): Note(i,ti),text(te),widget(0), maxW(0){}
@@ -44,4 +44,15 @@ ArticleWidget* Article::getWidget(){
         maxW++;
     }
     return widget;
+}
+
+/**
+ * @brief Article::getCopy
+ * @return
+ */
+Article& Article::getCopy()
+{
+    Article* a=dynamic_cast<Article*>(NoteManager::getInstance().getFactory()["Article"]->buildNoteCopy());
+    a->setText(text);
+    return *a;
 }

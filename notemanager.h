@@ -14,12 +14,16 @@
 #include <QTextStream>
 #include <QMap>
 #include <QSet>
-#include "note.h"
-#include "article.h"
-#include "document.h"
 #include "exports.h"
 #include "factories.h"
 
+class Article;
+class Document;
+class Note;
+class Binary;
+class Video;
+class Audio;
+class Image;
 
 class NoteManagerException{
 public:
