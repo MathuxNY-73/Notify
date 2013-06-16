@@ -27,6 +27,7 @@ BinaryWidget::BinaryWidget(Binary* b,QWidget* parent):NoteWidget(parent),binary(
     //bwse->setStyle();
     QObject::connect(descpt,SIGNAL(textChanged()),this,SLOT(enableSave()));
     QObject::connect(title,SIGNAL(textChanged(QString)),this,SLOT(enableSave()));
+    QObject::connect(bwse,SIGNAL(clicked()),this,SLOT(getPath()));
 
     //Layout
     hlayout->addWidget(path);
@@ -34,7 +35,7 @@ BinaryWidget::BinaryWidget(Binary* b,QWidget* parent):NoteWidget(parent),binary(
     hlayout->addWidget(bwse);
     layout->addLayout(hlayout);
     layout->addWidget(descpt);
-    //layout->addWidget(save);
+
 
     pathEdit->setText(binary->getBinPath());
     path->setMaximumWidth(35);
@@ -73,6 +74,13 @@ void BinaryWidget::modification()
 Note* BinaryWidget::getNote()
 {
     return dynamic_cast<Note*>(binary);
+}
+
+void BinaryWidget::getPath()
+{
+    QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "*.*");
+    binary->setBinPath(fichier);
+    pathEdit->setText(binary->getBinPath());
 }
 
 //Méthodes de AudioWidget

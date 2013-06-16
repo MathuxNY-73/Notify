@@ -51,6 +51,7 @@ public:
 public slots:
     void updateNote();
     void modification();
+    void getPath();
 private slots:
     void enableSave();
 };

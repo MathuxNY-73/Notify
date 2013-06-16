@@ -35,7 +35,6 @@ Workspace::Workspace(QWidget* parent):QWidget(parent)
     layout = new QVBoxLayout(this);
     model= new QStandardItemModel();
     scroll = new QScrollBar(Qt::Horizontal,this);
-    afficheSelection = new QPushButton("Afficher la selection",this);
 
     //On créer la structure de base de tout fichier .workspace
     QDomElement root = xmlfile->createElement("workspace");
@@ -54,7 +53,6 @@ Workspace::Workspace(QWidget* parent):QWidget(parent)
     viewer->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     layout->addWidget(viewer);
-    layout->addWidget(afficheSelection);
 
     QObject::connect(viewer, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(getSelection(QModelIndex)));
 }
@@ -65,7 +63,6 @@ Workspace::~Workspace()
     delete viewer;
     delete model;
     delete layout;
-    delete afficheSelection;
     Editorspace::releaseInstance();
     NoteManager::releaseInstance();
     delete xmlfile;
@@ -81,13 +78,12 @@ void Workspace::setWorkspace()
 
 void Workspace::loadWorkspace()
 {
-    NoteManager::Const_Iterator it;
-    for(it=NoteManager::getInstance().cbegin() ; it!=NoteManager::getInstance().cend() ; ++it)
+    NoteManager::Iterator it;
+    for(it=NoteManager::getInstance().begin() ; it!=NoteManager::getInstance().end() ; ++it)
     {
-        QStandardItem* n=(*it)->getItem();
+        NoteItem* n= new NoteItem((*it)->getTitle(),(*it));
         n->setEditable(false);
         model->appendRow(n);
-        items.insert(model->indexFromItem(n),(*it)->getId());
     }
 }
 
@@ -125,27 +121,20 @@ void Workspace::addTag(const QString &t)
             throw Tags::TagManagerException("Error while trying to add tag");
 }
 
-/*QSet<Note*>& Workspace::getSelectedNote() const
+void Workspace::getSelectedItem(QModelIndex index)
 {
-    QSet<Note*>* selectedNotes = new QSet<Note*>();
-    QItemSelectionModel *selection = viewer->selectionModel();
-    QModelIndexList listeSelections = selection->selectedIndexes();
-    for (int i = 0 ; i < listeSelections.size() ; i++)
+    try
     {
-        QVariant elementSelectionne = model->data(listeSelections[i], Qt::DisplayRole);
-        unsigned int idSelect=items[elementSelectionne.toModelIndex()];
-        *selectedNotes<<NoteManager::getInstance().getNote(idSelect);
+        NoteItem* itemNote = dynamic_cast<NoteItem*>(model->itemFromIndex(index));
+        if(!itemNote)
+            throw WorkspaceException("La conversion à échouée, impossible de réupérer la note à partir de l'item");
+         Note* n=itemNote->getNote();
+    }catch(WorkspaceException& e)
+    {
+        QMessageBox::critical(this,"Alert",e.getInfo());
+        //return NULL;
     }
-    return *selectedNotes;
-}
-*/
-void Workspace::getSelection(QModelIndex index)
-{     
-    NoteItem* itemNote = dynamic_cast<NoteItem*>(model->itemFromIndex(index));
-    Note* n=itemNote->getNote();
-    QString selectedItems="1 : "+n->getTitle()+"  "+QString::number(n->getId())+"\n";
-    QMessageBox::information(&Tags::TagManagerWidget::getInstance(), "Eléments sélectionnés", selectedItems);
-    //return *selectedNotes;
+    //return *n;
 }
 
 void Workspace::getFile(const QString& path)
@@ -235,7 +224,6 @@ void Workspace::clearAll()
 {
     xmlfile->clear();
     model->clear();
-    items.clear();
     model->clear();
     viewer->setModel(model);
     emit clearOthers();

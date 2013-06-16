@@ -34,9 +34,7 @@ private:
     QVBoxLayout* layout;
     QTreeView* viewer;
     QScrollBar* scroll;
-    QPushButton* afficheSelection;
     QStandardItemModel* model;
-    QMap<QModelIndex,unsigned int> items;
     QDomDocument* xmlfile;
 
 
@@ -67,7 +65,7 @@ public:
 
 public slots:
     void clear();
-    void getSelection(QModelIndex index);
+    void getSelectedItem(QModelIndex intdex);
 
 signals:
     void clearOthers();
@@ -80,6 +78,7 @@ private:
     Note* note;
 public:
     NoteItem(const QString& title, Note* n):QStandardItem(title),note(n){}
+    ~NoteItem(){}
     Note* getNote() const{ return note;}
 };
 
@@ -88,7 +87,8 @@ class WorkspaceException
     QString info;
 
 public:
-    WorkspaceException(const QString& message):info(message){}
+    WorkspaceException(const QString& message) throw() :info(message){}
+    ~WorkspaceException() throw(){}
     QString getInfo() const { return info; }
 };
 

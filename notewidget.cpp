@@ -26,7 +26,7 @@ NoteWidget::NoteWidget(QWidget *parent):QWidget(parent)
 void NoteWidget::titleChanged(QString q)
 {
     getNote()->setTitle(q);
-    getNote()->getItem()->setText(q);
+    emit changeTitle(q);
 }
 
 void NoteWidget::updateNote()

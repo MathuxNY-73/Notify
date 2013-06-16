@@ -56,6 +56,7 @@ private slots:
     //signal
 signals:
     void mod();
+    void changeTitle(QString q);
 
 };
 

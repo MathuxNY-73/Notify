@@ -145,7 +145,7 @@ void MainWindow::newArticle()
 {
     if(NoteManager::exist())
     {
-        Article* a =NoteManager::getInstance().getFactory()["Article"]->buildNewNote("Titre de l'article");
+        Article* a =dynamic_cast<Article*>(NoteManager::getInstance().getFactory()["Article"]->buildNewNote("Titre de l'article"));
         try{
             work->addNote(a);
         }catch(MyException& e){
@@ -162,7 +162,7 @@ void MainWindow::newDocument()
 {
     if(NoteManager::exist())
     {
-        Document* d =NoteManager::getInstance().getFactory()["Document"]->buildNewNote("Titre du document");
+        Document* d =dynamic_cast<Document*>(NoteManager::getInstance().getFactory()["Document"]->buildNewNote("Titre du document"));
         try{
             work->addNote(d);
         }catch(MyException& e){
@@ -179,7 +179,7 @@ void MainWindow::newImage()
 {
     if(NoteManager::exist())
     {
-        Image* i =NoteManager::getInstance().getFactory()["Image"]->buildNewNote("Titre de l'image");
+        Image* i = dynamic_cast<Image*>(NoteManager::getInstance().getFactory()["Image"]->buildNewNote("Titre de l'image"));
         try{
             work->addNote(i);
         }catch(MyException& e){
@@ -196,7 +196,7 @@ void MainWindow::newVideo()
 {
     if(NoteManager::exist())
     {
-        Video* v = NoteManager::getInstance().getFactory()["Video"]->buildNewNote("Titre de la video");
+        Video* v = dynamic_cast<Video*>(NoteManager::getInstance().getFactory()["Video"]->buildNewNote("Titre de la video"));
         try{
             work->addNote(v);
         }catch(MyException& e){
@@ -213,7 +213,7 @@ void MainWindow::newAudio()
 {
     if(NoteManager::exist())
     {
-        Audio* a = NoteManager::getInstance().getFactory()["Audio"]->buildNewNote("Titre de l'audio");
+        Audio* a = dynamic_cast<Audio*>(NoteManager::getInstance().getFactory()["Audio"]->buildNewNote("Titre de l'audio"));
         try{
             work->addNote(a);
         }catch(MyException& e){

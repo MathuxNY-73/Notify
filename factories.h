@@ -23,7 +23,7 @@ public:
 };
 
 
-class ArticleFactory{
+class ArticleFactory : public NoteFactory{
 
 public:
     ArticleFactory(){}
@@ -32,7 +32,7 @@ public:
     Article* buildNoteCopy();
 };
 
-class DocumentFactory{
+class DocumentFactory : public NoteFactory{
 public:
     DocumentFactory(){}
     Document* buildNewNote(const QString& title);
@@ -40,7 +40,7 @@ public:
     Document* buildNoteCopy();
 };
 
-class AudioFactory{
+class AudioFactory : public NoteFactory{
 
 public:
     AudioFactory(){}
@@ -49,7 +49,7 @@ public:
     Audio* buildNoteCopy();
 };
 
-class ImageFactory{
+class ImageFactory : public NoteFactory{
 
 public:
     ImageFactory(){}
@@ -58,7 +58,7 @@ public:
     Image* buildNoteCopy();
 };
 
-class VideoFactory{
+class VideoFactory : public NoteFactory{
 
 public:
     VideoFactory(){}
