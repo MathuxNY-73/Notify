@@ -10,6 +10,7 @@
 #include "document.h"
 #include "notewidget.h"
 #include "exports.h"
+#include "tagmanager.h"
 #include <iostream>
 
 /**
@@ -63,4 +64,17 @@ void DocumentWidget::modification()
 Note* DocumentWidget::getNote()
 {
     return dynamic_cast<Note*>(document);
+}
+
+/**
+ * \fn void DocumentWidge::tagAssociation()
+ * \brief Créer une association
+ *Slot appelé lorsque l'utilisateur appuie sur le bouton 'tag'. Il permet de faire appelle à la fonction que permettra de tagger la note.
+ */
+void DocumentWidget::tagAssociation()
+{
+    Tags::TagManagerWidget::getInstance().setAssociation(document);
+    Document::Iterator it;
+    for(it=document->begin() ; it != document->end() ; ++it)
+        Tags::TagManagerWidget::getInstance().setAssociation((*it));
 }

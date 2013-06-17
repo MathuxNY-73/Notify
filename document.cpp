@@ -13,6 +13,7 @@
 #include <QFile>
 #include <QList>
 #include"notemanager.h"
+#include "editorspace.h"
 
 /**
  * \fn void load(const QString& path)
@@ -87,8 +88,10 @@ void Document::addSubNote(Note* n, unsigned int id){
         else
         {
             modified=true;
-            notes<<n;
-            item->appendRow(n->getCopy().getItem());
+            Note* newNote = &(n->getCopy());
+            notes<<newNote;
+            Editorspace::getInstance().addWidget(newNote);
+            item->appendRow(newNote->getItem());
         }
     }
     catch(DocumentException& e){
@@ -157,12 +160,6 @@ QString Document::ExportNote(Exports::ExportStrategy* es)
  */
 DocumentWidget* Document::getWidget()
 {
-  /*  if(modified)
-        if(maxW)
-        {
-            delete widget;
-            maxW--;
-        }*/
         if(maxW==0)
         {
             widget = new DocumentWidget(this);
@@ -200,7 +197,9 @@ Document& Document::getCopy(){
     for(it=begin() ; it!=end() ; ++it)
     {
         Note* note=&((*it)->getCopy());
+        NoteManager::getInstance().addNote(note);
         d->addSubNote(note,note->getId());
     }
+    NoteManager::getInstance().addNote(d);
     return *d;
 }

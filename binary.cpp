@@ -128,6 +128,7 @@ Audio::~Audio(){
 Audio& Audio::getCopy()
 {
     Audio* a=dynamic_cast<Audio*>(NoteManager::getInstance().getFactory()["Audio"]->buildNoteCopy());
+    NoteManager::getInstance().addNote(a);
     a->setDesc(desc);
     a->setBinPath(binPath);
     return *a;
@@ -164,6 +165,7 @@ Image::~Image()
 Image& Image::getCopy()
 {
     Image* i=dynamic_cast<Image*>(NoteManager::getInstance().getFactory()["Image"]->buildNoteCopy());
+    NoteManager::getInstance().addNote(i);
     i->setDesc(desc);
     i->setBinPath(binPath);
     return *i;
@@ -199,6 +201,7 @@ Video::~Video(){
 Video& Video::getCopy()
 {
     Video* v=dynamic_cast<Video*>(NoteManager::getInstance().getFactory()["Video"]->buildNoteCopy());
+    NoteManager::getInstance().addNote(v);
     v->setDesc(desc);
     v->setBinPath(binPath);
     return *v;

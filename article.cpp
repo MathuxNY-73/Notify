@@ -86,6 +86,7 @@ ArticleWidget* Article::getWidget(){
 Article& Article::getCopy()
 {
     Article* a=dynamic_cast<Article*>(NoteManager::getInstance().getFactory()["Article"]->buildNoteCopy());
+    NoteManager::getInstance().addNote(a);
     a->setText(text);
     return *a;
 }

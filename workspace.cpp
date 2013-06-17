@@ -248,7 +248,7 @@ void Workspace::rootChange(Note* n)
           if (dialog.result()){
               dialog.getDocument()->addSubNote(n,n->getId());
               Editorspace::getInstance().addWidget(dialog.getDocument());
-              updateNoteModel();
+              //updateNoteModel();
           }
       } catch (WorkspaceException& e){
           QMessageBox::information(this, "Erreur", e.getInfo());

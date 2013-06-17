@@ -65,7 +65,8 @@ Article* ArticleFactory::buildNote(unsigned int id,const QString& title){
  * \return Pointeur sur le nouvel Article
  */
 Article* ArticleFactory::buildNoteCopy(){
-    Article* a = new Article(getNewId(), "","");
+    unsigned int newId = getNewId();
+    Article* a = new Article(newId, "Titre de l'article " + QString::number(newId),"");
     return a;
 }
 
@@ -98,7 +99,8 @@ Document* DocumentFactory::buildNote(unsigned int id,const QString& title){
  * \return Pointeur sur le nouveau Document
  */
 Document* DocumentFactory::buildNoteCopy(){
-    Document*d = new Document(getNewId(),"");
+    unsigned int newId = getNewId();
+    Document*d = new Document(newId,"Titre du document " + QString::number(newId));
     return d;
 }
 
@@ -131,7 +133,8 @@ Audio* AudioFactory::buildNote(unsigned int id,const QString& title){
  * \return Pointeur sur le nouvel Audio
  */
 Audio* AudioFactory::buildNoteCopy(){
-    Audio* a = new Audio(getNewId(),"");
+    unsigned int newId = getNewId();
+    Audio* a = new Audio(newId,"Titre de l'audio " + QString::number(newId));
     return a;
 }
 
@@ -164,7 +167,8 @@ Video* VideoFactory::buildNote(unsigned int id,const QString& title){
  * \return Pointeur sur la nouvelle video
  */
 Video* VideoFactory::buildNoteCopy(){
-    Video* a = new Video(getNewId(),"");
+    unsigned int newId = getNewId();
+    Video* a = new Video(newId,"Titre de la video " + QString::number(newId));
     return a;
 }
 
@@ -175,6 +179,7 @@ Video* VideoFactory::buildNoteCopy(){
  * \return Pointeur sur la nouvelle image
  */
 Image* ImageFactory::buildNewNote(const QString& title){
+    unsigned int newId = getNewId();
     Image* a = new Image(getNewId(),title);
     return a;
 }
@@ -185,7 +190,8 @@ Image* ImageFactory::buildNewNote(const QString& title){
  * \return Pointeur sur la nouvelle image
  */
 Image* ImageFactory::buildNoteCopy(){
-    Image* a = new Image(getNewId(),"");
+    unsigned int newId = getNewId();
+    Image* a = new Image(newId,"Titre de l'image " + QString::number(newId));
     return a;
 }
 

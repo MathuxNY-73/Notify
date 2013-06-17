@@ -40,6 +40,7 @@ public:
 public slots:
     void updateNote();
     void modification();
+    void tagAssociation();
 };
 
 #endif // DOCUMENTWIDGET_H
