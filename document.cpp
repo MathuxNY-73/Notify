@@ -157,12 +157,12 @@ QString Document::ExportNote(Exports::ExportStrategy* es)
  */
 DocumentWidget* Document::getWidget()
 {
-    if(modified)
+  /*  if(modified)
         if(maxW)
         {
             delete widget;
             maxW--;
-        }
+        }*/
         if(maxW==0)
         {
             widget = new DocumentWidget(this);
