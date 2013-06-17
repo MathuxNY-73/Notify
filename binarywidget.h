@@ -16,9 +16,7 @@
 #include <QGridLayout>
 #include <QPixmap>
 #include <QImage>
-//#include <QObject>
 #include <QSlider>
-//#include <Phonon>
 
 
 class Binary;
@@ -27,6 +25,10 @@ class Video;
 class Image;
 class BinaryException;
 
+/**
+ * \class BinaryWidget : public NoteWidget
+ * \brief Classe des widgets des fichiers binaires
+ */
 class BinaryWidget : public NoteWidget
 {
     //Macro
@@ -39,7 +41,6 @@ protected:
     QLabel* path,*pathEdit;
     QTextEdit* descpt;
     Binary* binary;
-    //QPushButton* save;
 
 
 public:
@@ -52,10 +53,12 @@ public slots:
     void updateNote();
     void modification();
     void getPath();
-private slots:
-    void enableSave();
 };
 
+/**
+ * \class AudioWidget : public BinaryWidget
+ * \brief Classe des widgets audio
+ */
 class AudioWidget : public BinaryWidget
 {
     //Macro
@@ -78,12 +81,15 @@ public slots:
 
 };
 
+/**
+ * \class VideoWidget : public BinaryWidget
+ * \brief Classe des widgets video
+ */
 class VideoWidget : public BinaryWidget
 {
     Q_OBJECT
 private:
     Video* video;
-    //Phonon::VideoPlayer* player;
     QPushButton* play, *pause, *stop;
     QSlider* cursor;
     QHBoxLayout* hlayout;
@@ -100,6 +106,10 @@ public slots:
 
 };
 
+/**
+ * \class ImageWidget : public BinaryWidget
+ * \brief Classe des widgets image
+ */
 class ImageWidget : public BinaryWidget
 {
     Q_OBJECT

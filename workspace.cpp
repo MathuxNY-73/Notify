@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Antoine POUILLAUDE. All rights reserved.
 //
 
+#include "notemanager.h"
 #include "workspace.h"
 #include "mainwindow.h"
 #include <QVariant>
@@ -13,16 +14,18 @@
 #include <string>
 
 /**
- * @brief Workspace::Instance
+ * \brief Workspace::Instance Pointeur sur l'unique instance du Workspace.
  */
 
 Workspace* Workspace::Instance=0;
 
 /**
- * @brief Workspace::getInstance
- * @param parent
- * @return Workspace&
+ $ \fn Workspace& Workspace::getInstance(QWidget* parent)
+ * \brief Design Pattern Singleton : Methode servant à récupérer une instance du Workspace.
+ * \param parent Widget parent du widget que l'on cherche à créer. 'NULL' par défaut.
+ * \return Workspace& Retourne une référence sur l'instance créée.
  */
+
 Workspace& Workspace::getInstance(QWidget* parent)
 {
     if(!Instance)
@@ -31,8 +34,10 @@ Workspace& Workspace::getInstance(QWidget* parent)
 }
 
 /**
- * @brief Workspace::releaseInstance
+ * \fn void Workspace::releaseInstance()
+ * \brief Design Pattern Singleton : Methode de libération de l'instance du workspace
  */
+
 void Workspace::releaseInstance()
 {
     if(Instance)
@@ -41,9 +46,11 @@ void Workspace::releaseInstance()
 }
 
 /**
- * @brief Workspace::Workspace
- * @param parent
+ * \fn Workspace::Workspace(QWidget* parent)
+ * \brief Constructeur du de la classe Workspace
+ * \param parent Widget parent du workspace. 'NULL' par défaut.
  */
+
 Workspace::Workspace(QWidget* parent):QWidget(parent)
 {
     //Allocation des widgets
@@ -75,8 +82,10 @@ Workspace::Workspace(QWidget* parent):QWidget(parent)
 }
 
 /**
- * @brief Workspace::~Workspace
+ * \fn Workspace::~Workspace()
+ * \brief Destructeur du Workspace.
  */
+
 Workspace::~Workspace()
 {
     delete scroll;
@@ -89,33 +98,25 @@ Workspace::~Workspace()
 }
 
 /**
- * @brief Workspace::setWorkspace
+ * \fn  void Workspace::clearAll()
+ * \brief Méthode servant à supprimer les éléments présents dans le workspace
  */
-/*void Workspace::setWorkspace()
-{
-    if(NoteManager::getInstance().begin()!=NoteManager::getInstance().end())
-    {
-        loadWorkspace();
-    }
-}*/
 
-/**
- * @brief Workspace::loadWorkspace
- */
-void Workspace::updateNoteModel()
+void Workspace::clearAll()
 {
-    NoteManager::Iterator it;
-    for(it=NoteManager::getInstance().begin() ; it!=NoteManager::getInstance().end() ; ++it)
-    {
-        QStandardItem* n = (*it)->getItem();
-        model->appendRow(n);
-    }
+    xmlfile->clear();
+    model->clear();
+    model->clear();
+    viewer->setModel(model);
+    emit clearOthers();
 }
 
 /**
- * @brief Workspace::addNote
- * @param n
+ * \fn  void Workspace::addNote(Note* n)
+ * \brief Méthode servant à ajouter une note au workspace et donc au NoteManager. On ajoute en plus la note dans le document XML
+ * \param n Prend en paramètre la note à créer.
  */
+
 void Workspace::addNote(Note* n)
 {
     //On créer le noeud correspondant à la note.
@@ -140,9 +141,11 @@ void Workspace::addNote(Note* n)
 }
 
 /**
- * @brief Workspace::addTag
- * @param t
+ * \fn void Workspace::addTag(const QString &t)
+ * \brief Cette méthode ajoute le tag créé dans le TagManager au document XML
+ * \param t Prend en paramètre le nom du tag créé
  */
+
 void Workspace::addTag(const QString &t)
 {
     //On créer le noeud correspondant à la note.
@@ -153,33 +156,49 @@ void Workspace::addTag(const QString &t)
     if(tagsNode.appendChild(createdNote)==0)
             throw Tags::TagManagerException("Error while trying to add tag");
 }
+
 /**
- * @brief Workspace::getSelectedItem
- * @param index
+ * \fn  void Workspace::updateFile()
+ * \brief Cette méthode sert à mettre à jour les données du document XML pour ensuite pouvoir les écrires dans le fichier .workspace
  */
-void Workspace::getSelectedItem(QModelIndex index)
+
+void Workspace::updateFile()
 {
-    unsigned int id;
-    try
+    QDomNodeList node_list = xmlfile->elementsByTagName("notes");
+    QDomElement notesNode = node_list.at(0).toElement();
+    QDomNodeList nodeNotesList = notesNode.elementsByTagName("note");
+    for(int i=0 ; i<nodeNotesList.size() ; i++)
     {
-        QString idNote = model->itemFromIndex(index)->accessibleDescription();
-        if(idNote=="")
-            throw WorkspaceException("La conversion à échouée, impossible de réupérer la note à partir de l'item");
-        id = idNote.toUInt();
-    }catch(WorkspaceException& e)
-    {
-        QMessageBox::critical(this,"Alert",e.getInfo());
-        return;
+        QDomElement oldNote = nodeNotesList.at(i).toElement();
+        QDomElement newNote = oldNote;
+        int noteId = oldNote.attribute("id","-1").toInt();
+        if(noteId<0)
+            continue;
+        Note* n;
+        if(!(n=NoteManager::getInstance().getNote(noteId)))
+        {
+            notesNode.removeChild(oldNote);
+            continue;
+        }
+        /*if(!n->isModify())
+            continue;*/
+        QString type =QString::fromStdString(typeid(*n).name());
+        type.remove(0,1);
+        newNote.setAttribute("id",n->getId());
+        newNote.setAttribute("type",type);
+        newNote.setAttribute("title",n->getTitle());
+        newNote.setAttribute("path",n->getPath());
+
+        notesNode.removeChild(notesNode.replaceChild(newNote,oldNote));
     }
-    QString type =QString::fromStdString(typeid(*(NoteManager::getInstance().getNote(id))).name());
-    type.remove(0,1);
-    QMessageBox::information(this,"Info","La note selectionnée est "+NoteManager::getInstance().getNote(id)->getTitle()+" avec l'id "+QString::number(id)+" de type : "+type);
-    Editorspace::getInstance().addWidget(NoteManager::getInstance().getNote(id));
 }
 
 /**
- * @brief Workspace::saveInFile
+ * \fn void Workspace::saveInFile()
+ * \brief Fonction de suavegarde
+ * Cette fonction sert à écrire dans le fichier .workspace. Elle sauvegarde tous les éléments du workspace
  */
+
 void Workspace::saveInFile()
 {
     NoteManager::Iterator it;
@@ -215,56 +234,10 @@ void Workspace::saveInFile()
 }
 
 /**
- * @brief Workspace::updateFile
- */
-
-void Workspace::updateFile()
-{
-    QDomNodeList node_list = xmlfile->elementsByTagName("notes");
-    QDomElement notesNode = node_list.at(0).toElement();
-    QDomNodeList nodeNotesList = notesNode.elementsByTagName("note");
-    for(int i=0 ; i<nodeNotesList.size() ; i++)
-    {
-        QDomElement oldNote = nodeNotesList.at(i).toElement();
-        QDomElement newNote = oldNote;
-        int noteId = oldNote.attribute("id","-1").toInt();
-        if(noteId<0)
-            continue;
-        Note* n;
-        if(!(n=NoteManager::getInstance().getNote(noteId)))
-        {
-            notesNode.removeChild(oldNote);
-            continue;
-        }
-        /*if(!n->isModify())
-            continue;*/
-        QString type =QString::fromStdString(typeid(*n).name());
-        type.remove(0,1);
-        newNote.setAttribute("id",n->getId());
-        newNote.setAttribute("type",type);
-        newNote.setAttribute("title",n->getTitle());
-        newNote.setAttribute("path",n->getPath());
-
-        notesNode.removeChild(notesNode.replaceChild(newNote,oldNote));
-    }
-}
-/*
-class DocumentAddDialog : public QDialog {
-    Q_OBJECT
-private :
-    QComboBox comboBox;
-    QString noteId;
-public :
-    DocumentAddDialog(Document *resource, QWidget* parent = 0);
-    const QString& getNoteId() const { return noteId; }
-public slots :
-    void ok();
-    void cancel();
-};*/
-
-/**
- * @brief Workspace::rootChange
- * @param n
+ * \fn void Workspace::rootChange(Note* n)
+ * \brief Cette méthode permet de placé la note passée en paremètre dans un document
+ * \param n Note que l'on souhaite placée dans le document
+ * \bug La note ne s'affiche pas dans la vue du modèle
  */
 
 void Workspace::rootChange(Note* n)
@@ -283,9 +256,62 @@ void Workspace::rootChange(Note* n)
 }
 
 /**
- * @brief DocumentAddNoteDialog::DocumentAddNoteDialog
- * @param n
- * @param parent
+ * \fn void Workspace::clear()
+ * \brief Slots qui appelle la méthode qui va supprimer les éléments présents dans le workspace. Utilisé dans le cas d'un changement de Workspace par exemple
+ */
+
+void Workspace::clear()
+{
+    clearAll();
+}
+
+/**
+ * \fn  void Workspace::getSelectedItem(QModelIndex index)
+ * \brief Ce slot sert à implémenter l'interaction avec le modèle créé pour afficher les notes.
+ * \param index Prend en paramètre l'index, dans le modèle, de l'élément sélectionné
+ * \bug Dans l'esprit cette fontion devait vider l'editeur et n'afficher que la note selectionnée
+ */
+
+void Workspace::getSelectedItem(QModelIndex index)
+{
+    unsigned int id;
+    try
+    {
+        QString idNote = model->itemFromIndex(index)->accessibleDescription();
+        if(idNote=="")
+            throw WorkspaceException("La conversion à échouée, impossible de réupérer la note à partir de l'item");
+        id = idNote.toUInt();
+    }catch(WorkspaceException& e)
+    {
+        QMessageBox::critical(this,"Alert",e.getInfo());
+        return;
+    }
+    QString type =QString::fromStdString(typeid(*(NoteManager::getInstance().getNote(id))).name());
+    type.remove(0,1);
+    QMessageBox::information(this,"Info","La note selectionnée est "+NoteManager::getInstance().getNote(id)->getTitle()+" avec l'id "+QString::number(id)+" de type : "+type);
+    Editorspace::getInstance().addWidget(NoteManager::getInstance().getNote(id));
+}
+
+/**
+ * \fn void Workspace::updateNoteModel()
+ * \brief Méthode servant à mettre à jour le modèle de notes
+ */
+
+void Workspace::updateNoteModel()
+{
+    NoteManager::Iterator it;
+    for(it=NoteManager::getInstance().begin() ; it!=NoteManager::getInstance().end() ; ++it)
+    {
+        QStandardItem* n = (*it)->getItem();
+        model->appendRow(n);
+    }
+}
+
+/**
+ * \fn DocumentAddNoteDialog::DocumentAddNoteDialog(Note* n,QWidget *parent)
+ * \brief Constructeur de la fenêtre de dialogue personnalisée représentée par cette classe
+ * \param n Note que l'on souhaite ajouter à un document
+ * \param parent  Widget parent de la classe.
  */
 
 DocumentAddNoteDialog::DocumentAddNoteDialog(Note* n,QWidget *parent):QDialog(parent),correspondance(QMap<QListWidgetItem*,Document*>())
@@ -312,16 +338,11 @@ DocumentAddNoteDialog::DocumentAddNoteDialog(Note* n,QWidget *parent):QDialog(pa
     setLayout(vLayout);
 }
 
-/**
- * @brief DocumentAddNoteDialog::cancel
- */
-void DocumentAddNoteDialog::cancel()
-{
-    done(0);
-}
 
 /**
- * @brief DocumentAddNoteDialog::ok
+ * \fn void DocumentAddNoteDialog::ok()
+ * \brief Méthode Ok
+ * Appelée lorsque l'utilisateur appuie sur "ajouter" dans la fenêtre de dialogue
  */
 
 void DocumentAddNoteDialog::ok(){
@@ -331,23 +352,12 @@ void DocumentAddNoteDialog::ok(){
 }
 
 /**
- * @brief Workspace::clearAll
+ * \fn void DocumentAddNoteDialog::cancel()
+ * \brief Méthode cancel
+ * Appelée lorsque l'utilisateur appuie sur "cancel" dans la fenêtre de dialogue. La valeur donnée en paramètre de done
+ *  est ensuite récupérée grâce à la méthode 'result'.
  */
-
-void Workspace::clearAll()
+void DocumentAddNoteDialog::cancel()
 {
-    xmlfile->clear();
-    model->clear();
-    model->clear();
-    viewer->setModel(model);
-    emit clearOthers();
-}
-
-/**
- * @brief Workspace::clear
- */
-
-void Workspace::clear()
-{
-    clearAll();
+    done(0);
 }

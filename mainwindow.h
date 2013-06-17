@@ -15,11 +15,18 @@
 #include <QMenuBar>
 #include <QFileDialog>
 
+/**
+ * \namespace Ui
+ */
 namespace Ui {
 class MainWindow;
 class MyException;
 }
 
+/**
+ * \class MyException
+ * \brief Classe des exceptions de la Main Window
+ */
 class MyException
 {
     QString info;
@@ -29,6 +36,10 @@ public:
     QString getInfo() const { return info; }
 };
 
+/**
+ * \class MainWindow : public QMainWindow
+ * \brief La classe de Main Window
+ */
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -48,7 +59,6 @@ private:
     Editorspace* editor;
     Workspace* work;
     QString workPath;
-
     QGridLayout* gridLayout;
 
     //slots

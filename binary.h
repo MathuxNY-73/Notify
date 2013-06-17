@@ -15,6 +15,10 @@
 #include "exports.h"
 #include "binarywidget.h"
 
+/**
+ * \class BinaryException
+ * \brief Classe des exceptions des binaires
+ */
 class BinaryException{
 public:
     BinaryException(const QString& message):info(message){}
@@ -24,6 +28,11 @@ private:
 };
 
 //Super-classe des fichiers binaires
+
+/**
+ * \class Binary : public Note {Abstract}
+ * \brief Classe des objets binaires
+ */
 class Binary : public Note{
     
 private:
@@ -60,6 +69,11 @@ public:
 
 
 //Classe des binaires vidéo
+
+/**
+ * \class Video : public Binary
+ * \brief Classe des objets binaires videos
+ */
 class Video : public Binary {
     
 private:
@@ -89,6 +103,11 @@ public:
 
 
 //Classe des binaires image
+
+/**
+ * \class Image : public Binary
+ * \brief Classe des objets binaires image
+ */
 class Image : public Binary {
     
 private:
@@ -119,6 +138,11 @@ public:
 
 
 //Classe des binaires audio
+
+/**
+ * \class Audio : public Binary
+ * \brief Classe des objets binaires audio
+ */
 class Audio : public Binary {
     
 private:

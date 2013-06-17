@@ -22,11 +22,18 @@ class Video;
 class Image;
 class Audio;
 
-
+/**
+ * \namespace Exports
+ */
 namespace Exports{
 
     
     //Mise en place du design pattern strategy et template methods
+
+    /**
+     * \class ExportStrategy
+     * \brief La classe des Strategies d'export.
+     */
     class ExportStrategy{
         
     private:
@@ -41,12 +48,66 @@ namespace Exports{
         static QMap<QString, ExportStrategy*> getExport();
         
         //Méthode virtuelles
+
+        /**
+         * \fn virtual QString header(Note* n) =0
+         * \brief Exportation d'un header de note
+         * \param Note à exporter
+         * \return Chaine de caractères de l'exportation en header
+         */
         virtual QString header(Note* n) =0;
+
+        /**
+         * \fn virtual QString footer(Note* n) =0
+         * \brief Exportation d'un footer de note
+         * \param Note à exporter
+         * \return Chaine de caractères de l'exportation en footer
+         */
         virtual QString footer(Note* n) =0;
+
+        /**
+         * \fn virtual QString exportNote(Article* n, unsigned int tl=0) =0
+         * \brief Exportation d'un article
+         * \param Article à exporter
+         * \param Niveau de titre. Par defaut égale à 0.
+         * \return Chaine de caractères issue de l'exportation.
+         */
         virtual QString exportNote(Article* n, unsigned int tl=0) =0;
+
+        /**
+         * \fn virtual QString exportNote(Document* n, unsigned int tl=0) =0
+         * \brief Exportation d'un document
+         * \param Document à exporter
+         * \param Niveau de titre. Par défaut égale à 0.
+         * \return Chaine de caractères issue de l'exportation.
+         */
         virtual QString exportNote(Document* n, unsigned int tl=0) =0;
+
+        /**
+         * \fn virtual QString exportNote(Audio* n, unsigned int tl=0) =0
+         * \brief Exportation d'un audio
+         * \param Audio à exporter
+         * \param Niveau de titre. Par défaut égale à 0.
+         * \return Chaine de caractères issue de l'exportation.
+         */
         virtual QString exportNote(Audio* n, unsigned int tl=0) =0;
+
+        /**
+         * \fn virtual QString exportNote(Video* n, unsigned int tl=0) =0
+         * \brief Exportation d'un video
+         * \param Video à exporter
+         * \param Niveau de titre. Par défaut égale à 0.
+         * \return Chaine de caractères issue de l'exportation.
+         */
         virtual QString exportNote(Video* n, unsigned int tl=0) =0;
+
+        /**
+         * \fn virtual QString exportNote(Image* n, unsigned int tl=0) =0
+         * \brief Exportation d'un image
+         * \param Image à exporter
+         * \param Niveau de titre. Par défaut égale à 0.
+         * \return Chaine de caractères issue de l'exportation.
+         */
         virtual QString exportNote(Image* n, unsigned int tl=0) =0;
     };
     

@@ -12,6 +12,7 @@
 #include <iostream>
 #include <QString>
 #include <QTextStream>
+#include <QMessageBox>
 #include <QMap>
 #include <QSet>
 #include "exports.h"
@@ -25,6 +26,10 @@ class Video;
 class Audio;
 class Image;
 
+/**
+ * \class NoteManagerException
+ * \brief Classe des exceptions de Note Manager
+ */
 class NoteManagerException{
 public:
     NoteManagerException(const QString& message):info(message){}
@@ -33,7 +38,11 @@ private:
     QString info;
 };
 
-//Classe principale du Note Manager
+
+/**
+ * \class NoteManager
+ * \brief Classe de NoteManager
+ */
 class NoteManager {
     
 private:
@@ -45,12 +54,26 @@ private:
     QMap<QString, Exports::ExportStrategy*> strategies;
     
     //Constructeurs
-    NoteManager():notes(QSet<Note*>()),path(""),factories(NoteFactory::getFactories()),strategies(Exports::ExportStrategy::getExport()){
-    }  //Je subodore que c'est quelque chose comme cela.
 
+    /**
+     * \fn NoteManager()
+     * \brief Constructeur de Note Manager
+     */
+    NoteManager():notes(QSet<Note*>()),path(""),factories(NoteFactory::getFactories()),strategies(Exports::ExportStrategy::getExport()){}
+
+    /**
+     * \fn NoteManager(const QString& p)
+     * \brief Constructeur de Note Manager
+     * \param Chemin vers le fichier de Note Manager
+     */
     NoteManager(const QString& p):notes(QSet<Note*>()),path(p){}
     
     //Destructeur
+
+    /**
+     * \fn NoteManager()
+     * \brief Destructeur de Note Manager
+     */
     ~NoteManager(){}
     
     //Constructeurs de recopie
@@ -59,7 +82,19 @@ private:
     
 public:
     //Methodes inlines
+
+    /**
+     * \fn QString getPath() const
+     * \brief Récupérer le chemin de la note.
+     * \return Le chemin de la note
+     */
     QString getPath() const {return path;}
+
+    /**
+     * \fn void setPath(const QString& p)
+     * \brief Donner le chemin.
+     * \param Le chemin.
+     */
     void setPath(const QString& p) {path=p;}
     
     //Methodes non-inlines
@@ -69,11 +104,21 @@ public:
     void deleteNote(Note* n);
     QString getFilename(unsigned int i) const;
     void load(const QString& newPath);
-    void load();
     void reset();
     Note* loadNote(unsigned int i);
+
+    /**
+     * \fn static bool exist()
+     * \brief Test d'existance
+     * \return Retourne vrai si une instance existe, retourne faux sinon.
+     */
     static bool exist() {return instance!=0;}
-    void saveState() const;
+
+    /**
+     * \fn QMap<QString, NoteFactory*> getFactory() const
+     * \brief Récupérer les factories
+     * \return Map des factories disponibles.
+     */
     QMap<QString, NoteFactory*> getFactory() const
     {
         return factories;

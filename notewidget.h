@@ -24,6 +24,10 @@
 #include "note.h"
 #include <QLabel>
 
+/**
+ * \class NoteWidget : public QWidget
+ * \brief Classe des widgets de Note
+ */
 class NoteWidget : public QWidget
 {
     //Macro

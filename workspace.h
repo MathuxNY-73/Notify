@@ -11,8 +11,6 @@
 #ifndef WORKSPACE_H
 #define WORKSPACE_H
 
-#include "notemanager.h"
-#include "modelManager.h"
 #include "editorspace.h"
 #include "tagmanager.h"
 #include <QTreeView>
@@ -28,7 +26,8 @@
 
 
 /**
- * @brief The Workspace class
+ * \class Workspace : public QWidget
+ * \brief Classe du workspace
  */
 class Workspace : public QWidget
 {
@@ -51,7 +50,6 @@ private:
     Workspace& operator=(const Workspace& ws);
 
     //Methodes privées
-    void loadWorkspace();
     void clearAll();
 
 public:
@@ -59,12 +57,10 @@ public:
     static Workspace& getInstance(QWidget* parent=0);
     static void releaseInstance();
 
-    void getFile(const QString& path);
-    //void setWorkspace();
-    void saveInFile();
-    void updateFile();
     void addNote(Note* a);
     void addTag(const QString& t);
+    void updateFile();
+    void saveInFile();
     void rootChange(Note* n);
 
 public slots:
@@ -73,13 +69,18 @@ public slots:
     void updateNoteModel();
 
 signals:
+
+    /**
+     * \fn clearOthers()
+     * \brief Signal pour vider les widgets conteneurs
+     */
     void clearOthers();
-    void clearEditor();
 
 };
 
 /**
- * @brief The DocumentAddNoteDialog class
+ * \class  DocumentAddNoteDialog : public QDialog
+ * \brief The DocumentAddNoteDialog class
  */
 class DocumentAddNoteDialog : public QDialog
 {
@@ -89,24 +90,31 @@ private:
     Document* document;
     QMap<QListWidgetItem*,Document*> correspondance;
 public:
+
     DocumentAddNoteDialog(Note* n,QWidget* parent=0);
+
+    /**
+     * \fn Document* getDocument() const ()
+     * \brief Récupération du document
+     * \return Retourne le document où l'on souhaite ajouter la note.
+     */
     Document* getDocument() const { return document; }
 public slots :
+
     void ok();
     void cancel();
 };
 
-/**
- * @brief The WorkspaceException class
- */
 
 class WorkspaceException
 {
     QString info;
 
 public:
+
     WorkspaceException(const QString& message) throw() :info(message){}
     ~WorkspaceException() throw(){}
+
     QString getInfo() const { return info; }
 };
 

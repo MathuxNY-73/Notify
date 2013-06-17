@@ -11,8 +11,17 @@
 #include "workspace.h"
 #include <iostream>
 
+/**
+ * \brief Pointeur sur l'unique instance du widget d'edition.
+ */
 Editorspace* Editorspace::instance=0;
 
+/**
+ * \fn Editorspace& Editorspace::getInstance(QWidget* parent)
+ * \brief Recupérer une instance.
+ * \param Widget parent de l'editeur. 'NULL' par défaut.
+ * \return Référence sur l'instance créée.
+ */
 Editorspace& Editorspace::getInstance(QWidget* parent)
 {
     if(!instance)
@@ -20,6 +29,10 @@ Editorspace& Editorspace::getInstance(QWidget* parent)
     return *instance;
 }
 
+/**
+ * \fn void Editorspace::releaseInstance()
+ * \brief Supprimer l'instance existante de l'éditeur.
+ */
 void Editorspace::releaseInstance()
 {
     if(instance)
@@ -27,6 +40,11 @@ void Editorspace::releaseInstance()
     instance=0;
 }
 
+/**
+ * \fn Editorspace::Editorspace(QWidget* parent)
+ * \brief Constructeur de l'éditeur
+ * \param Widget parent de l'éditeur. 'NULL' par défaut.
+ */
 Editorspace::Editorspace(QWidget* parent):QWidget(parent)
 {
     onglets = new QTabWidget(this);
@@ -98,6 +116,10 @@ Editorspace::Editorspace(QWidget* parent):QWidget(parent)
     QObject::connect(&Workspace::getInstance(),SIGNAL(clearEditor()),this,SLOT(clear()));
 }
 
+/**
+ * \fn Editorspace::~Editorspace()
+ * \brief Destructeur de l'editeur
+ */
 Editorspace::~Editorspace()
 {
     delete onglets;
@@ -111,6 +133,11 @@ Editorspace::~Editorspace()
     delete save;*/
 }
 
+/**
+ * \fn void Editorspace::addWidget(Note* n)
+ * \brief Ajouter un widget de note à l'éditeur.
+ * \param Note associé au Widget.
+ */
 void Editorspace::addWidget(Note* n)
 {
     if(NoteManager::getInstance().getNote(n->getId())==NULL)
@@ -122,6 +149,11 @@ void Editorspace::addWidget(Note* n)
     QMessageBox::information(this,"Success","Layout succesfully added type : "+type);
 }
 
+/**
+ * \fn void Editorspace::changementOnglet(int i)
+ * \brief Slots de changement d'onglets
+ * \param Numéro de l'onglet
+ */
 void Editorspace::changementOnglet(int i)
 {
     if(NoteManager::exist())
@@ -171,6 +203,10 @@ void Editorspace::changementOnglet(int i)
     }
 }
 
+/**
+ * \fn void Editorspace::sauvegarder()
+ * \brief Sauvegarder les notes dans l'éditeur
+ */
 void Editorspace::sauvegarder()
 {
     if(!NoteManager::exist())
@@ -200,14 +236,10 @@ void Editorspace::sauvegarder()
     }
 }
 
-/*void Editorspace::clearEditor()
-{
-    if(widgetList.isEmpty())
-        return;
-    while(!widgetList.isEmpty())
-        layout_Editor->removeWidget(widgetList.pop());
-}*/
-
+/**
+ * \fn void Editorspace::clear()
+ * \brief Vider l'éditeur des widgets présents.
+ */
 void Editorspace::clear()
 {
     QLayoutItem *item;

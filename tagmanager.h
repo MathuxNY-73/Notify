@@ -15,12 +15,19 @@
 #include <QListWidget>
 #include <QListWidgetItem>
 
+/**
+ * \namespace Tags
+ */
 namespace Tags
 {
 
 class TagStringList;
 class TagManagerWidget;
 
+/**
+ * \class TagManagerException
+ * \brief Classe des exceptions du Tag Manager
+ */
 class TagManagerException
 {
     QString info;
@@ -92,7 +99,10 @@ public:
     FTIterator ftiEnd() {return filteredTags.end();}
 };
 
-//class TagStringList : Q
+/**
+ * \class TagManagerWidget : public QWidget
+ * \brief Widget du tag manager
+ */
 
 class TagManagerWidget : public QWidget
 {
@@ -128,7 +138,8 @@ public slots :
 };
 
 /**
- * @brief The DeleteAssociationDialog class
+ * \class DeleteAssociationDialog : public QDialog
+ * \brief Boîte de dialogue pour suppression d'association
  */
 
 class DeleteAssociationDialog : public QDialog
@@ -139,6 +150,12 @@ private:
     QString selectedTag;
 public:
     DeleteAssociationDialog(Note* n,QWidget* parent=0);
+
+    /**
+     * \fn QString getTag() const
+     * \brief Récupère le tag seletionne
+     * \return Retourne le tag en question
+     */
     QString getTag() const { return selectedTag; }
 public slots :
     void ok();

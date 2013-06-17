@@ -1,6 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
+/**
+ * \fn MainWindow::MainWindow(QWidget *parent)
+ * \brief Construction de la MainWindow
+ * \param Widget parent de MainWindow. 'NULL' par defaut.
+ */
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -12,7 +18,6 @@ MainWindow::MainWindow(QWidget *parent) :
     NoteManager::getInstance();
 
     //Configuration
-    //ui->actionWorkspace->setEnabled(false);
 
     QWidget* spacer= new QWidget();
     spacer->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
@@ -61,6 +66,10 @@ MainWindow::MainWindow(QWidget *parent) :
     gridLayout->addWidget(&Tags::TagManagerWidget::getInstance(ui->centralwidget),1,0,1,1);
 }
 
+/**
+ * \fn MainWindow::~MainWindow()
+ * \brief Destructeur de MainWindow
+ */
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -70,6 +79,136 @@ MainWindow::~MainWindow()
     Editorspace::releaseInstance();
 }
 
+/**
+ * \fn QString MainWindow::getPath() const
+ * \brief Récupérer un chemin défini par l'utilisateur.
+ * \return Retourne le chemin choisi.
+ * Methode servant à recupérer le chemin de sauvegarde des fichiers par l'intermédiaire d'une boîte de dialogue.
+ */
+QString MainWindow::getPath() const
+{
+    QString dossier = QFileDialog::getSaveFileName(ui->centralwidget, "Save a workspace", QString(), "*.*");
+    if(dossier=="")
+        return "";
+    QDir workFolder(dossier);
+    if(!workFolder.mkpath(dossier))
+         throw MyException("An error occured while creating the workspace directory");
+    else
+    {
+        return QString(dossier);
+     }
+}
+
+/**
+ * \fn void MainWindow::newArticle()
+ * \brief Slot permmettant de créer un nouvel article.
+ */
+void MainWindow::newArticle()
+{
+    if(NoteManager::exist())
+    {
+        Article* a =dynamic_cast<Article*>(NoteManager::getInstance().getFactory()["Article"]->buildNewNote("Titre de l'article"));
+        try{
+            work->addNote(a);
+        }catch(MyException& e){
+            QMessageBox::warning(ui->centralwidget,"Error",e.getInfo());
+            delete a;
+            return;
+        }
+        id++;
+    }
+
+}
+
+/**
+ * \fn void MainWindow::newDocument()
+ * \brief Slot permmettant de créer un nouveau document.
+ */
+void MainWindow::newDocument()
+{
+    if(NoteManager::exist())
+    {
+        Document* d =dynamic_cast<Document*>(NoteManager::getInstance().getFactory()["Document"]->buildNewNote("Titre du document"));
+        try{
+            work->addNote(d);
+        }catch(MyException& e){
+            QMessageBox::warning(ui->centralwidget,"Error",e.getInfo());
+            delete d;
+            return;
+        }
+        id++;
+    }
+
+}
+
+/**
+ * \fn void MainWindow::newAudio()
+ * \brief Slot permmettant de créer un nouvel audio.
+ */
+void MainWindow::newAudio()
+{
+    if(NoteManager::exist())
+    {
+        Audio* a = dynamic_cast<Audio*>(NoteManager::getInstance().getFactory()["Audio"]->buildNewNote("Titre de l'audio"));
+        try{
+            work->addNote(a);
+        }catch(MyException& e){
+            QMessageBox::warning(ui->centralwidget,"Error",e.getInfo());
+            delete a;
+            return;
+        }
+        id++;
+    }
+
+}
+
+/**
+ * \fn void MainWindow::newVideo()
+ * \brief Slot permmettant de créer une nouvelle video.
+ */
+void MainWindow::newVideo()
+{
+    if(NoteManager::exist())
+    {
+        Video* v = dynamic_cast<Video*>(NoteManager::getInstance().getFactory()["Video"]->buildNewNote("Titre de la video"));
+        try{
+            work->addNote(v);
+        }catch(MyException& e){
+            QMessageBox::warning(ui->centralwidget,"Error",e.getInfo());
+            delete v;
+            return;
+        }
+        id++;
+    }
+
+}
+
+/**
+ * \fn void MainWindow::newImage()
+ * \brief Slot permmettant de créer une nouvelle image.
+ */
+void MainWindow::newImage()
+{
+    if(NoteManager::exist())
+    {
+        Image* i = dynamic_cast<Image*>(NoteManager::getInstance().getFactory()["Image"]->buildNewNote("Titre de l'image"));
+        try{
+            work->addNote(i);
+        }catch(MyException& e){
+            QMessageBox::warning(ui->centralwidget,"Error",e.getInfo());
+            delete i;
+            return;
+        }
+        id++;
+    }
+
+}
+
+/**
+ * \fn void MainWindow::newWorkspace()
+ * \brief Nouveau Workspace
+ * Slot permettant de changer de workspace en proposant la sauvegarde à l'utilisateur.
+ */
 void MainWindow::newWorkspace()
 {
     if(NoteManager::exist())
@@ -105,6 +244,11 @@ void MainWindow::newWorkspace()
     }
 }
 
+/**
+ * \fn void MainWindow::saveWorkspace()
+ * \brief Fonction de sauvegarde (Save)
+ * Slot permettant de faire appelle à la fonction de sauvegarde du workspace.
+ */
 void MainWindow::saveWorkspace()
 {
     if(NoteManager::getInstance().getPath()=="")
@@ -115,6 +259,11 @@ void MainWindow::saveWorkspace()
     Workspace::getInstance().saveInFile();
 }
 
+/**
+ * \fn void MainWindow::saveWorkspaceAs()
+ * \brief Fontion de sauvegarde (Save As..)
+ * Slot faisant appelle à la fonction de sauvegarde du Workspace en passant en argument le chemin de sauvegarde choisi par l'utilisateur.
+ */
 void MainWindow::saveWorkspaceAs()
 {
     QString dossier = QFileDialog::getSaveFileName(ui->centralwidget, "Save workspace as...", QString(), "*.*");
@@ -128,107 +277,3 @@ void MainWindow::saveWorkspaceAs()
         Workspace::getInstance().saveInFile();
      }
 }
-
-QString MainWindow::getPath() const
-{
-    QString dossier = QFileDialog::getSaveFileName(ui->centralwidget, "Save a workspace", QString(), "*.*");
-    if(dossier=="")
-        return "";
-    QDir workFolder(dossier);
-    if(!workFolder.mkpath(dossier))
-         throw MyException("An error occured while creating the workspace directory");
-    else
-    {
-        return QString(dossier);
-     }
-}
-
-void MainWindow::newArticle()
-{
-    if(NoteManager::exist())
-    {
-        Article* a =dynamic_cast<Article*>(NoteManager::getInstance().getFactory()["Article"]->buildNewNote("Titre de l'article"));
-        try{
-            work->addNote(a);
-        }catch(MyException& e){
-            QMessageBox::warning(ui->centralwidget,"Error",e.getInfo());
-            delete a;
-            return;
-        }
-        id++;
-    }
-
-}
-
-void MainWindow::newDocument()
-{
-    if(NoteManager::exist())
-    {
-        Document* d =dynamic_cast<Document*>(NoteManager::getInstance().getFactory()["Document"]->buildNewNote("Titre du document"));
-        try{
-            work->addNote(d);
-        }catch(MyException& e){
-            QMessageBox::warning(ui->centralwidget,"Error",e.getInfo());
-            delete d;
-            return;
-        }
-        id++;
-    }
-
-}
-
-void MainWindow::newImage()
-{
-    if(NoteManager::exist())
-    {
-        Image* i = dynamic_cast<Image*>(NoteManager::getInstance().getFactory()["Image"]->buildNewNote("Titre de l'image"));
-        try{
-            work->addNote(i);
-        }catch(MyException& e){
-            QMessageBox::warning(ui->centralwidget,"Error",e.getInfo());
-            delete i;
-            return;
-        }
-        id++;
-    }
-
-}
-
-void MainWindow::newVideo()
-{
-    if(NoteManager::exist())
-    {
-        Video* v = dynamic_cast<Video*>(NoteManager::getInstance().getFactory()["Video"]->buildNewNote("Titre de la video"));
-        try{
-            work->addNote(v);
-        }catch(MyException& e){
-            QMessageBox::warning(ui->centralwidget,"Error",e.getInfo());
-            delete v;
-            return;
-        }
-        id++;
-    }
-
-}
-
-void MainWindow::newAudio()
-{
-    if(NoteManager::exist())
-    {
-        Audio* a = dynamic_cast<Audio*>(NoteManager::getInstance().getFactory()["Audio"]->buildNewNote("Titre de l'audio"));
-        try{
-            work->addNote(a);
-        }catch(MyException& e){
-            QMessageBox::warning(ui->centralwidget,"Error",e.getInfo());
-            delete a;
-            return;
-        }
-        id++;
-    }
-
-}
-
-void MainWindow::saveInFile() const{
-    return;
-}
-

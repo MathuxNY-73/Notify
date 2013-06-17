@@ -14,6 +14,10 @@
 #include "exports.h"
 #include "articlewidget.h"
 
+/**
+ * \class ArticleException
+ * \brief Classes des exceptions des objets articles
+ */
 class ArticleException{
 public:
     ArticleException(const QString& message):info(message){}
@@ -22,6 +26,10 @@ private:
     QString info;
 };
 
+/**
+ * \fn class Article : public Note
+ * \brief Classe des objets articles
+ */
 class Article : public Note {
     
 private:
@@ -42,9 +50,6 @@ public:
     //Destructeur
     ~Article();
     
-    //Methodes inlines
-
-    
     //Methodes non-inlines
     void setText(const QString& t);
     const QString& getText() const;
@@ -52,11 +57,7 @@ public:
 
     QString ExportNote(Exports::ExportStrategy *es);
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);
-    //QTextStream& operator<<(QTextStream& f, const Article& a);
 
-
-
-    //Ceci est un test afin de pouvoir afficher les notes contenues dans un document
     ArticleWidget* getWidget();
 };
 

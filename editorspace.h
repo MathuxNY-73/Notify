@@ -11,7 +11,6 @@
 
 
 #include <QWidget>
-//#include <QMainWindow>
 #include <QFile>
 #include <QString>
 #include <QTextStream>
@@ -33,6 +32,10 @@
 
 class Workspace;
 
+/**
+ * \class Editorspace : public QWidget
+ * \brief Classe du widget le l'editeur.
+ */
 class Editorspace : public QWidget
 {
     //Macro
@@ -63,7 +66,6 @@ public:
 
     QVBoxLayout* getLayout() {return layout;}
     void addWidget(Note* n);
-    void clearEditor();
 
     static Editorspace& getInstance(QWidget* parent=0);
     static void releaseInstance();
@@ -74,14 +76,6 @@ public slots:
     void changementOnglet(int i);
     void sauvegarder();
     void clear();
-/*
-private slots:
-    void changementOnglet(int);
-*/
-/*    //signal
-signals:
-    void mod();
-*/
 };
 
 #endif // EDITORSPACE_H

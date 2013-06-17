@@ -16,8 +16,18 @@
 
 using namespace Exports;
 
+/**
+ * \fn ExportStrategy::ExportStrategy()
+ * \brief Constructeur de la classe ExportStrategy
+ */
 ExportStrategy::ExportStrategy(){}
 
+
+/**
+ * \fn QMap<QString, ExportStrategy*> ExportStrategy::getExport()
+ * \brief Récupérer les différents exports
+ * \return Map de correspondance entre type d'export et pointeur sur stratégie.
+ */
 QMap<QString, ExportStrategy*> ExportStrategy::getExport(){
     QMap<QString, ExportStrategy*> map;
     map["text"]=new TextExport();
@@ -28,6 +38,13 @@ QMap<QString, ExportStrategy*> ExportStrategy::getExport(){
 }
 
 //Export en text
+
+/**
+ * \fn QString TextExport::QString header(Note* n)
+ * \brief Exportation d'un header de note en text
+ * \param Note à exporter
+ * \return Chaine de caractères de l'exportation en header
+ */
 QString TextExport::header(Note* n){
     QString s;
     s="Header ID : {"+QString::number(n->getId())+"} \n "
@@ -36,6 +53,12 @@ QString TextExport::header(Note* n){
     return s;
 }
 
+/**
+ * \fn QString TextExport::footer(Note* n)
+ * \brief Exportation d'un footer de note en text
+ * \param Note à exporter
+ * \return Chaine de caractères de l'exportation en footer
+ */
 QString TextExport::footer(Note* n){
 
     QString s;
@@ -45,6 +68,13 @@ QString TextExport::footer(Note* n){
     return s;
 }
 
+/**
+ * \fn QString TextExport::exportNote(Article* n, unsigned int tl=0)
+ * \brief Exportation d'un article en text
+ * \param Article à exporter
+ * \param Niveau de titre. Par defaut égale à 0.
+ * \return Chaine de caractères issue de l'exportation.
+ */
 QString TextExport::exportNote(Article* a, unsigned int tl){
     QString s;
     for(unsigned int i=0 ; i<tl ; i++)
@@ -56,6 +86,13 @@ QString TextExport::exportNote(Article* a, unsigned int tl){
     return s;
 }
 
+/**
+ * \fn QString TextExport::exportNote(Document* n, unsigned int tl=0)
+ * \brief Exportation d'un document en text
+ * \param Document à exporter
+ * \param Niveau de titre. Par défaut égale à 0.
+ * \return Chaine de caractères issue de l'exportation.
+ */
 QString TextExport::exportNote(Document* d, unsigned int tl){
     QString s;
     for(unsigned int i=0 ; i<tl ; i++)
@@ -69,6 +106,13 @@ QString TextExport::exportNote(Document* d, unsigned int tl){
     return s;
 }
 
+/**
+ * \fn QString TextExport::exportNote(Audio* n, unsigned int tl=0)
+ * \brief Exportation d'un audio en text
+ * \param Audio à exporter
+ * \param Niveau de titre. Par défaut égale à 0.
+ * \return Chaine de caractères issue de l'exportation.
+ */
 QString TextExport::exportNote(Video* v, unsigned int tl){
     QString s,tab;
     for(unsigned int i=0 ; i<tl ; i++)
@@ -79,6 +123,13 @@ QString TextExport::exportNote(Video* v, unsigned int tl){
     return s;
 }
 
+/**
+ * \fn QString TextExport::exportNote(Video* n, unsigned int tl=0)
+ * \brief Exportation d'un video en text
+ * \param Video à exporter
+ * \param Niveau de titre. Par défaut égale à 0.
+ * \return Chaine de caractères issue de l'exportation.
+ */
 QString TextExport::exportNote(Image* i, unsigned int tl){
     QString s,tab;
     for(unsigned int j=0 ; j<tl ; j++)
@@ -89,6 +140,13 @@ QString TextExport::exportNote(Image* i, unsigned int tl){
     return s;
 }
 
+/**
+ * \fn QString TextExport::exportNote(Image* n, unsigned int tl=0)
+ * \brief Exportation d'un image en text
+ * \param Image à exporter
+ * \param Niveau de titre. Par défaut égale à 0.
+ * \return Chaine de caractères issue de l'exportation.
+ */
 QString TextExport::exportNote(Audio* a, unsigned int tl){
     QString s,tab;
     for(unsigned int j=0 ; j<tl ; j++)
@@ -100,6 +158,13 @@ QString TextExport::exportNote(Audio* a, unsigned int tl){
 }
 
 //Fonction qui permet de sortir les niveaux des parties
+
+/**
+ * \fn QString TeXExport::docStruct(unsigned int i) const
+ * \brief Structure d'un document TeX
+ * \param Niveau de titre
+ * \return Chaine de caractère issue de cet export.
+ */
 QString TeXExport::docStruct(unsigned int i) const{
     QString s;
     switch (i) {
@@ -128,6 +193,13 @@ QString TeXExport::docStruct(unsigned int i) const{
 }
 
 //Export en LateX
+
+/**
+ * \fn QString TeXExport::QString header(Note* n)
+ * \brief Exportation d'un header en TeX
+ * \param Note à exporter
+ * \return Chaine de caractères de l'exportation en header
+ */
 QString TeXExport::header(Note* n){
     QString s;
     //Definition du document en latex
@@ -149,12 +221,25 @@ QString TeXExport::header(Note* n){
     return s;
 }
 
+/**
+ * \fn QString TeXExport::footer(Note* n)
+ * \brief Exportation d'un footer de note en TeX
+ * \param Note à exporter
+ * \return Chaine de caractères de l'exportation en footer
+ */
 QString TeXExport::footer(Note* n){
     QString s;
     s=" \n \\end{document} \n";
     return s;
 }
 
+/**
+ * \fn QString TeXExport::exportNote(Article* n, unsigned int tl=0)
+ * \brief Exportation d'un article en TeX
+ * \param Article à exporter
+ * \param Niveau de titre. Par defaut égale à 0.
+ * \return Chaine de caractères issue de l'exportation.
+ */
 QString TeXExport::exportNote(Article* a, unsigned int tl){
     QString s;
     s=docStruct(tl)+a->getTitle()+"} \n";
@@ -162,6 +247,13 @@ QString TeXExport::exportNote(Article* a, unsigned int tl){
     return s;
 }
 
+/**
+ * \fn QString TeXExport::exportNote(Document* n, unsigned int tl=0)
+ * \brief Exportation d'un document en TeX
+ * \param Document à exporter
+ * \param Niveau de titre. Par défaut égale à 0.
+ * \return Chaine de caractères issue de l'exportation.
+ */
 QString TeXExport::exportNote(Document* d, unsigned int tl){
     QString s;
     s=docStruct(tl)+d->getTitle()+"} \n";
@@ -171,6 +263,13 @@ QString TeXExport::exportNote(Document* d, unsigned int tl){
     return s;
 }
 
+/**
+ * \fn QString TeXExport::exportNote(Audio* n, unsigned int tl=0)
+ * \brief Exportation d'un audio en TeX
+ * \param Audio à exporter
+ * \param Niveau de titre. Par défaut égale à 0.
+ * \return Chaine de caractères issue de l'exportation.
+ */
 QString TeXExport::exportNote(Video* v, unsigned int tl){
     QString s;
     s=docStruct(tl)+v->getTitle()+"} \n";
@@ -179,6 +278,13 @@ QString TeXExport::exportNote(Video* v, unsigned int tl){
     return s;
 }
 
+/**
+ * \fn QString TeXExport::exportNote(Video* n, unsigned int tl=0)
+ * \brief Exportation d'un video en TeX
+ * \param Video à exporter
+ * \param Niveau de titre. Par défaut égale à 0.
+ * \return Chaine de caractères issue de l'exportation.
+ */
 QString TeXExport::exportNote(Image* i, unsigned int tl){
     QString s;
     s="\\begin{figure} \n"
@@ -192,6 +298,13 @@ QString TeXExport::exportNote(Image* i, unsigned int tl){
     return s;
 }
 
+/**
+ * \fn QString TeXExport::exportNote(Image* n, unsigned int tl=0)
+ * \brief Exportation d'un image en TeX
+ * \param Image à exporter
+ * \param Niveau de titre. Par défaut égale à 0.
+ * \return Chaine de caractères issue de l'exportation.
+ */
 QString TeXExport::exportNote(Audio* a, unsigned int tl){
     QString s;
     s=docStruct(tl)+a->getTitle()+"} \n";
@@ -203,6 +316,13 @@ QString TeXExport::exportNote(Audio* a, unsigned int tl){
 
 //TODO
 //Export en HTML
+
+/**
+ * \fn QString HTMLExport::QString header(Note* n)
+ * \brief Exportation d'un header en HTML
+ * \param Note à exporter
+ * \return Chaine de caractères de l'exportation en header
+ */
 QString HTMLExport::header(Note* n){
     QString s;
     //Definition du document en HTML
@@ -219,6 +339,12 @@ QString HTMLExport::header(Note* n){
     return s;
 }
 
+/**
+ * \fn QString HTMLExport::footer(Note* n)
+ * \brief Exportation d'un footer de note en HTML
+ * \param Note à exporter
+ * \return Chaine de caractères de l'exportation en footer
+ */
 QString HTMLExport::footer(Note* n){
     QString s;
     s="</body> \n"
@@ -226,6 +352,13 @@ QString HTMLExport::footer(Note* n){
     return s;
 }
 
+/**
+ * \fn QString TeXExport::exportNote(Article* n, unsigned int tl=0)
+ * \brief Exportation d'un article en TeX
+ * \param Article à exporter
+ * \param Niveau de titre. Par defaut égale à 0.
+ * \return Chaine de caractères issue de l'exportation.
+ */
 QString HTMLExport::exportNote(Article* a, unsigned int tl){
     QString s,indent="";
     for(unsigned int i=0 ; i<tl ; i++)
@@ -237,6 +370,13 @@ QString HTMLExport::exportNote(Article* a, unsigned int tl){
     return s;
 }
 
+/**
+ * \fn QString HTMLExport::exportNote(Document* n, unsigned int tl=0)
+ * \brief Exportation d'un document en HTML
+ * \param Document à exporter
+ * \param Niveau de titre. Par défaut égale à 0.
+ * \return Chaine de caractères issue de l'exportation.
+ */
 QString HTMLExport::exportNote(Document* d, unsigned int tl){
     QString s,indent="";
     for(unsigned int i=0 ; i<tl ; i++)
@@ -250,6 +390,13 @@ QString HTMLExport::exportNote(Document* d, unsigned int tl){
     return s;
 }
 
+/**
+ * \fn QString HTMLExport::exportNote(Audio* n, unsigned int tl=0)
+ * \brief Exportation d'un audio en HTML
+ * \param Audio à exporter
+ * \param Niveau de titre. Par défaut égale à 0.
+ * \return Chaine de caractères issue de l'exportation.
+ */
 QString HTMLExport::exportNote(Video* v, unsigned int tl){
     QString s,indent="";
     for(unsigned int i=0 ; i<tl ; i++)
@@ -260,6 +407,13 @@ QString HTMLExport::exportNote(Video* v, unsigned int tl){
     return s;
 }
 
+/**
+ * \fn QString HTMLExport::exportNote(Video* n, unsigned int tl=0)
+ * \brief Exportation d'un video en HTML
+ * \param Video à exporter
+ * \param Niveau de titre. Par défaut égale à 0.
+ * \return Chaine de caractères issue de l'exportation.
+ */
 QString HTMLExport::exportNote(Image* i, unsigned int tl){
     QString s,indent="";
     for(unsigned int i=0 ; i<tl ; i++)
@@ -273,6 +427,13 @@ QString HTMLExport::exportNote(Image* i, unsigned int tl){
     return s;
 }
 
+/**
+ * \fn QString HTMLExport::exportNote(Image* n, unsigned int tl=0)
+ * \brief Exportation d'un image en HTML
+ * \param Image à exporter
+ * \param Niveau de titre. Par défaut égale à 0.
+ * \return Chaine de caractères issue de l'exportation.
+ */
 QString HTMLExport::exportNote(Audio* a, unsigned int tl){
     QString s,indent="";
     for(unsigned int i=0 ; i<tl ; i++)
@@ -285,6 +446,12 @@ QString HTMLExport::exportNote(Audio* a, unsigned int tl){
 
 //Export SaveXML
 
+/**
+ * \fn QString SaveXMLExport::QString header(Note* n)
+ * \brief Exportation d'un header en XML
+ * \param Note à exporter
+ * \return Chaine de caractères de l'exportation en header
+ */
 QString SaveXMLExport::header(Note* n){
     QString s;
     QString type =QString::fromStdString(typeid(*n).name());
@@ -295,6 +462,12 @@ QString SaveXMLExport::header(Note* n){
     return s;
 }
 
+/**
+ * \fn QString SaveXMLExport::footer(Note* n)
+ * \brief Exportation d'un footer de note en XML
+ * \param Note à exporter
+ * \return Chaine de caractères de l'exportation en footer
+ */
 QString SaveXMLExport::footer(Note* n){
 
     QString s;
@@ -304,6 +477,13 @@ QString SaveXMLExport::footer(Note* n){
     return s;
 }
 
+/**
+ * \fn QString SaveXMLExport::exportNote(Article* n, unsigned int tl=0)
+ * \brief Exportation d'un article en XML
+ * \param Article à exporter
+ * \param Niveau de titre. Par defaut égale à 0.
+ * \return Chaine de caractères issue de l'exportation.
+ */
 QString SaveXMLExport::exportNote(Article* a, unsigned int tl){
     QString s,indent="";
     for(unsigned int i=0 ; i<tl ; i++)
@@ -312,6 +492,13 @@ QString SaveXMLExport::exportNote(Article* a, unsigned int tl){
     return s;
 }
 
+/**
+ * \fn QString SaveXMLExport::exportNote(Document* n, unsigned int tl=0)
+ * \brief Exportation d'un document en XML
+ * \param Document à exporter
+ * \param Niveau de titre. Par défaut égale à 0.
+ * \return Chaine de caractères issue de l'exportation.
+ */
 QString SaveXMLExport::exportNote(Document* d, unsigned int tl){
     QString s,indent="";
     for(unsigned int i=0 ; i<tl+1 ; i++)
@@ -322,6 +509,13 @@ QString SaveXMLExport::exportNote(Document* d, unsigned int tl){
     return s;
 }
 
+/**
+ * \fn QString SaveXMLExport::exportNote(Audio* n, unsigned int tl=0)
+ * \brief Exportation d'un audio en XML
+ * \param Audio à exporter
+ * \param Niveau de titre. Par défaut égale à 0.
+ * \return Chaine de caractères issue de l'exportation.
+ */
 QString SaveXMLExport::exportNote(Video* v, unsigned int tl){
     QString s,tab;
     for(unsigned int i=0 ; i<tl ; i++)
@@ -330,6 +524,14 @@ QString SaveXMLExport::exportNote(Video* v, unsigned int tl){
     s=s+tab+"<desc>"+v->getDesc()+"</desc> \n";
     return s;
 }
+
+/**
+ * \fn QString SaveXMLExport::exportNote(Video* n, unsigned int tl=0)
+ * \brief Exportation d'un video en XML
+ * \param Video à exporter
+ * \param Niveau de titre. Par défaut égale à 0.
+ * \return Chaine de caractères issue de l'exportation.
+ */
 QString SaveXMLExport::exportNote(Image* i, unsigned int tl){
     QString s,tab;
     for(unsigned int j=0 ; j<tl ; j++)
@@ -339,6 +541,13 @@ QString SaveXMLExport::exportNote(Image* i, unsigned int tl){
     return s;
 }
 
+/**
+ * \fn QString SaveXMLExport::exportNote(Image* n, unsigned int tl=0)
+ * \brief Exportation d'un image en XML
+ * \param Image à exporter
+ * \param Niveau de titre. Par défaut égale à 0.
+ * \return Chaine de caractères issue de l'exportation.
+ */
 QString SaveXMLExport::exportNote(Audio* a, unsigned int tl){
     QString s,tab;
     for(unsigned int j=0 ; j<tl ; j++)

@@ -19,6 +19,10 @@
 class Document;
 class DocumentException;
 
+/**
+ * \class DocumentWidget : public NoteWidget
+ * \brief Classe des widgets de document.
+ */
 class DocumentWidget : public NoteWidget
 {
     //Macro
@@ -28,11 +32,6 @@ private:
     Document* document;
     QFrame* frame;
     QVBoxLayout* frame_layout;
-    //QPushButton* save, *exp;
-    //QTextEdit* fen;
-    //QFile* file;
-    //QTextStream* out;
-
 
 public:
     explicit DocumentWidget(Document* d, QWidget* parent=0);
@@ -41,9 +40,6 @@ public:
 public slots:
     void updateNote();
     void modification();
-    /*
-private slots:
-    void giveExport();*/
 };
 
 #endif // DOCUMENTWIDGET_H

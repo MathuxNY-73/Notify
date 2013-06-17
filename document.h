@@ -14,7 +14,10 @@
 #include "exports.h"
 #include "documentwidget.h"
 
-
+/**
+ * \class DocumentException
+ * \brief Classe des exceptions de Document
+ */
 class DocumentException{
 public:
     DocumentException(const QString& message):info(message){}
@@ -23,12 +26,15 @@ private:
     QString info;
 };
 
+/**
+ * \class Document : public Note
+ * \brief Classe de document
+ */
 class Document : public Note {
     
 private:
     //Attributs
-    QList<Note*> notes; //This QList implement the design pattern Composite.
-    //We could also have used std::List<Note*> but QList is simpler to use
+    QList<Note*> notes;
     DocumentWidget* widget;
     unsigned int maxW;
 
@@ -54,11 +60,6 @@ public:
             delete widget;
     }
 
-    
-    //Methodes inlines
-
-    //QList<Note*>::const_iterator beginList() const { return notes.begin();}
-    //QList<Note*>::const_iterator endList() const { return notes.end();}
 
     //Autres methodes non-inline
     void load(const QString& path);
@@ -66,14 +67,18 @@ public:
     void addSubNote(Note* n);
     void addSubNote(Note* n, unsigned int id);
     void removeSubNote(unsigned int id);
+
+    QString ExportNote(Exports::ExportStrategy* es);
+    QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);
+    
+    DocumentWidget* getWidget();
+    QStandardItem* getItem();
     Document& getCopy();
 
-    QString ExportNote(Exports::ExportStrategy* es);     //Class ExportStrategy not yet implemented
-    QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);      //Class ExportStrategy not yet implemented
-    
-    QStandardItem* getItem();
-
-    //Iterateur non constant
+    /**
+     * \class Iterator
+     * \brief Classe Iterator de Document
+     */
     class Iterator {   //Cette classe va servir dans les exports afin de pouvoir accéder aux notes
         
     private:
@@ -107,7 +112,10 @@ public:
         return Iterator(notes.end());
     }
     
-    //Iterateur constant
+    /**
+     * \class constIterator
+     * \brief Classe Iterator const.
+     */
     class constIterator {   //Cette classe va servir dans les exports afin de pouvoir accéder aux notes
         
     private:
@@ -141,10 +149,6 @@ public:
     constIterator end() const{
         return constIterator(notes.constEnd());
     }
-
-    DocumentWidget* getWidget();
-    
-    bool notin(const Note& n) const;
 };
 
 #endif // DOCUMENT_H

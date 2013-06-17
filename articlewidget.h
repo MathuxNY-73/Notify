@@ -14,6 +14,10 @@
 class Article;
 class ArticleException;
 
+/**
+ * \class ArticleWidget : public NoteWidget
+ * \brief Classe des widgets d'articles.
+ */
 class ArticleWidget : public NoteWidget
 {
     //Macro
@@ -32,8 +36,6 @@ public:
 public slots:
     void updateNote();
     void modification();
-private slots:
-    //void enableSave();
 
 };
 #endif // ARTICLEWIDGET_H

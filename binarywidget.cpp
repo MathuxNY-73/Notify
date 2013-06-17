@@ -12,6 +12,12 @@
 
 //Methodes de Binary Widgets
 
+/**
+ * \fn BinaryWidget::BinaryWidget(Binary* b,QWidget* parent)
+ * \brief Constructeur de la classe Binary
+ * \param Pointeur sur l'objet Binary associé au widget.
+ * \param Widget parent. Par defaut 'NULL'.
+ */
 BinaryWidget::BinaryWidget(Binary* b,QWidget* parent):NoteWidget(b,parent),binary(b)
 {
 
@@ -45,6 +51,10 @@ BinaryWidget::BinaryWidget(Binary* b,QWidget* parent):NoteWidget(b,parent),binar
     descpt->setText(binary->getDesc());
 }
 
+/**
+ * \fn BinaryWidget::~BinaryWidget()
+ * \brief Destructeur de la classe BinaryWidget
+ */
 BinaryWidget::~BinaryWidget()
 {
     delete descpt;
@@ -53,11 +63,20 @@ BinaryWidget::~BinaryWidget()
     delete hlayout;
 }
 
-void BinaryWidget::enableSave()
+/**
+ * \fn Note* BinaryWidget::getNote()
+ * \brief Récupérer la partie Note.
+ * \return Un pointeur sur la partie note du binaire associé au Widget
+ */
+Note* BinaryWidget::getNote()
 {
-    //save->setEnabled(true);
+    return dynamic_cast<Note*>(binary);
 }
 
+/**
+ * \fn void BinaryWidget::updateNote()
+ * \brief Mise à jour du binaire associée
+ */
 void BinaryWidget::updateNote()
 {
     binary->setTitle(title->text());
@@ -65,17 +84,23 @@ void BinaryWidget::updateNote()
     binary->setBinPath(pathEdit->text());
     binary->setModify(false);
 }
+
+/**
+ * \fn void BinaryWidget::modification()
+ * \brief Slots de modification.
+ * Cette fonction est appelée si les divers champs du widget sont modifiés
+ */
 void BinaryWidget::modification()
 {
     binary->setModify(true);
     emit mod();
 }
 
-Note* BinaryWidget::getNote()
-{
-    return dynamic_cast<Note*>(binary);
-}
-
+/**
+ * \fn void BinaryWidget::getPath()
+ * \brief Récupération du chemin vers le fichier binaire.
+ * Ce slot ouvre une fenêtre de dialogue pour selectionner le fichier à associer au binaire.
+ */
 void BinaryWidget::getPath()
 {
     QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "*.*");
@@ -85,6 +110,12 @@ void BinaryWidget::getPath()
 
 //Méthodes de AudioWidget
 
+/**
+ * \fn AudioWidget::AudioWidget(Audio* a, QWidget* parent)
+ * \brief Constructeur de l'objet AudioWidget
+ * \param Pointeur sur l'audio associé au widget.
+ * \param Widget parent.
+ */
 AudioWidget::AudioWidget(Audio* a, QWidget* parent):BinaryWidget(a,parent),audio(a)
 {
     //Allocations des widgets et connection
@@ -115,20 +146,39 @@ AudioWidget::AudioWidget(Audio* a, QWidget* parent):BinaryWidget(a,parent),audio
 
 }
 
+/**
+ * \fn AudioWidget::~AudioWidget()
+ * \brief Destructeur de l'objet Widget Audio
+ */
 AudioWidget::~AudioWidget(){}
 
+/**
+ * \fn void AudioWidget::lire()
+ * \brief Slot de lecture du fichier audio.
+ * \bug Non définie.
+ */
 void AudioWidget::lire()
 {
     stop->setEnabled(true);
     //Je ne sais pas ce qu'il faut mettre ici
 }
 
+/**
+ * \fn void AudioWidget::arreter()
+ * \brief Slot pour arrêter la lecture du fichier audio
+ * \bug Non définie
+ */
 void AudioWidget::arreter()
 {
     stop->setEnabled(false);
     //Je ne sais pas ce qu'il faut mettre ici non plus
 }
 
+/**
+ * \fn Note* AudioWidget::getNote()
+ * \brief Récupérer la partie note.
+ * \return Pointeur sur la partie Note de l'Audio.
+ */
 Note* AudioWidget::getNote()
 {
     return dynamic_cast<Note*>(audio);
@@ -136,16 +186,32 @@ Note* AudioWidget::getNote()
 
 //Methodes de Image Widget
 
+/**
+ * \fn ImageWidget::ImageWidget(Image* i,QWidget* parent)
+ * \brief Constructeur de l'objet ImageWidget
+ * \param Pointeur sur l'image à associer au widget
+ * \param Widget parent
+ * \bug Je ne peux pas afficher l'image car l'application crash.
+ */
 ImageWidget::ImageWidget(Image* i,QWidget* parent):BinaryWidget(i,parent),image(i)
 {
-    //Chez moi ces lignes font planter l'application. Essaye de compiler chez toi.
     /*img = new QPixmap(image->getPath());
     label->setPixmap((const QPixmap&) img);
     //label->adjustSize();
     layout->addWidget(label);*/
 }
+
+/**
+ * \fn ImageWidget::~ImageWidget()
+ * \brief Destructeur du widget
+ */
 ImageWidget::~ImageWidget(){}
 
+/**
+ * \fn Note* ImageWidget::getNote()
+ * \brief Récupérer la partie note
+ * \return Pointeur sur la partie Note de l'Image
+ */
 Note* ImageWidget::getNote()
 {
     return dynamic_cast<Note*>(image);
@@ -153,6 +219,12 @@ Note* ImageWidget::getNote()
 
 //Méthodes de Video Widget
 
+/**
+ * \fn VideoWidget::VideoWidget(Video* v,QWidget* parent)
+ * \brief Constructeur de l'objet Video Widget
+ * \param Pointeur sur l'objet video à associer au widget
+ * \param Widget parent
+ */
 VideoWidget::VideoWidget(Video* v,QWidget* parent):BinaryWidget(v,parent),video(v)
 {
 
@@ -192,8 +264,16 @@ VideoWidget::VideoWidget(Video* v,QWidget* parent):BinaryWidget(v,parent),video(
     layout->addLayout(hlayout);
 }
 
+/**
+ * \fn VideoWidget::~VideoWidget()
+ * \brief Destructeur de l'objet VideoWidget
+ */
 VideoWidget::~VideoWidget(){}
 
+/**
+ * \fn void VideoWidget::lire()
+ * \brief Slot de lecture du fichier Video
+ */
 void VideoWidget::lire()
 {
     play->setText("Play");
@@ -202,6 +282,10 @@ void VideoWidget::lire()
     //Je ne sais pas ce qu'il faut mettre ici
 }
 
+/**
+ * \fn void VideoWidget::setPause()
+ * \brief Slot de mise en pause de la video
+ */
 void VideoWidget::setPause()
 {
     play->setText("Resume");
@@ -209,6 +293,10 @@ void VideoWidget::setPause()
     //Je ne sais pas ce qu'il faut mettre ici
 }
 
+/**
+ * \fn void VideoWidget::arreter()
+ * \brief Slot d'arrêt de lecture de la video
+ */
 void VideoWidget::arreter()
 {
     stop->setEnabled(false);
@@ -216,6 +304,11 @@ void VideoWidget::arreter()
     //Je ne sais pas ce qu'il faut mettre ici
 }
 
+/**
+ * \fn Note* VideoWidget::getNote()
+ * \brief Récupérer la partie note de l'objet video associé
+ * \return Pointeur sur la partie note en question.
+ */
 Note* VideoWidget::getNote()
 {
     return dynamic_cast<Note*>(video);
