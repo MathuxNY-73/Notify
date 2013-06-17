@@ -8,41 +8,85 @@
 
 #include <fstream>
 #include <QFile>
-#include "note.h"
+#include "workspace.h"
 #include "notemanager.h"
+#include "note.h"
 #include "article.h"
 #include "document.h"
 
-NoteManager* NoteManager::instance=0; // pointeur sur l'unique instance
+/**
+ * \brief Pointeur sur l'unique instance du Note Manager
+ */
+NoteManager* NoteManager::instance=0;
 
-NoteManager* NoteManager::getInstance(){
+/**
+ * \fn NoteManager& NoteManager::getInstance()
+ * \brief Fonction qui permet de récupérer une instance du Note Manager
+ * \return Retourne une reférence sur l'instance du NoteManager.
+ */
+NoteManager& NoteManager::getInstance(){
     if (!instance)
         instance=new NoteManager();
-    return instance;
+    return *instance;
 }
 
+/**
+ * \fn void NoteManager::releaseInstance()
+ * \brief Fonction qui libère et supprime l'instance de Note Manager si celle ci existe.
+ */
 void NoteManager::releaseInstance(){
     if (instance)
         delete instance;
     instance=0;
 }
 
+/**
+ * \fn  Exports::ExportStrategy* NoteManager::getStrategy(const QString& n)
+ * \brief Méthode servant à récupérer la strategie d'exportation correspondant au paramètre.
+ * \param Nom de l'export
+ * \return Pointeur sur l'export.
+ */
+Exports::ExportStrategy* NoteManager::getStrategy(const QString& n)
+{
+    QMap<QString,Exports::ExportStrategy*>::Iterator it;
+    try
+    {
+        if(strategies.isEmpty())
+            throw NoteManagerException("Il n'existe aucun export");
+        it=strategies.find(n);
+        if(it==strategies.end())
+            throw NoteManagerException("Il n'existe aucun export avec cette denomination");
+        else
+            return *it;
+    }
+    catch (NoteManagerException& e)
+    {
+        QMessageBox::warning(&Workspace::getInstance(),"Error",e.getInfo());
+        return 0;
+    }
+}
+
+/**
+ * \fn Note* NoteManager::getNote(unsigned int i) const
+ * \brief Cette méthode sert à récupérer une note grâce à son identifiant.
+ * \param L'identifiant de la note à récupérer
+ * \return Un pointeur sur la note recherchée.
+ */
 Note* NoteManager::getNote(unsigned int i) const{
     QSet<Note*>::const_iterator it;
     for(it = notes.begin() ; it!=notes.end() ; ++it)
         if((*it)->getId()==i)
             break;
-    try{
         if(it==notes.end())
-            throw NoteManagerException("The note you are trying to select is not in the document. Why are you so stupid ?");
-    }
-    catch(NoteManagerException& e){
-        std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";  //To be modified to display a warning on the screen.
-        return NULL;        //cette ligne provoque des erreurs.
-    }
+            return 0;
     return *it;
 }
 
+/**
+ * \fn void NoteManager::addNote(Note* n)
+ * \brief Methode servant à ajouter une note au Note Manager
+ * \param Un pointeur sur la note que l'on souhaite ajouter.
+ */
 void NoteManager::addNote(Note* n){
     try{
         if(notes.contains(n))
@@ -51,11 +95,16 @@ void NoteManager::addNote(Note* n){
             notes<<n;
     }
     catch(NoteManagerException& e){
-        std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";  //To be modified to display a warning on the screen.
+        QMessageBox::warning(&Workspace::getInstance(),"Error",e.getInfo());
     }
-    
+
 }
 
+/**
+ * \fn void NoteManager::deleteNote(Note* n)
+ * \brief Méthode servant à supprimer une note du Note Manager
+ * \param Pointeur sur la note à supprimer.
+ */
 void NoteManager::deleteNote(Note* n){
     try{
         if(notes.size()<=0)
@@ -78,11 +127,16 @@ void NoteManager::deleteNote(Note* n){
         }
     }
     catch(NoteManagerException& e){
-        std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";  //To be modified to display a warning on the screen.
+        QMessageBox::warning(&Workspace::getInstance(),"Error",e.getInfo());
     }
 }
 
-//Ici je ne sais pas trop ce qu'il faut renvoyer
+/**
+ * \fn  QString NoteManager::getFilename(unsigned int i) const
+ * \brief Fonction qui sert à récupérer les chemins d'une note.
+ * \param Identifiant de la note dont on souhaite connaîtere le chemin
+ * \return Le chemein vers la note.
+ */
 QString NoteManager::getFilename(unsigned int i) const{
     QSet<Note*>::const_iterator it;
     for(it = notes.begin() ; it!=notes.end() ; ++it)
@@ -92,50 +146,32 @@ QString NoteManager::getFilename(unsigned int i) const{
         if(it==notes.end())
             throw NoteManagerException("The note you are trying to select is not in the document. Why are you so stupid ?");
         else
-             return (*it)->getTitle();
+             return (*it)->getPath();
     }
     catch(NoteManagerException& e){
-        std::cout<<"Fatal Error:"<<e.getInfo().toStdString()<<"\n";  //To be modified to display a warning on the screen.
-        return "";      
+        QMessageBox::warning(&Workspace::getInstance(),"Error",e.getInfo());
+        return "";
     }
 }
 
+/**
+ * \fn void NoteManager::load(const QString& newPath)
+ * \brief Fonction servant à charger un NoteManager depuis un fichier sur le disque
+ * \param Chemin vers le fichier .workspace correspondant.
+ * \bug Non définie
+ */
 void NoteManager::load(const QString& newPath){}
-void NoteManager::load(){}
+
+/**
+ * \fn void NoteManager::reset()
+ * \brief Fonction servant à restaurer le Note Manager depuis un historique.
+ * \bug Non définie
+ */
 void NoteManager::reset(){}
+
+/**
+ * \fn Note* NoteManager::loadNote(unsigned int i)
+ * \brief Fonction servant à charger une note grâce à son id.
+ * \bug Non définie
+ */
 Note* NoteManager::loadNote(unsigned int i){}
-void NoteManager::saveState() const{}
-
-
-
-
-//Les deux fonctions suivantes servent à sauver les articles et les documents. Cependant, je pense que la fonctionnalité va être réalisée par la méthodes saveState.
-/*
-void NoteManager::saveArticle(Article& a){
-    if (a.isModified()) {
-        // Création d'un objet QFile
-        QFile file(a.getFilename());
-        // On ouvre notre fichier en lecture seule et on vérifie l'ouverture
-        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-            throw NotesException("Erreur sauvegarde d'un article : impossible d'ouvrir un fichier en écriture");
-        QTextStream flux(&file);
-        flux<<a;
-        file.close();
-        a.modified=false;
-    }
-}
-
-void NoteManager::saveDocument(Document& d){
-    if (d.isModified()) {
-        // Création d'un objet QFile
-        QFile file(d.getFilename());
-        // On ouvre notre fichier en lecture seule et on vérifie l'ouverture
-        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-            throw NotesException("Erreur sauvegarde d'un document : impossible d'ouvrir un fichier en écriture");
-        QTextStream flux(&file);
-        flux<<d;
-        file.close();
-        d.modified=false;
-    }
-}
-*/

@@ -10,8 +10,14 @@
 #define ARTICLEWIDGET_H
 
 #include "notewidget.h"
-#include "article.h"
 
+class Article;
+class ArticleException;
+
+/**
+ * \class ArticleWidget : public NoteWidget
+ * \brief Classe des widgets d'articles.
+ */
 class ArticleWidget : public NoteWidget
 {
     //Macro
@@ -19,17 +25,17 @@ class ArticleWidget : public NoteWidget
 
 private:
     QTextEdit* text;
-    QPushButton* save;
+    //QPushButton* save;
     Article* article;
 
 public:
     explicit ArticleWidget(Article* a,QWidget* parent=0);
-    Note* getNote(){}
+    Note* getNote();
 
    //Slots
 public slots:
     void updateNote();
-private slots:
-    void enableSave();
+    void modification();
+
 };
 #endif // ARTICLEWIDGET_H

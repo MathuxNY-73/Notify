@@ -10,20 +10,14 @@
 #define ARTICLE_H
 
 #include <iostream>
-#include <QFile>
-#include <QString>
-#include <QTextStream>
-//#include <QApplication> //Toutes les lignes suivantes sont à décommenter sous Qt. Elles sont commentées parce que sinon sous XCode cela ne fonctionne pas.
-#include <QWidget>
-#include <QLineEdit>
-#include <QTextEdit>
-#include <QPushButton>
-#include <QVBoxLayout>
-#include <QMessageBox>
 #include "note.h"
 #include "exports.h"
-#include "notewidget.h"
+#include "articlewidget.h"
 
+/**
+ * \class ArticleException
+ * \brief Classes des exceptions des objets articles
+ */
 class ArticleException{
 public:
     ArticleException(const QString& message):info(message){}
@@ -32,35 +26,46 @@ private:
     QString info;
 };
 
+/**
+ * \fn class Article : public Note
+ * \brief Classe des objets articles
+ */
 class Article : public Note {
     //friend class ArticleFactory;
     //friend Article* ArticleFactory::buildNoteCopy(const Article&); //copain pour pouvoir créer des notes par recopie dans les Factories
 private:
     //Attributs
     QString text;
-    
+    ArticleWidget* widget;
+    unsigned int maxW;
+
     //Constructeurs de recopie
     Article(const Article&);
     Article& operator=(const Article&);
-    //void load();
     
 public:
     //Constructeurs
-    Article(const QString& path):Note(path),text(""){}
-    Article(unsigned int i, const QString& ti, const QString& te): Note(i,ti),text(te){}
+    Article(const QString& path);
+    Article(unsigned int i, const QString& ti, const QString& te);
     
     //Destructeur
-    ~Article(){}
-    
-    //Methodes inlines
-    const QString& getText() const { return text; }
+    ~Article();
     
     //Methodes non-inlines
     void setText(const QString& t);
+    const QString& getText() const;
+    Article& getCopy();
 
+    QString ExportNote(Exports::ExportStrategy *es);
+    QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);
+
+<<<<<<< HEAD
     QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const;
     //QTextStream& operator<<(QTextStream& f, const Article& a);
 
+=======
+    ArticleWidget* getWidget();
+>>>>>>> Graphix
 };
 
 

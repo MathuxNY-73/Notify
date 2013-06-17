@@ -10,12 +10,14 @@
 #define DOCUMENT_H
 
 #include <iostream>
-#include <QString>
-#include <QList>
-#include <QTextStream>
 #include "note.h"
 #include "exports.h"
+#include "documentwidget.h"
 
+/**
+ * \class DocumentException
+ * \brief Classe des exceptions de Document
+ */
 class DocumentException{
 public:
     DocumentException(const QString& message):info(message){}
@@ -24,35 +26,40 @@ private:
     QString info;
 };
 
+/**
+ * \class Document : public Note
+ * \brief Classe de document
+ */
 class Document : public Note {
     
 private:
     //Attributs
-    QList<Note*> notes; //This QList implement the design pattern Composite.
-    //We could also have used std::List<Note*> but QList is simpler to use.
-    
+    QList<Note*> notes;
+    DocumentWidget* widget;
+    unsigned int maxW;
+
     //Constructeur de recopie
     Document(const Document& m);
     Document& operator=(const Document& m);
     
+
 public:
     //Constructeurs
-    Document(unsigned int i, const QString& t):Note(i,t),notes(QList<Note*>()){}
-    Document(unsigned int i, const QString& t, const QList<Note*>& listNote):Note(i,t){
+    Document(unsigned int i, const QString& t):Note(i,t),notes(QList<Note*>()),widget(0),maxW(0){}
+    Document(unsigned int i, const QString& t, const QList<Note*>& listNote):Note(i,t),widget(0),maxW(0){
         notes=QList<Note*>();
         QList<Note*>::const_iterator it;                 //Il faudra vérifier si le const est justifié et correct ici.
         for(it=listNote.begin() ; it!=listNote.end() ; ++it)
             notes<<(*it);
     }
-    Document(const QString& p):Note(p), notes(QList<Note*>()){}
     
     //Destructeur
-    ~Document() {}
-    
-    //Methodes inlines
+    ~Document()
+    {
+        if(widget)
+            delete widget;
+    }
 
-    //QList<Note*>::const_iterator beginList() const { return notes.begin();}
-    //QList<Note*>::const_iterator endList() const { return notes.end();}
 
     //Autres methodes non-inline
     void load(const QString& path);
@@ -60,16 +67,18 @@ public:
     void addSubNote(Note* n);
     void addSubNote(Note* n, unsigned int id);
     void removeSubNote(unsigned int id);
-    //QTextStream& operator<<(QTextStream& f, const Document& d);
 
+    QString ExportNote(Exports::ExportStrategy* es);
+    QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl);
     
-    
-    //TODO
-    //QString ExportNote(ExportStrategy* es) const;     Class ExportStrategy not yet implemented
-    QString ExportAsPart(Exports::ExportStrategy* es, unsigned int tl) const;      //Class ExportStrategy not yet implemented
-    
-    
-    //Iterateur non constant
+    DocumentWidget* getWidget();
+    QStandardItem* getItem();
+    Document& getCopy();
+
+    /**
+     * \class Iterator
+     * \brief Classe Iterator de Document
+     */
     class Iterator {   //Cette classe va servir dans les exports afin de pouvoir accéder aux notes
         
     private:
@@ -77,10 +86,10 @@ public:
         friend class Document;
         
         //Attributs
-        typename QList<Note*>::iterator it;
+        QList<Note*>::iterator it;
         
         //Constructeur
-        Iterator(typename QList<Note*>::iterator c):it(c){}
+        Iterator(QList<Note*>::iterator c):it(c){}
         
     public:
         //Constructeur
@@ -103,7 +112,10 @@ public:
         return Iterator(notes.end());
     }
     
-    //Iterateur constant
+    /**
+     * \class constIterator
+     * \brief Classe Iterator const.
+     */
     class constIterator {   //Cette classe va servir dans les exports afin de pouvoir accéder aux notes
         
     private:
@@ -111,10 +123,10 @@ public:
         friend class Document;
         
         //Attributs
-        typename QList<Note*>::const_iterator it;
+        QList<Note*>::const_iterator it;
         
         //Constructeur
-        constIterator(typename QList<Note*>::const_iterator c):it(c){}
+        constIterator(QList<Note*>::const_iterator c):it(c){}
         
     public:
         //Constructeur
@@ -137,7 +149,6 @@ public:
     constIterator end() const{
         return constIterator(notes.constEnd());
     }
-    
 };
 
 #endif // DOCUMENT_H

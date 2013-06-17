@@ -12,13 +12,28 @@
 #include <QString>
 #include <QTextStream>
 #include "note.h"
-#include "article.h"
 
+//#include "notewidget.h"
 
+class Article;
+class Document;
+class Binary;
+class Video;
+class Image;
+class Audio;
+
+/**
+ * \namespace Exports
+ */
 namespace Exports{
 
     
     //Mise en place du design pattern strategy et template methods
+
+    /**
+     * \class ExportStrategy
+     * \brief La classe des Strategies d'export.
+     */
     class ExportStrategy{
         
     private:
@@ -33,13 +48,67 @@ namespace Exports{
         static QMap<QString, ExportStrategy*> getExport();
         
         //Méthode virtuelles
-        virtual QString header(const Note& n) =0;
-        virtual QString footer(const Note& n) =0;
-        virtual QString exportNote(const Article& n, unsigned int tl=0) =0;
-        virtual QString exportNote(const Document& n, unsigned int tl=0) =0;
-        virtual QString exportNote(const Audio& n, unsigned int tl=0) =0;
-        virtual QString exportNote(const Video& n, unsigned int tl=0) =0;
-        virtual QString exportNote(const Image& n, unsigned int tl=0) =0;
+
+        /**
+         * \fn virtual QString header(Note* n) =0
+         * \brief Exportation d'un header de note
+         * \param Note à exporter
+         * \return Chaine de caractères de l'exportation en header
+         */
+        virtual QString header(Note* n) =0;
+
+        /**
+         * \fn virtual QString footer(Note* n) =0
+         * \brief Exportation d'un footer de note
+         * \param Note à exporter
+         * \return Chaine de caractères de l'exportation en footer
+         */
+        virtual QString footer(Note* n) =0;
+
+        /**
+         * \fn virtual QString exportNote(Article* n, unsigned int tl=0) =0
+         * \brief Exportation d'un article
+         * \param Article à exporter
+         * \param Niveau de titre. Par defaut égale à 0.
+         * \return Chaine de caractères issue de l'exportation.
+         */
+        virtual QString exportNote(Article* n, unsigned int tl=0) =0;
+
+        /**
+         * \fn virtual QString exportNote(Document* n, unsigned int tl=0) =0
+         * \brief Exportation d'un document
+         * \param Document à exporter
+         * \param Niveau de titre. Par défaut égale à 0.
+         * \return Chaine de caractères issue de l'exportation.
+         */
+        virtual QString exportNote(Document* n, unsigned int tl=0) =0;
+
+        /**
+         * \fn virtual QString exportNote(Audio* n, unsigned int tl=0) =0
+         * \brief Exportation d'un audio
+         * \param Audio à exporter
+         * \param Niveau de titre. Par défaut égale à 0.
+         * \return Chaine de caractères issue de l'exportation.
+         */
+        virtual QString exportNote(Audio* n, unsigned int tl=0) =0;
+
+        /**
+         * \fn virtual QString exportNote(Video* n, unsigned int tl=0) =0
+         * \brief Exportation d'un video
+         * \param Video à exporter
+         * \param Niveau de titre. Par défaut égale à 0.
+         * \return Chaine de caractères issue de l'exportation.
+         */
+        virtual QString exportNote(Video* n, unsigned int tl=0) =0;
+
+        /**
+         * \fn virtual QString exportNote(Image* n, unsigned int tl=0) =0
+         * \brief Exportation d'un image
+         * \param Image à exporter
+         * \param Niveau de titre. Par défaut égale à 0.
+         * \return Chaine de caractères issue de l'exportation.
+         */
+        virtual QString exportNote(Image* n, unsigned int tl=0) =0;
     };
     
     //Exporter en txt
@@ -54,13 +123,13 @@ namespace Exports{
         //Methodes inlines
         
         //Methodes non-inlines
-        QString header(const Note& n);
-        QString footer(const Note& n);
-        QString exportNote(const Article& a, unsigned int tl=0);        //Ces fonctions n'implémentent, apparement, pas la fonction virtuelle de l'ExportStrategy je ne sais pas pourquoi.
-        QString exportNote(const Document& d, unsigned int tl=0);
-        QString exportNote(const Image& i, unsigned int tl=0);
-        QString exportNote(const Audio& a, unsigned int tl=0);
-        QString exportNote(const Video& v, unsigned int tl=0);
+        QString header(Note* n);
+        QString footer(Note* n);
+        QString exportNote(Article* a, unsigned int tl=0);        //Ces fonctions n'implémentent, apparement, pas la fonction virtuelle de l'ExportStrategy je ne sais pas pourquoi.
+        QString exportNote(Document* d, unsigned int tl=0);
+        QString exportNote(Image* i, unsigned int tl=0);
+        QString exportNote(Audio* a, unsigned int tl=0);
+        QString exportNote(Video* v, unsigned int tl=0);
         //using ExportStrategy::exportNote;
 
 
@@ -77,13 +146,13 @@ namespace Exports{
         //Methodes inlines
         
         //Methodes non-inlines
-        QString header(const Note& n);
-        QString footer(const Note& n);
-        QString exportNote(const Article& a, unsigned int tl=0);
-        QString exportNote(const Document& d, unsigned int tl=0);
-        QString exportNote(const Image& i, unsigned int tl=0);
-        QString exportNote(const Audio& a, unsigned int tl=0);
-        QString exportNote(const Video& v, unsigned int tl=0);
+        QString header(Note* n);
+        QString footer(Note* n);
+        QString exportNote(Article* a, unsigned int tl=0);
+        QString exportNote(Document* d, unsigned int tl=0);
+        QString exportNote(Image* i, unsigned int tl=0);
+        QString exportNote(Audio* a, unsigned int tl=0);
+        QString exportNote(Video* v, unsigned int tl=0);
         //using ExportStrategy::exportNote;
         QString docStruct(unsigned int i) const;
         
@@ -100,34 +169,34 @@ namespace Exports{
         //Methodes inlines
         
         //Methodes non-inlines
-        QString header(const Note& n);
-        QString footer(const Note& n);
-        QString exportNote(const Article& a, unsigned int tl=0);
-        QString exportNote(const Document& d, unsigned int tl=0);
-        QString exportNote(const Image& i, unsigned int tl=0);
-        QString exportNote(const Audio& a, unsigned int tl=0);
-        QString exportNote(const Video& v, unsigned int tl=0);
+        QString header(Note* n);
+        QString footer(Note* n);
+        QString exportNote(Article* a, unsigned int tl=0);
+        QString exportNote(Document* d, unsigned int tl=0);
+        QString exportNote(Image* i, unsigned int tl=0);
+        QString exportNote(Audio* a, unsigned int tl=0);
+        QString exportNote(Video* v, unsigned int tl=0);
         //using ExportStrategy::exportNote;
     };
 
-    class SaveTextExport : public ExportStrategy{
+    class SaveXMLExport : public ExportStrategy{
     
     private:
     
     public:
         //Constructeurs
-        SaveTextExport(){}
+        SaveXMLExport(){}
         
         //Methodes inlines
         
         //Methodes non-inlines
-        QString header(const Note& n);
-        QString footer(const Note& n);
-        QString exportNote(const Article& a, unsigned int tl=0);
-        QString exportNote(const Document& d, unsigned int tl=0);
-        QString exportNote(const Image& i, unsigned int tl=0);
-        QString exportNote(const Audio& a, unsigned int tl=0);
-        QString exportNote(const Video& v, unsigned int tl=0);
+        QString header(Note* n);
+        QString footer(Note* n);
+        QString exportNote(Article* a, unsigned int tl=0);
+        QString exportNote(Document* d, unsigned int tl=0);
+        QString exportNote(Image* i, unsigned int tl=0);
+        QString exportNote(Audio* a, unsigned int tl=0);
+        QString exportNote(Video* v, unsigned int tl=0);
         //using ExportStrategy::exportNote;
     
     };

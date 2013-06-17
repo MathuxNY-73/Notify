@@ -14,35 +14,56 @@
 #include <QApplication> //Toutes les lignes suivantes sont à décommenter sous Qt. Elles sont commentées parce que sinon sous XCode cela ne fonctionne pas.
 #include <QWidget>
 #include <QLineEdit>
+#include <QObject>
 #include <QTextEdit>
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QMessageBox>
+#include <QFileDialog>
 #include "note.h"
+#include <QLabel>
 
+/**
+ * \class NoteWidget : public QWidget
+ * \brief Classe des widgets de Note
+ */
 class NoteWidget : public QWidget
 {
     //Macro
     Q_OBJECT
 
 private:
-
+    Note* note;
 protected:
     QLineEdit* title;
     QVBoxLayout* layout;
+    QHBoxLayout* hlayout,*hlayoutTag;
+    QFileDialog* explorer;
+    QPushButton* root,*tag,*untag;
+    QLabel* directory;
 
 public:
-    explicit NoteWidget(QWidget *parent=0);
+    explicit NoteWidget(Note *n, QWidget *parent=0);
     QVBoxLayout* getLayout() {return layout;}
     virtual Note* getNote()=0;
+    ~NoteWidget();
 
     //Slots
 public slots:
+    virtual void modification()=0;
     virtual void updateNote();
+    void tagAssociation();
+    void unTagAssociation();
 
 private slots:
     void titleChanged(QString q);
+    void choseDoc();
+
+    //signal
+signals:
+    void mod();
+    void changeTitle(QString q);
 
 };
 
